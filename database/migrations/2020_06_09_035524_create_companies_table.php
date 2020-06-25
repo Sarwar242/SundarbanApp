@@ -22,8 +22,11 @@ class CreateCompaniesTable extends Migration
             $table->string('owners_nid')->nullable();
             $table->string('phone1')->nullable();
             $table->string('phone2')->nullable();
+            $table->string('website')->nullable();
             $table->string('image')->nullable();
             $table->string('description')->nullable();
+            $table->string('business_type')->comment('Product|Service')->nullable();
+            $table->string('type')->comment('Wholesale|Retail|Export|Import')->nullable();
             $table->string('location')->nullable();
             $table->string('street')->nullable();
             $table->string('zipcode')->nullable();
