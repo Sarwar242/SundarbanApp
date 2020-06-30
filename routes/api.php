@@ -31,5 +31,13 @@ Route::get('email/verify/{id}/{hash}', 'Api\VerificationController@verify')
             ->name('verification.verify');
 
 
-//Product-Part
+//Product-Part->middleware('auth:api');
+
+Route::get('product/all', 'Api\ProductController@index');
+Route::post('product/create', 'Api\ProductController@store');
+Route::post('product/update', 'Api\ProductController@update');
+Route::get('product/show', 'Api\ProductController@show');
+Route::get('product/delete', 'Api\ProductController@destroy');
+
+
 

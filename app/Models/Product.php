@@ -11,4 +11,9 @@ class Product extends Model
         'discount','quantity', 'type',
         'category_id','subcategory_id','unit_id','company_id'
    ];
+
+   public function company()
+   {
+       return $this->belongsTo(Company::class);
+   }
 }
