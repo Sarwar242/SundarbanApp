@@ -41,3 +41,23 @@ Route::get('product/delete', 'Api\ProductController@destroy');
 
 
 
+
+//Category
+Route::get('category/all', 'Api\CategoryController@index');
+Route::post('category/create', 'Api\CategoryController@store');
+Route::post('category/update', 'Api\CategoryController@update');
+Route::get('category/show', 'Api\CategoryController@show');
+Route::get('category/delete', 'Api\CategoryController@destroy');
+
+
+
+
+//Subcategory
+Route::get('subcategory/all', 'Api\SubcategoryController@index');
+Route::post('subcategory/create', 'Api\SubcategoryController@store');
+Route::post('subcategory/update', 'Api\SubcategoryController@update');
+Route::get('subcategory/show', 'Api\SubcategoryController@show');
+Route::get('subcategory/delete', 'Api\SubcategoryController@destroy');
+
+
+

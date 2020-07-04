@@ -3,19 +3,22 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Category;
+use App\Models\Subcategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class CategoryController extends Controller
+class SubcategoryController extends Controller
 {
     public function index()
     {
         try{
-            $categories = Category::all();      
+            $subcategories = Subcategory::all();   
+            foreach($subcategories as $subcategory ):
+                $subcategory->category;
+            endforeach;   
             return response()->json([
                 "sucess"  => true,
-                "categories" => $categories,
+                "subcategories" => $subcategories,
             ]);
         }
         catch(Exception $e){
@@ -35,25 +38,27 @@ class CategoryController extends Controller
             'description' => 'sometimes|string',
             'bn_description' => 'sometimes|string',
             'image' => 'sometimes|file|image|max:3000',
+            'category_id' => 'required',
         ]);
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
         try{
-            $category= new Category;
-            $category->name =$request->name;
-            $category->bn_name =$request->bn_name;
-            $category->description =$request->description;
-            $category->bn_description =$request->bn_description;
+            $subcategory= new Subcategory;
+            $subcategory->name =$request->name;
+            $subcategory->bn_name =$request->bn_name;
+            $subcategory->description =$request->description;
+            $subcategory->bn_description =$request->bn_description;
+            $subcategory->category_id =$request->category_id;
             if(is_null($request->image)){
-                $category->image="category/default.jpg";
+                $subcategory->image="subcategory/default.jpg";
             }
-            $category->save();
+            $subcategory->save();
 
             return response()->json([
                 "sucess"  => true,
-                "message" => "New Category created!",
-                "category" => $category,
+                "message" => "New Subcategory created!",
+                "subcategory" => $subcategory,
             ]);
         }catch(Exception $e){
             return response()->json([
@@ -66,17 +71,17 @@ class CategoryController extends Controller
     public function show(Request  $request)
     {
         try{
-            $category = Category::find($request->id);
-            if(is_null($category))
+            $subcategory = Subcategory::find($request->id);
+            if(is_null($subcategory))
             return response()->json([
                 "sucess"  => false,
-                "message" => "No Category Found!",
+                "message" => "No Subcategory Found!",
                 
             ]);
             
             return response()->json([
                 "sucess"  => true,
-                "category" => $category,
+                "subcategory" => $subcategory,
             ]);
         }
         catch(Exception $e){
@@ -97,22 +102,24 @@ class CategoryController extends Controller
             'bn_name' => 'sometimes|string',
             'description' => 'sometimes|string',
             'bn_description' => 'sometimes|string',
-            'image' => 'sometimes|file|image|max:3000',   
+            'image' => 'sometimes|file|image|max:3000',
+            'category_id' => 'required',   
         ]);
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
-        $category = Category::find($request->id);
-        $category->name =$request->name;
-        $category->bn_name =$request->bn_name;
-        $category->description =$request->description;
-        $category->bn_description =$request->bn_description;
-        $category->save();
+        $subcategory = Subcategory::find($request->id);
+        $subcategory->name =$request->name;
+        $subcategory->bn_name =$request->bn_name;
+        $subcategory->description =$request->description;
+        $subcategory->bn_description =$request->bn_description;
+        $subcategory->category_id =$request->category_id;
+        $subcategory->save();
 
         return response()->json([
             "sucess"  => true,
-            "message" => "Category has been updated!",
-            "category" => $category
+            "message" => "Subcategory has been updated!",
+            "subcategory" => $subcategory
         ]);
     }
 
@@ -120,17 +127,11 @@ class CategoryController extends Controller
     public function destroy(Request  $request)
     {
         try{
-            $category = Category::find($request->id);
-            if(is_null($category))
-            return response()->json([
-                "sucess"  => false,
-                "message" => "No Category Found!",
-                
-            ]);
-            $category->delete();
+            $subcategory = Subcategory::find($request->id);
+            $subcategory->delete();
             return response()->json([
                 "sucess"  => true,
-                "message" => "Category has been deleted!",
+                "message" => "Subcategory has been deleted!",
             ]);
         }
         catch(Exception $e){
