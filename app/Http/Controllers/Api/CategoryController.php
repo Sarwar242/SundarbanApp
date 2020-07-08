@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\File;
 
 class CategoryController extends Controller
 {
@@ -46,7 +47,11 @@ class CategoryController extends Controller
             $category->description =$request->description;
             $category->bn_description =$request->bn_description;
             if(is_null($request->image)){
-                $category->image="category/default.jpg";
+                $category->image="default.jpg";
+            }else if(request()->hasFile('image')){
+                $imageName = time().'.'.$request->image->extension();  
+                $request->image->move(public_path('storage/category'), $imageName);
+                $category->image=$imageName;
             }
             $category->save();
 
@@ -107,6 +112,11 @@ class CategoryController extends Controller
         $category->bn_name =$request->bn_name;
         $category->description =$request->description;
         $category->bn_description =$request->bn_description;
+        if(request()->hasFile('image')){
+            $imageName = time().'.'.$request->image->extension();  
+            $request->image->move(public_path('storage/category'), $imageName);
+            $category->image=$imageName;
+        }
         $category->save();
 
         return response()->json([
@@ -127,6 +137,9 @@ class CategoryController extends Controller
                 "message" => "No Category Found!",
                 
             ]);
+            if (!is_null($category->image) && $category->image !="default.png") {
+                File::delete(public_path('/storage/category/'.$category->image));
+            }
             $category->delete();
             return response()->json([
                 "sucess"  => true,

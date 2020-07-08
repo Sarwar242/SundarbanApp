@@ -13,9 +13,14 @@ use Illuminate\Http\Request;
 |
 */
 
+
+
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('test', 'Api\SubcategoryController@test');
+
 Route::post('register', 'Api\AuthController@register');
 Route::post('login', 'Api\AuthController@login');
 Route::get('logout', 'Api\AuthController@logout');
@@ -54,7 +59,7 @@ Route::get('category/delete', 'Api\CategoryController@destroy');
 
 //Subcategory
 Route::get('subcategory/all', 'Api\SubcategoryController@index');
-Route::post('subcategory/create', 'Api\SubcategoryController@store');
+Route::post('subcategory/create', 'Api\SubcategoryController@store')->name('api.test');
 Route::post('subcategory/update', 'Api\SubcategoryController@update');
 Route::get('subcategory/show', 'Api\SubcategoryController@show');
 Route::get('subcategory/delete', 'Api\SubcategoryController@destroy');

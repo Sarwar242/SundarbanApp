@@ -4,8 +4,11 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Subcategory;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\File;
+//use Illuminate\Support\Facades\Storage;
 
 class SubcategoryController extends Controller
 {
@@ -28,6 +31,11 @@ class SubcategoryController extends Controller
             ]);
         }
     }
+    public function test(){
+        $categories=Category::all();
+        return view('test')->with('categories',$categories);
+    }
+
 
     public function store(Request  $request)
     {
@@ -51,8 +59,24 @@ class SubcategoryController extends Controller
             $subcategory->bn_description =$request->bn_description;
             $subcategory->category_id =$request->category_id;
             if(is_null($request->image)){
-                $subcategory->image="subcategory/default.jpg";
+                $subcategory->image="default.png";
+            }else if(request()->hasFile('image')){
+                // $file = $request->file('image');
+            //    $extention=$file->getClientOriginalExtension();
+                //dd( $file->getClientMimeType() );
+                // $image=time().'.'.$extention;
+                // file_put_contents('storage/subcategory/'.$image, base64_decode($request->image));
+
+                $imageName = time().'.'.$request->image->extension();  
+   
+                $request->image->move(public_path('storage/subcategory'), $imageName);
+                $subcategory->image=$imageName;
+                // return response()->json([
+                //     $request->image,
+                //     "hasfile"
+                //     ]);
             }
+         
             $subcategory->save();
 
             return response()->json([
@@ -128,6 +152,17 @@ class SubcategoryController extends Controller
     {
         try{
             $subcategory = Subcategory::find($request->id);
+            if(is_null($subcategory)){
+                return response()->json([
+                    "sucess"  => false,
+                    "message" => "No Subcategory Found!",
+                    ]);
+            }
+            if (!is_null($subcategory->image) && $subcategory->image !="default.png") {
+                //dd(public_path('storage/subcategory/').$subcategory->image);
+                File::delete(public_path('/storage/subcategory/'.$subcategory->image));
+
+            }
             $subcategory->delete();
             return response()->json([
                 "sucess"  => true,
