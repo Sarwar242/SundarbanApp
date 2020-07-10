@@ -43,6 +43,9 @@ Route::post('product/create', 'Api\ProductController@store');
 Route::post('product/update', 'Api\ProductController@update');
 Route::get('product/show', 'Api\ProductController@show');
 Route::get('product/delete', 'Api\ProductController@destroy');
+Route::post('product/image/upload', 'Api\ProductController@uploadImage');
+Route::post('product/image/setpriority', 'Api\ProductController@setPriority');
+Route::get('product/image/delete', 'Api\ProductController@deleteImage');
 
 
 

@@ -47,7 +47,7 @@ class CategoryController extends Controller
             $category->description =$request->description;
             $category->bn_description =$request->bn_description;
             if(is_null($request->image)){
-                $category->image="default.jpg";
+                $category->image="default.png";
             }else if(request()->hasFile('image')){
                 $imageName = time().'.'.$request->image->extension();  
                 $request->image->move(public_path('storage/category'), $imageName);
