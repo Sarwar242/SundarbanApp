@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCompaniesTable extends Migration
+class CreateAdminsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,21 +13,22 @@ class CreateCompaniesTable extends Migration
      */
     public function up()
     {
-        Schema::create('companies', function (Blueprint $table) {
+        Schema::create('admins', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('user_id');
-            $table->string('bn_name')->nullable();
-            $table->string('name');
-            $table->string('owners_name')->nullable();
-            $table->string('owners_nid')->nullable();
+            $table->string('first_name');
+            $table->string('last_name');
+            $table->string('username');
+            $table->string('email')->unique();
+            $table->string('password');
+            $table->string('type')
+                ->default('Super Admin')
+                ->comment('Admin|Super Admin');
+            $table->string('nid')->nullable();
             $table->boolean('ban')->nullable();
             $table->string('phone1')->nullable();
             $table->string('phone2')->nullable();
-            $table->string('website')->nullable();
             $table->string('image')->nullable();
-            $table->string('description')->nullable();
-            $table->string('business_type')->comment('Product|Service')->nullable();
-            $table->string('type')->comment('Wholesale|Retail|Export|Import')->nullable();
+            $table->text('about')->nullable();
             $table->string('location')->nullable();
             $table->string('street')->nullable();
             $table->string('zipcode')->nullable();
@@ -36,11 +37,10 @@ class CreateCompaniesTable extends Migration
             $table->unsignedBigInteger('upazilla_id')->nullable();
             $table->unsignedBigInteger('district_id')->nullable();
             $table->unsignedBigInteger('division_id')->nullable();
+
+            $table->rememberToken();
             $table->timestamps();
              
-            $table->foreign('user_id')
-            ->references('id')->on('users')
-            ->onDelete('cascade');
             
             $table->foreign('union_id')
             ->references('id')->on('unions')
@@ -67,6 +67,6 @@ class CreateCompaniesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('companies');
+        Schema::dropIfExists('admins');
     }
 }

@@ -285,7 +285,7 @@ class ProductController extends Controller
             $image->save();
             return response()->json([
                 "sucess"  => true,
-                "message" => "Priority of the image has been set to "+$request->priority,
+                "message" => "Priority of the image has been set to ".$request->priority,
                 
             ]);
         } catch(Exception $e){

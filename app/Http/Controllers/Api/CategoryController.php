@@ -8,12 +8,17 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\File;
 
+
 class CategoryController extends Controller
 {
+    // public function __construct()
+    // {
+    //     $this->middleware('auth:api');
+    // }
     public function index()
     {
         try{
-            $categories = Category::all();      
+            $categories = Category::all();   
             return response()->json([
                 "sucess"  => true,
                 "categories" => $categories,
