@@ -85,6 +85,14 @@ Route::get('admin/show', 'Api\AdminController@show')
         ->middleware(['auth:api']);
 
 
+Route::post('admin/create', 'Api\AdminController@createAdmin');
+Route::post('admin/user/create', 'Api\AdminController@userCreate');
+Route::post('admin/company/update', 'Api\CompanyController@update');
+Route::post('admin/customer/update', 'Api\CustomerController@update');
+Route::post('admin/user/change', 'Api\AdminController@user_change_password');
+Route::post('admin/company/ban', 'Api\AdminController@companyBan');
+Route::post('admin/customer/ban', 'Api\AdminController@customerBan');
+Route::post('admin/admin/ban', 'Api\AdminController@customerBan');
 Route::get('admin/users', 'Api\AdminController@users');
 Route::get('admin/admins', 'Api\AdminController@admins');
 Route::get('admin/profile', 'Api\AdminController@profile');

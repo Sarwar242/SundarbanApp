@@ -1,19 +1,6 @@
-Here you will find the date rules for different conditions:
+1.route:: admin/user/change --- it needs parameter user_id as id ... 
+    [password should be at least 8 character]..
 
-$v = Validator::make(
-  ['start_date' => date('30-05-2028')], // input
-  [
-    'date_of_birth' => ['before:5 years ago'],
-    'start_date'    => 'required|date_format:d-m-Y|after:8 years',
-    'end_date'      => 'date_format:d-m-Y|after:start_date', 
-    ]
-);
 
-if ($v->passes())
- dd('Your Date format is correct.');
-else
- dd($v->errors());
-For your case you should try:
-
-'date_of_birth' => 'date_format:Y-m-d|before:today|nullable'
-Careful: You must use this Y-m-d format. Not this Y-M-D. Month and Date parameter must be in lower case. Hope it will solve your issues.
+2. route:: admin/company/update  --- needs parameter company_id as id ...
+    [same for customer route]
