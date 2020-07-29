@@ -304,6 +304,7 @@
     <script src="{{ asset('js/backend/jquery.min.js')}}"></script>
     <script>
        $(document).on('change','#category_id',function(){
+
         var category = $("#category_id").val();
         $("#subcategory_id").html("");
         var option = " ";
@@ -311,6 +312,7 @@
         $.get(""+myapplink+"/admin/get-subcategories/" +
         category,
         function(data) {
+          option = "<option selected disabled>Select one</option>";
             var d = JSON.parse(data);
             d.forEach(function(element) {
                 console.log(element.id);

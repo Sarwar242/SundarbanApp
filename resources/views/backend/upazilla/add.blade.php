@@ -146,6 +146,7 @@
         $.get(""+myapplink+"/admin/get-district/" +
         category,
         function(data) {
+          option = "<option selected disabled>Select one</option>";
             var d = JSON.parse(data);
             d.forEach(function(element) {
                 console.log(element.id);
