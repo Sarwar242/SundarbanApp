@@ -14,6 +14,8 @@ class Admin  extends Authenticatable
 {
     use Notifiable, HasApiTokens;
 
+    protected $guard = 'admin';
+    
     protected $fillable = [
          'email', 'password','first_name',
          'last_name', 'username','type','ban',
@@ -36,6 +38,11 @@ class Admin  extends Authenticatable
     //     $this->notify(new PasswordResetNotification($token));
     // }
     
-
+    public static function admins()
+    {
+        $admins = Admin::paginate(5);
+ 
+        return $admins;
+    }
 
 }

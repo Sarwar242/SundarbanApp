@@ -19,4 +19,11 @@ class Subcategory extends Model
    {
        return $this->belongsTo(Category::class);
    }
+
+   public static function subcategoies()
+   {
+       $subcategoies = Subcategory::paginate(5);
+
+       return $subcategoies;
+   }
 }

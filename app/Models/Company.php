@@ -16,4 +16,29 @@ class Company extends Model
    {
        return $this->belongsTo(User::class);
    }
+
+   public function division()
+   {
+       return $this->belongsTo(Division::class);
+   }
+   public function district()
+   {
+       return $this->belongsTo(District::class);
+   }
+   public function upazilla()
+   {
+       return $this->belongsTo(Upazilla::class);
+   }
+   public function union()
+   {
+       return $this->belongsTo(Union::class);
+   }
+
+   
+   public static function companies()
+   {
+       $companies = Company::paginate(5);
+
+       return $companies;
+   }
 }

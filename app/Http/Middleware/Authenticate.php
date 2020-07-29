@@ -23,7 +23,11 @@ class Authenticate extends Middleware
         if (Auth::guard($guard)->guest()) {
             if ($guard === 'api') {
                 return response('Unauthorized.', 401);
-            } else {
+            }else if($guard === 'admin'){
+                return redirect()->guest('/admin/login');
+            }
+            
+            else {
                 return redirect()->guest('login');
             }
         }
@@ -32,6 +36,9 @@ class Authenticate extends Middleware
     protected function redirectTo($request)
     {
         if (! $request->expectsJson()) {
+            if (array_first($this->guards) === 'admin') {
+                return route('admin.login');
+            }
             return route('login');
         }
     }

@@ -15,9 +15,31 @@ class Product extends Model
    public function company()
    {
        return $this->belongsTo(Company::class);
+   } 
+   public function subcategory()
+   {
+       return $this->belongsTo(Subcategory::class);
+   }
+   public function category()
+   {
+       return $this->belongsTo(Category::class);
+   }  
+    
+   public function unit()
+   {
+       return $this->belongsTo(Unit::class);
    }
    public function images()
    {
        return $this->hasMany(ProductImage::class);
+   }
+   
+   
+   
+   public static function products()
+   {
+       $product = Product::paginate(5);
+
+       return $product;
    }
 }

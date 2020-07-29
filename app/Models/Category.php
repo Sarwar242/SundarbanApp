@@ -21,4 +21,12 @@ class Category extends Model
    {
        return $this->hasMany(Product::class);
    }
+
+
+   public static function categoies()
+   {
+       $categoies = Category::paginate(5);
+
+       return $categoies;
+   }
 }

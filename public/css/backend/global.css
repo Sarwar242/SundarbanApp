@@ -1,0 +1,46 @@
+
+
+body
+{
+	font-family: 'Poppins', sans-serif;
+}
+
+.form-container
+{
+	width: 480px;
+	position: absolute;
+	top: 15vh;
+	left: -75px;
+	background: #fff;
+	padding: 30px;
+	margin-bottom: 40px;
+	border-radius: 10px;
+	box-shadow: 0px 0px 10px 0px #000;
+}
+
+.edit
+{
+	color: #db2323;
+}
+
+.form-writings
+{
+	margin-top: 20px;
+}
+
+.form-writings a
+{
+	text-decoration: none;
+	color: 
+}
+
+.heading
+{
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+.content table
+{
+	border-bottom: 2px solid #000;
+}
