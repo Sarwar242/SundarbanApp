@@ -11,7 +11,7 @@ use Route;
 
 class AdminAuthController extends Controller
 {
-    use AuthenticatesUsers,RedirectsUsers;
+    use AuthenticatesUsers;
 
     public function __construct()
     {

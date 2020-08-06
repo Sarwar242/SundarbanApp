@@ -1,7 +1,7 @@
 
 
 @extends('backend.layouts.master')
-
+@section('title','Product')
 
 @section('contents')
 @include('backend.layouts.sidebar')
@@ -73,7 +73,17 @@
 
               <div class="form-group">
                 <label for="exampleFormControlInput1">Code</label>
-                <input type="text" name="code" class="form-control @error('code') is-invalid @enderror" placeholder="Product Code">
+                @if(!is_null(App\Models\Product::generateProductCode()))
+                <div class="alert alert-success">
+                  <button type="button" class="close" data-dismiss="alert">
+                    x
+                  </button>
+                  <strong>
+                     This code is autometically generated!
+                  </strong>
+                </div>
+                @endif
+                <input type="text" name="code" value="{{App\Models\Product::generateProductCode()}}" class="form-control @error('code') is-invalid @enderror" placeholder="Product Code">
                 @error('code')
                 <div class="alert alert-danger alert-block">
                   <button type="button" class="close" data-dismiss="alert">
@@ -120,7 +130,7 @@
               <div class="form-group">
                 <label for="exampleFormControlSelect1">In Unit</label>
                 <select class="form-control @error('unit_id') is-invalid @enderror" name="unit_id">
-                  @foreach(App\Models\Unit::units() as $unit)
+                  @foreach(App\Models\Unit::all() as $unit)
                     <option value="{{$unit->id}}">{{$unit->name}}</option>
                   @endforeach
                 </select>

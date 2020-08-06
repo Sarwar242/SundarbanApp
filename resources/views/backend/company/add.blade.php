@@ -1,5 +1,5 @@
 @extends('backend.layouts.master')
-
+@section('title','Company')
 
 @section('contents')
 @include('backend.layouts.sidebar')

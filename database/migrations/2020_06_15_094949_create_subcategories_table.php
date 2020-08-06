@@ -21,7 +21,12 @@ class CreateSubcategoriesTable extends Migration
             $table->string('bn_description');
             $table->string('image');
             $table->unsignedBigInteger('category_id')->nullable();
+            $table->unsignedBigInteger('admin_id')->nullable();
             $table->timestamps();
+
+            $table->foreign('admin_id')
+            ->references('id')->on('admins')
+            ->onDelete('set null');
 
             $table->foreign('category_id')
             ->references('id')->on('categories')

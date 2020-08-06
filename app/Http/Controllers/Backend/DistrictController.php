@@ -8,25 +8,21 @@ use App\Models\Division;
 use App\Models\District;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\File;
+use Auth;
 
 class DistrictController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:admin');
+    }
+    
     public function index()
     {
-        try{
-            $districts = District::all();
-            return response()->json([
-                "sucess"  => true,
-                "districts" => $districts,
-            ]);
-        }
-        catch(Exception $e){
-            return response()->json([
-                'success'=>false,
-                'message'=> ''.$e,
-            ]);
-        }
+        return view('backend.district.index');
     }
+
+
         
     public function create(){
         return view('backend.district.add');
@@ -52,6 +48,8 @@ class DistrictController extends Controller
             $district->latitude =$request->latitude;
             $district->website =$request->website;
             $district->division_id =$request->division_id;
+
+            $district->admin_id=Auth::guard('admin')->user()->id; 
   
             $district->save();
 

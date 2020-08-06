@@ -7,23 +7,17 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\File;
+use Auth;
 class CategoryController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:admin');
+    }
+
     public function index()
     {
-        try{
-            $categories = Category::all();   
-            return response()->json([
-                "sucess"  => true,
-                "categories" => $categories,
-            ]);
-        }
-        catch(Exception $e){
-            return response()->json([
-                'success'=>false,
-                'message'=> ''.$e,
-            ]);
-        }
+        return view('backend.category.index');
     }
 
     public function create(){
@@ -46,6 +40,7 @@ class CategoryController extends Controller
             $category->bn_name =$request->bn_name;
             $category->description =$request->description;
             $category->bn_description =$request->bn_description;
+            $category->admin_id=Auth::guard('admin')->user()->id; 
             if(is_null($request->image)){
                 $category->image="default.png";
             }else if(request()->hasFile('image')){

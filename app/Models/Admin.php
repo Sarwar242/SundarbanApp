@@ -19,7 +19,7 @@ class Admin  extends Authenticatable
     protected $fillable = [
          'email', 'password','first_name',
          'last_name', 'username','type','ban',
-         'nid', 'phone1','phone2','image',
+         'nid', 'phone1','phone2','image','admin_id',
          'street', 'location','about','zipcode',
          'union_id', 'upazilla_id','district_id','division_id'
     ];

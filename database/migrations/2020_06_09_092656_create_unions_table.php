@@ -19,9 +19,15 @@ class CreateUnionsTable extends Migration
             $table->string('name')->nullable();
             $table->string('longitude')->nullable();
             $table->string('latitude')->nullable(); 
+            $table->unsignedBigInteger('admin_id')->nullable();
             $table->unsignedBigInteger('upazilla_id')->nullable();
             $table->timestamps();
 
+            $table->foreign('admin_id')
+            ->references('id')->on('admins')
+            ->onDelete('set null');
+
+    
             $table->foreign('upazilla_id')
             ->references('id')->on('upazillas')
             ->onDelete('set null');

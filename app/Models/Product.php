@@ -8,7 +8,7 @@ class Product extends Model
 {
     protected $fillable = [
         'code', 'name','bn_name','description','bn_description', 'price',
-        'discount','quantity', 'type',
+        'discount','quantity', 'type','admin_id',
         'category_id','subcategory_id','unit_id','company_id'
    ];
 
@@ -35,6 +35,18 @@ class Product extends Model
    }
    
    
+   public static function generateProductCode(){
+        $product22 = Product::latest('id')->first();
+        
+        if (!is_null($product22)) {
+            $code = $product22->code;
+            $removed2char = substr($code, 2);
+            $generatedProductCode = $stpad = 'p_' . str_pad($removed2char + 1, 9, "0", STR_PAD_LEFT);
+        } else {
+            $generatedProductCode = 'p_' . str_pad(1, 9, "0", STR_PAD_LEFT);
+        }
+        return $generatedProductCode;
+    }
    
    public static function products()
    {

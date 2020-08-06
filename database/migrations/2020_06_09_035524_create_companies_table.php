@@ -32,11 +32,16 @@ class CreateCompaniesTable extends Migration
             $table->string('street')->nullable();
             $table->string('zipcode')->nullable();
 
+            $table->unsignedBigInteger('admin_id')->nullable();
             $table->unsignedBigInteger('union_id')->nullable();
             $table->unsignedBigInteger('upazilla_id')->nullable();
             $table->unsignedBigInteger('district_id')->nullable();
             $table->unsignedBigInteger('division_id')->nullable();
             $table->timestamps();
+
+            $table->foreign('admin_id')
+            ->references('id')->on('admins')
+            ->onDelete('set null');
              
             $table->foreign('user_id')
             ->references('id')->on('users')

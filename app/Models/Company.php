@@ -8,7 +8,7 @@ class Company extends Model
 {
     protected $fillable = [
         'name', 'bn_name','owners_name','owners_nid','phone1','phone2','ban','image',
-        'description','location','street','website','business_type','type',
+        'description','location','street','website','business_type','type','admin_id',
         'zipcode','union_id','upazilla_id','district_id','division_id'
    ];
 

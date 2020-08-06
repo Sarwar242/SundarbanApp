@@ -10,25 +10,22 @@ use App\Models\Upazilla;
 use App\Models\Union;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\File;
+use Auth;
 
 class UnionController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:admin');
+    }
+
+
     public function index()
     {
-        try{
-            $unions = Union::all();
-            return response()->json([
-                "sucess"  => true,
-                "unions" => $unions,
-            ]);
-        }
-        catch(Exception $e){
-            return response()->json([
-                'success'=>false,
-                'message'=> ''.$e,
-            ]);
-        }
+        return view('backend.union.index');
     }
+
+
                 
     public function create(){
         return view('backend.union.add');
@@ -52,6 +49,7 @@ class UnionController extends Controller
             $union->longitude =$request->longitude;
             $union->latitude =$request->latitude;
             $union->upazilla_id =$request->upazilla_id;
+            $union->admin_id=Auth::guard('admin')->user()->id; 
             $union->save();
 
             session()->flash('success', 'A Union has been Added!!');

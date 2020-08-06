@@ -8,24 +8,20 @@ use App\Models\Division;
 use App\Models\District;
 use App\Models\Upazilla;
 use Illuminate\Support\Facades\Validator;
+use Auth;
+
 class UpazillaController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:admin');
+    }
+
     public function index()
     {
-        try{
-            $upazillas = Upazilla::all();
-            return response()->json([
-                "sucess"  => true,
-                "upazillas" => $upazillas,
-            ]);
-        }
-        catch(Exception $e){
-            return response()->json([
-                'success'=>false,
-                'message'=> ''.$e,
-            ]);
-        }
+        return view('backend.upazilla.index');
     }
+
 
             
     public function create(){
@@ -50,6 +46,7 @@ class UpazillaController extends Controller
             $upazilla->longitude =$request->longitude;
             $upazilla->latitude =$request->latitude;
             $upazilla->district_id =$request->district_id;
+            $upazilla->admin_id=Auth::guard('admin')->user()->id; 
             $upazilla->save();
 
             session()->flash('success', 'A Upazilla has been Added!!');

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Union extends Model
 {
     protected $fillable = [
-        'bn_name', 'name','longitude','latitude','upazilla_id',
+        'bn_name', 'name','longitude','latitude','admin_id','upazilla_id',
    ];
 
    
@@ -16,4 +16,9 @@ class Union extends Model
        return $this->belongsTo(Upazilla::class);
    }
 
+   public static function unions()
+   {
+       $unions= Union::orderBy('upazilla_id','asc')->paginate(10);
+       return $unions;
+   }
 }

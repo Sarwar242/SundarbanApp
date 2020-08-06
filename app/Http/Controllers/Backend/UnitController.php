@@ -6,23 +6,17 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Unit;
 use Illuminate\Support\Facades\Validator;
+use Auth;
 class UnitController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:admin');
+    }
+    
     public function index()
     {
-        try{
-            $units = Unit::all();
-            return response()->json([
-                "sucess"  => true,
-                "units" => $units,
-            ]);
-        }
-        catch(Exception $e){
-            return response()->json([
-                'success'=>false,
-                'message'=> ''.$e,
-            ]);
-        }
+        return view('backend.unit.index');
     }
 
     public function create(){
@@ -42,6 +36,7 @@ class UnitController extends Controller
             $unit= new Unit;
             $unit->name =$request->name;
             $unit->bn_name =$request->bn_name;
+            $unit->admin_id=Auth::guard('admin')->user()->id; 
             $unit->save();
 
             session()->flash('success', 'A Unit has been Added!!');
@@ -92,6 +87,7 @@ class UnitController extends Controller
             $unit = Unit::find($request->id);
             $unit->name =$request->name;
             $unit->bn_name =$request->bn_name;
+            //$unit->admin_id=Auth::guard('admin')->user()->id; 
             $unit->save();
 
             return response()->json([

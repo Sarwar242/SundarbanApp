@@ -1,17 +1,25 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Sundarban - Homepage</title>
+	<title>Shundarbon || @yield('title')</title>
 	<link rel="stylesheet" href="{{ asset('css/backend/bootstrap.css') }}?ver=1.1">
 	<link rel="stylesheet" type="text/css" href="{{ asset('css/backend/global.css') }}?ver=1.1">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
 	<link rel="stylesheet" type="text/css" href="{{ asset('css/backend/sidebar.css') }}?ver=1.1">
+	<link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
+
+
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/js/all.min.js"></script>
-	{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js"></script> --}}
+	
+
+
+
+
 	<script type="text/javascript">
 		const myapplink = "http://192.168.43.131:8000";
 	</script>
 	<script src="{{ asset('js/backend/jquery.min.js') }}" ></script>
+	<script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
 	{{-- <script src="{{ asset('js/backend/jquery-3.3.1.min.js')}}"></script> --}}
 </head>
 <body>

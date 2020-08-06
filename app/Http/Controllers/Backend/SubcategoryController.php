@@ -8,27 +8,17 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\File;
+use Auth;
 
 class SubcategoryController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:admin');
+    }
     public function index()
     {
-        try{
-            $subcategories = Subcategory::all();   
-            foreach($subcategories as $subcategory ):
-                $subcategory->category;
-            endforeach;   
-            return response()->json([
-                "sucess"  => true,
-                "subcategories" => $subcategories,
-            ]);
-        }
-        catch(Exception $e){
-            return response()->json([
-                'success'=>false,
-                'message'=> ''.$e,
-            ]);
-        }
+        return view('backend.subcategory.index');
     }
     public function test(){
         $categories=Category::all();
@@ -56,7 +46,12 @@ class SubcategoryController extends Controller
             $subcategory= new Subcategory;
             $subcategory->name =$request->name;
             $subcategory->bn_name =$request->bn_name;
-            $subcategory->description =$request->description;
+           
+            if(is_null($request->description)){
+                $subcategory->description ="N/A";
+            }else{
+                $subcategory->description =$request->description;
+            }
             if(is_null($request->bn_description)){
                 $subcategory->bn_description ="N/A";
             }else{
@@ -70,6 +65,9 @@ class SubcategoryController extends Controller
                 $request->image->move(public_path('storage/subcategory'), $imageName);
                 $subcategory->image=$imageName;
             }
+
+
+            $subcategory->admin_id=Auth::guard('admin')->user()->id; 
          
             $subcategory->save();
 
@@ -116,8 +114,8 @@ class SubcategoryController extends Controller
         $this->validate($request,[
             'name' => 'required|string',
             'bn_name' => 'nullable|string',
-            'description' => 'nullable|string',
-            'bn_description' => 'nullable|string',
+            'description' => 'required|string',
+            'bn_description' => 'required|string',
             'image' => 'nullable|file|image|max:3000',
             'category_id' => 'required',
         ]);

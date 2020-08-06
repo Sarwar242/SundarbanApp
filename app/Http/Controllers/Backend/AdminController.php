@@ -27,6 +27,10 @@ class AdminController extends Controller
     public function index()
     {
         return view('backend.index');
+    }
+    public function admins()
+    {
+        return view('backend.admin.index');
     }    
     
     public function companyCreateForm()
@@ -68,7 +72,8 @@ class AdminController extends Controller
                 $user->save();
                 $profile = new Company;
                 $profile->name=$request->name;
-                $profile->user_id=$user->id;
+                $profile->user_id=$user->id; 
+                $profile->admin_id=Auth::guard('admin')->user()->id; 
                 $profile->owners_name=$user->owners_name;
                 $profile->save();
                 session()->flash('success', 'A Company has been created!!');
@@ -98,6 +103,7 @@ class AdminController extends Controller
                 $profile->first_name=$request->first_name;
                 $profile->last_name=$request->last_name;
                 $profile->user_id=$user->id;
+                $profile->admin_id=Auth::guard('admin')->user()->id; 
                 $profile->save();
                 session()->flash('success', 'A Customer has been created!!');
                 return redirect()->route('admin.dashboard');

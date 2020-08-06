@@ -7,13 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class Unit extends Model
 {
     protected $fillable = [
-        'name',
+        'name','admin_id',
    ];
 
 
    public static function units()
    {
-       $units = Unit::all();
+       $units = Unit::paginate(10);
 
        return $units;
    }

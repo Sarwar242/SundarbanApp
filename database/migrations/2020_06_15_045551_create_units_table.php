@@ -17,7 +17,11 @@ class CreateUnitsTable extends Migration
             $table->bigIncrements('id');
             $table->string('name')->comment('Piece|Kg|Litter');
             $table->string('bn_name')->nullable();
+            $table->unsignedBigInteger('admin_id')->nullable();
             $table->timestamps();
+            $table->foreign('admin_id')
+            ->references('id')->on('admins')
+            ->onDelete('set null');
         });
     }
 

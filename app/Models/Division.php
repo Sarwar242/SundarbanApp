@@ -16,4 +16,12 @@ class Division extends Model
    {
        return $this->hasMany(District::class);
    }
+   
+   
+   public static function divisions()
+   {
+       $divisions= Division::paginate(10);
+       return $divisions;
+   }
+   //orderBy('created_at','desc')->
 }

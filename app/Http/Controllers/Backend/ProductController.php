@@ -8,31 +8,18 @@ use App\Models\ProductImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\File;
+use Auth;
 
 class ProductController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:admin');
+    }
+
     public function index()
     {
-        try{
-            $products = Product::all();
-            foreach($products as $product ):
-                $product->company;
-                foreach($product->images as $image):
-                    $image->image;
-                endforeach;
-            endforeach;
-            
-            return response()->json([
-                "sucess"  => true,
-                "product" => $products,
-            ]);
-        }
-        catch(Exception $e){
-            return response()->json([
-                'success'=>false,
-                'message'=> ''.$e,
-            ]);
-        }
+        return view('backend.product.index');
     }
 
     public function create(){
@@ -41,12 +28,11 @@ class ProductController extends Controller
 
     public function store(Request  $request)
     {
-
         $this->validate($request,[
             'code'=>'required',
             'name' => 'required|string',
             'bn_name' => 'nullable|string',
-            'description' => 'nullable|string',
+            'description' => 'required|string',
             'bn_description' => 'nullable|string',
             'price' => 'required|regex:/^\d+(\.\d{1,2})?$/',
             'discount' => 'nullable|numeric',
@@ -67,7 +53,7 @@ class ProductController extends Controller
             $product->description =$request->description;
             $product->bn_description =$request->bn_description;
             $product->price =$request->price;
-            
+            $product->admin_id=Auth::guard('admin')->user()->id; 
             if(!is_null($product->discount))
                 $product->discount =$request->discount;
             else
@@ -91,17 +77,16 @@ class ProductController extends Controller
                     // dd($file) ;
                     $i++;
                     try{
-                    $imagetbl = new ProductImage;
-                    $imageName = time().$i.'.'.$file->extension();  
-                    $file->move(public_path('storage/product'), $imageName);
-                    $imagetbl->image =$imageName;
-                    $imagetbl->product_id = $pid;
-                    $imagetbl->priority = $i;
-                    $imagetbl->save();   
-
-                }catch(Exception $e){
-                        ['message'=> ' '.$e.' '];
-                }
+                        $imagetbl = new ProductImage;
+                        $imageName = time().$i.'.'.$file->extension();  
+                        $file->move(public_path('storage/product'), $imageName);
+                        $imagetbl->image =$imageName;
+                        $imagetbl->product_id = $pid;
+                        $imagetbl->priority = $i;
+                        $imagetbl->save();   
+                    }catch(Exception $e){
+                            ['message'=> ' '.$e.' '];
+                    }
                 endforeach;
             endif;
 
@@ -183,6 +168,7 @@ class ProductController extends Controller
         $product->subcategory_id =$request->subcategory_id;
         $product->unit_id =$request->unit_id;
         $product->company_id =$request->company_id;
+        
         $product->save();
 
         session()->flash('success', 'The Product has been updated!!');

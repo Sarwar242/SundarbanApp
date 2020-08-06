@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Upazilla extends Model
 {
     protected $fillable = [
-        'bn_name', 'name','longitude','latitude','district_id',
+        'bn_name', 'name','longitude','latitude','admin_id','district_id',
    ];
 
    
@@ -20,5 +20,13 @@ class Upazilla extends Model
    public function unions()
    {
        return $this->hasMany(Union::class);
+   }
+
+
+   
+   public static function upazillas()
+   {
+       $upazillas= Upazilla::orderBy('district_id','asc')->paginate(10);
+       return $upazillas;
    }
 }

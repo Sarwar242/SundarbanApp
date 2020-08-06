@@ -19,6 +19,7 @@ class CreateCategoriesTable extends Migration
             $table->string('bn_name')->nullable();
             $table->string('description')->nullable();;
             $table->string('bn_description')->nullable();;
+            $table->unsignedBigInteger('admin_id')->nullable();
             $table->string('image');
             $table->timestamps();
         });

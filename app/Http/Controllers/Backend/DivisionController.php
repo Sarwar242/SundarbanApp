@@ -11,21 +11,14 @@ use Illuminate\Support\Facades\File;
 
 class DivisionController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:admin');
+    }
+    
     public function index()
     {
-        try{
-            $divisions = Division::all();
-            return response()->json([
-                "sucess"  => true,
-                "divisions" => $divisions,
-            ]);
-        }
-        catch(Exception $e){
-            return response()->json([
-                'success'=>false,
-                'message'=> ''.$e,
-            ]);
-        }
+        return view('backend.division.index');
     }
 
 

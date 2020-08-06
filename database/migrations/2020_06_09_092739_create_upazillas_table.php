@@ -19,9 +19,14 @@ class CreateUpazillasTable extends Migration
             $table->string('name')->nullable();
             $table->string('longitude')->nullable();
             $table->string('latitude')->nullable(); 
+            $table->unsignedBigInteger('admin_id')->nullable();
             $table->unsignedBigInteger('district_id')->nullable();
             $table->timestamps();
 
+            $table->foreign('admin_id')
+            ->references('id')->on('admins')
+            ->onDelete('set null');
+            
             $table->foreign('district_id')
             ->references('id')->on('districts')
             ->onDelete('set null');

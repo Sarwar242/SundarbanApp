@@ -33,6 +33,10 @@ class CreateAdminsTable extends Migration
             $table->string('street')->nullable();
             $table->string('zipcode')->nullable();
 
+            $table->foreign('admin_id')
+            ->references('id')->on('admins')
+            ->onDelete('set null');
+            $table->unsignedBigInteger('admin_id')->nullable();
             $table->unsignedBigInteger('union_id')->nullable();
             $table->unsignedBigInteger('upazilla_id')->nullable();
             $table->unsignedBigInteger('district_id')->nullable();

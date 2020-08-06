@@ -1,8 +1,7 @@
 
 
 @extends('backend.layouts.master')
-
-
+@section('title','Product')
 @section('contents')
 @include('backend.layouts.sidebar')
   <section class="container-fluid">

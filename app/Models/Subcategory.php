@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Subcategory extends Model
 {
     protected $fillable = [
-        'name','bn_name','description','bn_description', 'image','category_id',
+        'name','bn_name','description','bn_description', 'image','admin_id','category_id',
    ];
 
    public function products()
@@ -22,7 +22,7 @@ class Subcategory extends Model
 
    public static function subcategoies()
    {
-       $subcategoies = Subcategory::paginate(5);
+       $subcategoies = Subcategory::paginate(10);
 
        return $subcategoies;
    }

@@ -28,9 +28,6 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 
 
-
-
-
 /*
 |--------------------------------------------------------------------------
 |-------------------------- ---Admin Routes--- ----------------------------
@@ -40,31 +37,52 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 //Auth
 Route::group( ['prefix' => 'admin', 'as' => 'admin.'], function() {
+
+    //Authorization
     Route::get('/login','Backend\Auth\AdminAuthController@showLoginForm')->name('login');
     Route::post('/login', 'Backend\Auth\AdminAuthController@login')->name('login.submit');
     Route::get('logout/', 'Backend\Auth\AdminAuthController@logout')->name('logout');
+
+    //Dashboard
     Route::get('/', 'Backend\AdminController@index')->name('dashboard');
 
 
 
 
-    //Functionalities
+    // ********Functionalities*********
+
+    //Admin
     Route::post('create', 'Backend\AdminController@createAdmin');
-    Route::get('company/create', 'Backend\AdminController@companyCreateForm')->name('company.create');
-    Route::get('customer/create', 'Backend\AdminController@customerCreateForm')->name('customer.create');
-    Route::post('user/create', 'Backend\AdminController@userCreate')->name('user.create.submit');
-    Route::get('company/update/{id}', 'Backend\CompanyController@edit')->name('company.update');
-    Route::post('company/update/{id}', 'Backend\CompanyController@update')->name('company.update.submit');
-    Route::post('customer/update', 'Backend\CustomerController@update');
-    Route::post('user/change', 'Backend\AdminController@user_change_password');
-    Route::post('company/ban', 'Backend\AdminController@companyBan');
-    Route::post('customer/ban', 'Backend\AdminController@customerBan');
     Route::post('admin/ban', 'Backend\AdminController@customerBan');
-    Route::get('users', 'Backend\AdminController@users');
-    Route::get('admins', 'Backend\AdminController@admins');
+    Route::get('admins', 'Backend\AdminController@admins')->name('admins');
     Route::get('profile', 'Backend\AdminController@profile');
     Route::get('profile/own', 'Backend\AdminController@show');
     Route::post('profile/update', 'Backend\AdminController@update');
+   
+
+
+    //User
+    Route::post('user/create', 'Backend\AdminController@userCreate')->name('user.create.submit');
+    Route::post('user/change', 'Backend\AdminController@user_change_password')->name('user.password.change.submit');
+    Route::get('users', 'Backend\AdminController@users');
+
+
+
+
+    //Company
+    Route::get('company/all', 'Backend\CompanyController@index')->name('companies');
+    Route::get('company/create', 'Backend\AdminController@companyCreateForm')->name('company.create');
+    Route::get('company/update/{id}', 'Backend\CompanyController@edit')->name('company.update');
+    Route::get('company/update/{id}', 'Backend\CompanyController@edit')->name('company.update');
+    Route::post('company/update/{id}', 'Backend\CompanyController@update')->name('company.update.submit');
+    Route::post('company/ban', 'Backend\AdminController@companyBan')->name('company.ban');
+
+
+    //Customer
+    Route::get('customer/all', 'Backend\CustomerController@index')->name('customers');
+    Route::get('customer/create', 'Backend\AdminController@customerCreateForm')->name('customer.create');
+    Route::post('customer/update', 'Backend\CustomerController@update')->name('customer.update.submit');
+    Route::post('customer/ban', 'Backend\AdminController@customerBan');
 
 
 
@@ -111,7 +129,7 @@ Route::group( ['prefix' => 'admin', 'as' => 'admin.'], function() {
 
 
     //Division
-    Route::get('division/all', 'Backend\DivisionController@index')->name('division');
+    Route::get('division/all', 'Backend\DivisionController@index')->name('divisions');
     Route::get('division/create', 'Backend\DivisionController@create')->name('division.create');
     Route::post('division/create', 'Backend\DivisionController@store')->name('division.create.submit');
     Route::get('division/update', 'Backend\DivisionController@edit')->name('division.update');

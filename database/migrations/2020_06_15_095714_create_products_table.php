@@ -25,6 +25,7 @@ class CreateProductsTable extends Migration
             $table->double('discount')->nullable();
             $table->double('quantity')->nullable();
             $table->string('type')->comment('Featured|Normal')->nullable();
+            $table->unsignedBigInteger('admin_id')->nullable();
             $table->unsignedBigInteger('category_id')->nullable();
             $table->unsignedBigInteger('subcategory_id')->nullable();
             $table->unsignedBigInteger('unit_id')->nullable();
@@ -33,6 +34,10 @@ class CreateProductsTable extends Migration
             $table->timestamps();
 
 
+            $table->foreign('admin_id')
+            ->references('id')->on('admins')
+            ->onDelete('set null');
+            
             $table->foreign('category_id')
             ->references('id')->on('categories')
             ->onDelete('set null');

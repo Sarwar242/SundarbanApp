@@ -1,0 +1,60 @@
+@extends('backend.layouts.master')
+@section('title','Subcategories')
+
+@section('contents')
+@include('backend.layouts.sidebar')
+<div class="content">
+    <center>
+        <div class="heading">
+            <h4>All the Subcategories are here</h4>
+        </div>
+    </center>
+    <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Name</th>
+          <th scope="col">Name in Bangla</th>
+          <th scope="col">Category</th>
+          <th scope="col">Description</th>
+          <th scope="col">Description in Bangla</th>
+          <th scope="col" colspan="2">Edit</th>
+        </tr>
+      </thead>
+      <tbody>
+        @foreach(App\Models\Subcategory::subcategoies() as $subcategory)
+            <tr>
+                <th scope="row">{{$loop->index+1}}</th>
+                <td>{{$subcategory->name}}</td>
+                <td>{{$subcategory->bn_name}}</td>
+                <td>{{$subcategory->category->name}}</td>
+                <td>{{$subcategory->description}}</td>
+                <td>{{$subcategory->bn_description}}</td>
+                <td><a href="{{route('admin.subcategory.update',$subcategory->id)}}">Edit</a></td>
+                <td><a class="delete" data-confirm="Are you sure to delete this item?" 
+                    href="{{route('admin.subcategory.delete',$subcategory->id)}}">Delete</a></td>
+            </tr>
+        @endforeach
+      </tbody>
+    </table>
+    {!! App\Models\Subcategory::subcategoies()->render() !!}	
+</div>
+
+
+<script src="{{ asset('js/backend/jquery.min.js')}}"></script>
+<script>
+    var deleteLinks = document.querySelectorAll('.delete');
+    
+    for (var i = 0; i < deleteLinks.length; i++) {
+        deleteLinks[i].addEventListener('click', function(event) {
+            event.preventDefault();
+    
+            var choice = confirm(this.getAttribute('data-confirm'));
+    
+            if (choice) {
+                window.location.href = this.getAttribute('href');
+            }
+        });
+    }
+</script>
+@endsection

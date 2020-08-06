@@ -18,6 +18,12 @@ use Auth;
 
 class CompanyController extends Controller
 {
+
+    public function index(){
+        return view('backend.company.index');
+    }  
+    
+    
     public function edit($id){
         $company= Company::find($id);
 
