@@ -39,8 +39,16 @@ class CategoryController extends Controller
             $category= new Category;
             $category->name =$request->name;
             $category->bn_name =$request->bn_name;
-            $category->description =$request->description;
-            $category->bn_description =$request->bn_description;
+            if(is_null($request->description)){
+                $category->description ="N/A";
+            }else{
+                $category->description =$request->description;
+            }
+            if(is_null($request->bn_description)){
+                $category->bn_description ="N/A";
+            }else{
+                $category->bn_description =$request->bn_description;
+            }
             $category->admin_id=Auth::guard('admin')->user()->id; 
             if(is_null($request->image)){
                 $category->image="default.png";
@@ -106,7 +114,9 @@ class CategoryController extends Controller
         $category->bn_description =$request->bn_description;
         if(request()->hasFile('image')){
             if(!is_null($category->image) && $category->image !="default.png" &&  $category->image !="default.jpg"){
-                File::delete(public_path('/storage/category/'.$category->image));
+                $exists = Storage::disk('public')->exists('category/'.$category->image);
+                if($exists)
+                    Storage::disk('public')->delete('category/'.$category->image);
             }
             $imageName = time().'.'.$request->image->extension();  
             $request->image->storeAs('/category',$imageName,'public');
@@ -128,11 +138,13 @@ class CategoryController extends Controller
             return redirect()->route('admin.dashboard');
         }
             if (!is_null($category->image) && $category->image !="default.png" &&  $category->image !="default.jpg") {
-                File::delete(public_path('/storage/category/'.$category->image));
+                $exists = Storage::disk('public')->exists('category/'.$category->image);
+                if($exists)
+                   Storage::disk('public')->delete('category/'.$category->image);
             }
             $category->delete();
             session()->flash('success', 'A Category has been Deleted!!');
-            return redirect()->route('admin.dashboard');
+            return view('backend.category.index');
         }catch(Exception $e){
             session()->flash('failed', 'Error occured! --'.$e);
             return redirect()->route('admin.dashboard');

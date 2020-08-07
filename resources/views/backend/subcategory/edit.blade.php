@@ -76,8 +76,8 @@
               <div class="form-group">
                 <label for="exampleFormControlSelect1">Category</label>
                 <select class="form-control @error('category_id') is-invalid @enderror"  name="category_id" id="exampleFormControlSelect1">
+                  @if(!is_null($subcategory->category))
                   @foreach(App\Models\Category::all() as $category)
-
                     @if($subcategory->category->id==$category->id)
                     <option value="{{ $category->id }}" selected>
                         {{$category->name}}</option>
@@ -86,6 +86,13 @@
                         {{ $category->name}}</option>
                     @endif
                   @endforeach
+                  @else
+                  <option value="" selected='selected' disabled>
+                    Select a Category</option>
+                  @foreach(App\Models\Category::all() as $category)
+                    <option value="{{$category->id}}">{{$category->name}}</option>
+                  @endforeach
+                  @endif
                 </select>
                 @error('category_id')
                 <div class="alert alert-danger alert-block">

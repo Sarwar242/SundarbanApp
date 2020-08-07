@@ -8,6 +8,7 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 use Auth;
 
 class SubcategoryController extends Controller
@@ -134,7 +135,10 @@ class SubcategoryController extends Controller
         
         if(request()->hasFile('image')){
             if(!is_null($subcategory->image) && $subcategory->image !="default.png" &&  $subcategory->image !="default.jpg"){
-                File::delete(public_path('/storage/subcategory/'.$subcategory->image));
+                $exists = Storage::disk('public')->exists('subcategory/'.$subcategory->image);
+                if($exists)
+                    Storage::disk('public')->delete('subcategory/'.$subcategory->image);
+                //dd(unlink(public_path('/storage/subcategory/'.$subcategory->image)));
             }
             $imageName = time().'.'.$request->image->extension();  
             $request->image->storeAs('/subcategory',$imageName,'public');
@@ -157,8 +161,9 @@ class SubcategoryController extends Controller
                 return redirect()->route('admin.dashboard');
             }
             if (!is_null($subcategory->image) && $subcategory->image !="default.png" &&  $subcategory->image !="default.jpg") {
-                File::delete(public_path('/storage/subcategory/'.$subcategory->image));
-
+                $exists = Storage::disk('public')->exists('subcategory/'.$subcategory->image);
+                if($exists)
+                    Storage::disk('public')->delete('subcategory/'.$subcategory->image);
             }
             $subcategory->delete();
             session()->flash('success', 'A Subcategory has been Deleted!!');
