@@ -22,8 +22,7 @@ class Subcategory extends Model
 
    public static function subcategoies()
    {
-       $subcategoies = Subcategory::paginate(10);
-
+       $subcategoies = Subcategory::latest()->paginate(10);
        return $subcategoies;
    }
 }

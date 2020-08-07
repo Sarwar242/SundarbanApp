@@ -18,6 +18,7 @@
           <th scope="col">Category</th>
           <th scope="col">Description</th>
           <th scope="col">Description in Bangla</th>
+          <th scope="col">Image</th>
           <th scope="col" colspan="2">Edit</th>
         </tr>
       </thead>
@@ -27,9 +28,15 @@
                 <th scope="row">{{$loop->index+1}}</th>
                 <td>{{$subcategory->name}}</td>
                 <td>{{$subcategory->bn_name}}</td>
-                <td>{{$subcategory->category->name}}</td>
+                @if(!is_null($subcategory->category))
+					<td>{{$subcategory->category->name}}</td>
+                @else
+                    <td>N/A</td>
+                @endif
                 <td>{{$subcategory->description}}</td>
                 <td>{{$subcategory->bn_description}}</td>
+                <td><img src="{{ asset('storage/subcategory')}}/{{$subcategory->image}}" 
+                    style="width:30px;" alt="Subcategory Image"></td>
                 <td><a href="{{route('admin.subcategory.update',$subcategory->id)}}">Edit</a></td>
                 <td><a class="delete" data-confirm="Are you sure to delete this item?" 
                     href="{{route('admin.subcategory.delete',$subcategory->id)}}">Delete</a></td>

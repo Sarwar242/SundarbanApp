@@ -7,6 +7,7 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 use Auth;
 class CategoryController extends Controller
 {
@@ -45,7 +46,7 @@ class CategoryController extends Controller
                 $category->image="default.png";
             }else if(request()->hasFile('image')){
                 $imageName = time().'.'.$request->image->extension();  
-                $request->image->move(public_path('storage/category'), $imageName);
+                $request->image->storeAs('/category',$imageName,'public');
                 $category->image=$imageName;
             }
             $category->save();
@@ -104,8 +105,11 @@ class CategoryController extends Controller
         $category->description =$request->description;
         $category->bn_description =$request->bn_description;
         if(request()->hasFile('image')){
+            if(!is_null($category->image) && $category->image !="default.png" &&  $category->image !="default.jpg"){
+                File::delete(public_path('/storage/category/'.$category->image));
+            }
             $imageName = time().'.'.$request->image->extension();  
-            $request->image->move(public_path('storage/category'), $imageName);
+            $request->image->storeAs('/category',$imageName,'public');
             $category->image=$imageName;
         }
         $category->save();
@@ -123,7 +127,7 @@ class CategoryController extends Controller
             session()->flash('failed', 'No category found !!!');
             return redirect()->route('admin.dashboard');
         }
-            if (!is_null($category->image) && $category->image !="default.png") {
+            if (!is_null($category->image) && $category->image !="default.png" &&  $category->image !="default.jpg") {
                 File::delete(public_path('/storage/category/'.$category->image));
             }
             $category->delete();

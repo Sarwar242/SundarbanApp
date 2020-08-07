@@ -50,7 +50,7 @@ class Product extends Model
    
    public static function products()
    {
-       $product = Product::paginate(5);
+       $product = Product::latest()->paginate(10);
 
        return $product;
    }

@@ -13,7 +13,7 @@ class Unit extends Model
 
    public static function units()
    {
-       $units = Unit::paginate(10);
+       $units = Unit::latest()->paginate(10);
 
        return $units;
    }

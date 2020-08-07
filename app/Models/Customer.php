@@ -37,7 +37,7 @@ class Customer extends Model
    
    public static function customers()
    {
-       $customers = Customer::paginate(5);
+       $customers = Customer::latest()->paginate(10);
 
        return $customers;
    }

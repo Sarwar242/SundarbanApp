@@ -40,7 +40,7 @@ class Admin  extends Authenticatable
     
     public static function admins()
     {
-        $admins = Admin::paginate(5);
+        $admins = Admin::latest()->paginate(10);
  
         return $admins;
     }

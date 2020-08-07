@@ -25,7 +25,7 @@ class Category extends Model
 
    public static function categoies()
    {
-       $categoies = Category::paginate(5);
+       $categoies = Category::latest()->paginate(10);
 
        return $categoies;
    }

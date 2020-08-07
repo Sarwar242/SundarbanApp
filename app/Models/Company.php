@@ -37,7 +37,7 @@ class Company extends Model
    
    public static function companies()
    {
-       $companies = Company::paginate(5);
+       $companies = Company::latest()->paginate(10);
 
        return $companies;
    }

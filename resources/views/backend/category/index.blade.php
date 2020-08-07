@@ -17,11 +17,12 @@
           <th scope="col">Name in Bangla</th>
           <th scope="col">Description</th>
           <th scope="col">Description in Bangla</th>
+          <th scope="col">Image</th>
           <th scope="col" colspan="2">Edit</th>
         </tr>
       </thead>
       <tbody>
-          @foreach (App\Models\Category::all() as $category)
+          @foreach (App\Models\Category::categoies() as $category)
             <tr>
                 <th scope="row">{{$loop->index+1}}</th>
                 <td>{{$category->name}}</td>

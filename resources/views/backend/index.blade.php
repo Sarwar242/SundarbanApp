@@ -139,7 +139,7 @@
 		<hr>
 		<center>
 			<div class="heading">
-				<h4>Latest Products  are here</h3>
+				<h4>Latest Products are here</h3>
 			</div>
 		</center>
 		<table class="table">
@@ -234,7 +234,11 @@
 					<th scope="row">{{$loop->index+1}}</th>
 					<td>{{$subcategory->name}}</td>
 					<td>{{$subcategory->bn_name}}</td>
+					@if(!is_null($subcategory->category))
 					<td>{{$subcategory->category->name}}</td>
+					@else
+					<td>N/A</td>
+					@endif
 					<td>{{$subcategory->description}}</td>
 					<td>{{$subcategory->bn_description}}</td>
 					<td><a href="{{route('admin.subcategory.update',$subcategory->id)}}">Edit</a></td>

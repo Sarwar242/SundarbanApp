@@ -20,7 +20,7 @@ class Division extends Model
    
    public static function divisions()
    {
-       $divisions= Division::paginate(10);
+       $divisions= Division::latest()->paginate(10);
        return $divisions;
    }
    //orderBy('created_at','desc')->

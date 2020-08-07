@@ -62,7 +62,7 @@ class SubcategoryController extends Controller
                 $subcategory->image="default.png";
             }else if(request()->hasFile('image')){
                 $imageName = time().'.'.$request->image->extension();  
-                $request->image->move(public_path('storage/subcategory'), $imageName);
+                $request->image->storeAs('/subcategory',$imageName,'public');
                 $subcategory->image=$imageName;
             }
 
@@ -133,8 +133,11 @@ class SubcategoryController extends Controller
         }
         
         if(request()->hasFile('image')){
+            if(!is_null($subcategory->image) && $subcategory->image !="default.png" &&  $subcategory->image !="default.jpg"){
+                File::delete(public_path('/storage/subcategory/'.$subcategory->image));
+            }
             $imageName = time().'.'.$request->image->extension();  
-            $request->image->move(public_path('storage/subcategory'), $imageName);
+            $request->image->storeAs('/subcategory',$imageName,'public');
             $subcategory->image=$imageName;
         }
         $subcategory->category_id =$request->category_id;
@@ -153,7 +156,7 @@ class SubcategoryController extends Controller
                 session()->flash('failed', 'No Subcategory found !!!');
                 return redirect()->route('admin.dashboard');
             }
-            if (!is_null($subcategory->image) && $subcategory->image !="default.png") {
+            if (!is_null($subcategory->image) && $subcategory->image !="default.png" &&  $subcategory->image !="default.jpg") {
                 File::delete(public_path('/storage/subcategory/'.$subcategory->image));
 
             }
