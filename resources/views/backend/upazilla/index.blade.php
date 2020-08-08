@@ -5,9 +5,30 @@
 @include('backend.layouts.sidebar')
 
 	<div class="content">
+		@if(Session::has('success'))
+		<div class="alert alert-success alert-block">
+			<button type="button" class="close" data-dismiss="alert">
+				x
+			</button>
+			<strong>
+				{!! session('success') !!}
+			</strong>
+		</div>
+	  @endif
+	  @if(Session::has('failed'))
+		<div class="alert alert-error alert-block">
+			<button type="button" class="close" data-dismiss="alert">
+				x
+			</button>
+			<strong>
+				{!! session('failed') !!}
+			</strong>
+		</div>
+	  @endif
+	  <hr> 
 		<center>
 			<div class="heading">
-				<h4>All your Upazila details are here</h4>
+				<h4>All your Upazzila details are here</h4>
 			</div>
 		</center>
 		<table class="table">
@@ -31,12 +52,20 @@
 			  <td>{{$upazilla->bn_name}}</td>
 			  @if(!is_null($upazilla->district))
 				<td>{{$upazilla->district->name}}</td>
-				<td>{{$upazilla->district->division->name}}</td>
-			  @endif
+				@if(!is_null($upazilla->district->division))
+					<td>{{$upazilla->district->division->name}}</td>
+				@else
+			  		<td></td>
+			  	@endif
+			  @else
+			  <td></td>
+			  <td></td>
+			  @endif  
 			  <td>{{$upazilla->longitude}}</td>
 			  <td>{{$upazilla->latitude}}</td>
-		      <td><a href="#">Edit</a></td>
-		      <td><a href="#">Delete</a></td>
+			  <td><a href="{{route('admin.upazilla.update',$upazilla->id)}}">Edit</a></td>
+			  <td><a class="delete" data-confirm="Are you sure to delete this item?" 
+				  href="{{route('admin.upazilla.delete',$upazilla->id)}}">Delete</a></td>
 			</tr>
 			@endforeach
 		  </tbody>

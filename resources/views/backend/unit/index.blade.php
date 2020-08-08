@@ -4,6 +4,27 @@
 @section('contents')
 @include('backend.layouts.sidebar')
 	<div class="content">
+		@if(Session::has('success'))
+		<div class="alert alert-success alert-block">
+			<button type="button" class="close" data-dismiss="alert">
+				x
+			</button>
+			<strong>
+				{!! session('success') !!}
+			</strong>
+		</div>
+	  @endif
+	  @if(Session::has('failed'))
+		<div class="alert alert-error alert-block">
+			<button type="button" class="close" data-dismiss="alert">
+				x
+			</button>
+			<strong>
+				{!! session('failed') !!}
+			</strong>
+		</div>
+	  @endif
+	  <hr> 
 		<center>
 			<div class="heading">
 				<h4>All your Unit details are here</h4>
@@ -24,8 +45,9 @@
 					<th scope="row">{{$loop->index+1}}</th>
 					<td>{{$unit->name}}</td>
 					<td>{{$unit->bn_name}}</td>
-					<td><a href="#">Edit</a></td>
-					<td><a href="#">Delete</a></td>
+					<td><a href="{{route('admin.unit.update',$unit->id)}}">Edit</a></td>
+					<td><a class="delete" data-confirm="Are you sure to delete this item?" 
+						href="{{route('admin.unit.delete',$unit->id)}}">Delete</a></td>
 				</tr>
 				@endforeach
 		  </tbody>

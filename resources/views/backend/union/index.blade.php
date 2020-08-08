@@ -5,6 +5,27 @@
 @include('backend.layouts.sidebar')
 
 	<div class="content">
+		@if(Session::has('success'))
+		<div class="alert alert-success alert-block">
+			<button type="button" class="close" data-dismiss="alert">
+				x
+			</button>
+			<strong>
+				{!! session('success') !!}
+			</strong>
+		</div>
+	  @endif
+	  @if(Session::has('failed'))
+		<div class="alert alert-error alert-block">
+			<button type="button" class="close" data-dismiss="alert">
+				x
+			</button>
+			<strong>
+				{!! session('failed') !!}
+			</strong>
+		</div>
+	  @endif
+	  <hr> 
 		<center>
 			<div class="heading">
 				<h4>All your Union details are here</h4>
@@ -33,13 +54,27 @@
 			  <td>{{$union->bn_name}}</td>
 			  @if(!is_null($union->upazilla))
 				<td>{{$union->upazilla->name}}</td>
-				<td>{{$union->upazilla->district->name}}</td>
-				<td>{{$union->upazilla->district->division->name}}</td>
+				@if(!is_null($union->upazilla->district))
+					<td>{{$union->upazilla->district->name}}</td>
+					@if(!is_null($union->upazilla->district->division))
+						<td>{{$union->upazilla->district->division->name}}</td>
+					@else
+						<td></td>
+					@endif
+				@else
+					<td></td>
+					<td></td>
+				@endif 
+			  @else
+				<td></td>
+				<td></td>
+				<td></td>
 			  @endif
 			  <td>{{$union->longitude}}</td>
 			  <td>{{$union->latitude}}</td>
-		      <td><a href="#">Edit</a></td>
-		      <td><a href="#">Delete</a></td>
+			  <td><a href="{{route('admin.union.update',$union->id)}}">Edit</a></td>
+			  <td><a class="delete" data-confirm="Are you sure to delete this item?" 
+				  href="{{route('admin.union.delete',$union->id)}}">Delete</a></td>
 			</tr>
 			@endforeach
 		  </tbody>

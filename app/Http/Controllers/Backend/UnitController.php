@@ -47,7 +47,7 @@ class UnitController extends Controller
         }
     }
 
-    public function show(Request  $request)
+    public function show($id)
     {
         try{
             $unit = Unit::find($request->id);
@@ -73,58 +73,47 @@ class UnitController extends Controller
 
 
 
+    public function edit($id){
+        $unit= Unit::find($id);
+        return view('backend.unit.edit')->with('unit',$unit);
+    }
    
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
-        $validator = Validator::make($request->all(),[
+        $this->validate($request,[
             'name' => 'required|string',
             'bn_name' => 'nullable|string',
         ]);
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);
-        }
+        
         try{
-            $unit = Unit::find($request->id);
+            $unit = Unit::find($id);
             $unit->name =$request->name;
             $unit->bn_name =$request->bn_name;
-            //$unit->admin_id=Auth::guard('admin')->user()->id; 
             $unit->save();
 
-            return response()->json([
-                "sucess"  => true,
-                "message" => "Unit has been updated!",
-                "unit" => $unit
-            ]);
-        }
-        catch(Exception $e){
-            return response()->json([
-                'success'=>false,
-                'message'=> ''.$e,
-            ]);
+            session()->flash('success', 'The Unit has been Updated!!');
+            return redirect()->route('admin.unit.update',$unit->id);
+        }catch(Exception $e){
+            session()->flash('failed', 'Error occured! --'.$e);
+            return redirect()->route('admin.unit.update',$unit->id);
         }
     }
 
     
-    public function destroy(Request  $request)
+    public function destroy($id)
     {
         try{
-            $unit = Unit::find($request->id);
-            if(is_null($unit))
-            return response()->json([
-                "sucess"  => false,
-                "message" => "No Unit Found!",    
-            ]);    
+            $unit = Unit::find($id);
+            if(is_null($unit)){
+                session()->flash('failed', 'No Unit found');
+                return redirect()->route('admin.units');
+            }
             $unit->delete();
-            return response()->json([
-                "sucess"  => true,
-                "message" => "Unit has been deleted!",
-            ]);
-        }
-        catch(Exception $e){
-            return response()->json([
-                'success'=>false,
-                'message'=> ''.$e,
-            ]);
+            session()->flash('success', 'The Unit has been Deleted!!');
+            return redirect()->route('admin.units');
+        }catch(Exception $e){
+            session()->flash('failed', 'Error occured! --'.$e);
+            return redirect()->route('admin.units');
         }
     }
 }

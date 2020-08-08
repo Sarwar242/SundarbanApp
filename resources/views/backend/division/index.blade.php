@@ -4,6 +4,27 @@
 @section('contents')
 @include('backend.layouts.sidebar')
 	<div class="content">
+		@if(Session::has('success'))
+            <div class="alert alert-success alert-block">
+                <button type="button" class="close" data-dismiss="alert">
+                    x
+                </button>
+                <strong>
+                    {!! session('success') !!}
+                </strong>
+            </div>
+          @endif
+          @if(Session::has('failed'))
+            <div class="alert alert-error alert-block">
+                <button type="button" class="close" data-dismiss="alert">
+                    x
+                </button>
+                <strong>
+                    {!! session('failed') !!}
+                </strong>
+            </div>
+		  @endif
+		  <hr> 
 		<center>
 			<div class="heading">
 				<h4>All your Divisions details are here</h4>
@@ -28,8 +49,9 @@
 			  <td>{{$division->bn_name}}</td>
 			  <td>{{$division->longitude}}</td>
 			  <td>{{$division->latitude}}</td>
-		      <td><a href="#">Edit</a></td>
-		      <td><a href="#">Delete</a></td>
+			  <td><a href="{{route('admin.division.update',$division->id)}}">Edit</a></td>
+			  <td><a class="delete" data-confirm="Are you sure to delete this item?" 
+				  href="{{route('admin.division.delete',$division->id)}}">Delete</a></td>
 			</tr>
 			@endforeach
 		  </tbody>

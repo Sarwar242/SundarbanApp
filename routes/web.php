@@ -75,14 +75,14 @@ Route::group( ['prefix' => 'admin', 'as' => 'admin.'], function() {
     Route::get('company/update/{id}', 'Backend\CompanyController@edit')->name('company.update');
     Route::get('company/update/{id}', 'Backend\CompanyController@edit')->name('company.update');
     Route::post('company/update/{id}', 'Backend\CompanyController@update')->name('company.update.submit');
-    Route::post('company/ban', 'Backend\AdminController@companyBan')->name('company.ban');
+    Route::post('company/ban/{id}', 'Backend\AdminController@companyBan')->name('company.ban');
 
 
     //Customer
     Route::get('customer/all', 'Backend\CustomerController@index')->name('customers');
     Route::get('customer/create', 'Backend\AdminController@customerCreateForm')->name('customer.create');
-    Route::post('customer/update', 'Backend\CustomerController@update')->name('customer.update.submit');
-    Route::post('customer/ban', 'Backend\AdminController@customerBan');
+    Route::post('customer/update/{id}', 'Backend\CustomerController@update')->name('customer.update.submit');
+    Route::post('customer/ban/{id}', 'Backend\AdminController@customerBan');
 
 
 
@@ -94,11 +94,11 @@ Route::group( ['prefix' => 'admin', 'as' => 'admin.'], function() {
     Route::post('product/create', 'Backend\ProductController@store')->name('product.create.submit');
     Route::get('product/update/{id}', 'Backend\ProductController@edit')->name('product.update');
     Route::post('product/update/{id}', 'Backend\ProductController@update')->name('product.update.submit');
-    Route::get('product/show', 'Backend\ProductController@show');
+    Route::get('product/show/{id}', 'Backend\ProductController@show');
     Route::get('product/delete/{id}', 'Backend\ProductController@destroy')->name('product.delete');
     Route::post('product/image/upload', 'Backend\ProductController@uploadImage');
-    Route::post('product/image/setpriority', 'Backend\ProductController@setPriority');
-    Route::get('product/image/delete', 'Backend\ProductController@deleteImage');
+    Route::post('product/image/setpriority/{id}', 'Backend\ProductController@setPriority');
+    Route::get('product/image/delete/{id}', 'Backend\ProductController@deleteImage');
 
 
 
@@ -109,7 +109,7 @@ Route::group( ['prefix' => 'admin', 'as' => 'admin.'], function() {
     Route::post('category/create', 'Backend\CategoryController@store')->name('category.create.submit');
     Route::get('category/update/{id}', 'Backend\CategoryController@edit')->name('category.update');
     Route::post('category/update/{id}', 'Backend\CategoryController@update')->name('category.update.submit');
-    Route::get('category/show', 'Backend\CategoryController@show')->name('category.show');;
+    Route::get('category/show/{id}', 'Backend\CategoryController@show')->name('category.show');;
     Route::get('category/delete/{id}', 'Backend\CategoryController@destroy')->name('category.delete');
 
     
@@ -121,7 +121,7 @@ Route::group( ['prefix' => 'admin', 'as' => 'admin.'], function() {
     Route::post('subcategory/create', 'Backend\SubcategoryController@store')->name('subcategory.create.submit');
     Route::get('subcategory/update/{id}', 'Backend\SubcategoryController@edit')->name('subcategory.update');
     Route::post('subcategory/update/{id}', 'Backend\SubcategoryController@update')->name('subcategory.update.submit');
-    Route::get('subcategory/show', 'Backend\SubcategoryController@show')->name('subcategory.show');
+    Route::get('subcategory/show/{id}', 'Backend\SubcategoryController@show')->name('subcategory.show');
     Route::get('subcategory/delete/{id}', 'Backend\SubcategoryController@destroy')->name('subcategory.delete');
 
 
@@ -132,10 +132,10 @@ Route::group( ['prefix' => 'admin', 'as' => 'admin.'], function() {
     Route::get('division/all', 'Backend\DivisionController@index')->name('divisions');
     Route::get('division/create', 'Backend\DivisionController@create')->name('division.create');
     Route::post('division/create', 'Backend\DivisionController@store')->name('division.create.submit');
-    Route::get('division/update', 'Backend\DivisionController@edit')->name('division.update');
-    Route::post('division/update', 'Backend\DivisionController@update')->name('division.update.submit');
-    Route::get('division/show', 'Backend\DivisionController@show')->name('division.show');
-    Route::get('division/delete', 'Backend\DivisionController@destroy')->name('division.delete');
+    Route::get('division/update/{id}', 'Backend\DivisionController@edit')->name('division.update');
+    Route::post('division/update/{id}', 'Backend\DivisionController@update')->name('division.update.submit');
+    Route::get('division/show/{id}', 'Backend\DivisionController@show')->name('division.show');
+    Route::get('division/delete/{id}', 'Backend\DivisionController@destroy')->name('division.delete');
 
 
 
@@ -144,10 +144,10 @@ Route::group( ['prefix' => 'admin', 'as' => 'admin.'], function() {
     Route::get('district/all', 'Backend\DistrictController@index')->name('districts');
     Route::get('district/create', 'Backend\DistrictController@create')->name('district.create');;
     Route::post('district/create', 'Backend\DistrictController@store')->name('district.create.submit');
-    Route::get('district/update', 'Backend\DistrictController@edit')->name('district.update');
-    Route::post('district/update', 'Backend\DistrictController@update')->name('district.update.submit');
-    Route::get('district/show', 'Backend\DistrictController@show')->name('district.show');
-    Route::get('district/delete', 'Backend\DistrictController@destroy')->name('district.delete');
+    Route::get('district/update/{id}', 'Backend\DistrictController@edit')->name('district.update');
+    Route::post('district/update/{id}', 'Backend\DistrictController@update')->name('district.update.submit');
+    Route::get('district/show/{id}', 'Backend\DistrictController@show')->name('district.show');
+    Route::get('district/delete/{id}', 'Backend\DistrictController@destroy')->name('district.delete');
 
 
 
@@ -157,10 +157,10 @@ Route::group( ['prefix' => 'admin', 'as' => 'admin.'], function() {
     Route::get('upazilla/all', 'Backend\UpazillaController@index')->name('upazillas');
     Route::get('upazilla/create', 'Backend\UpazillaController@create')->name('upazilla.create');
     Route::post('upazilla/create', 'Backend\UpazillaController@store')->name('upazilla.create.submit');
-    Route::get('upazilla/update', 'Backend\UpazillaController@edit')->name('upazilla.update');
-    Route::post('upazilla/update', 'Backend\UpazillaController@update')->name('upazilla.update.submit');
-    Route::get('upazilla/show', 'Backend\UpazillaController@show')->name('upazilla.show');
-    Route::get('upazilla/delete', 'Backend\UpazillaController@destroy')->name('upazilla.delete');
+    Route::get('upazilla/update/{id}', 'Backend\UpazillaController@edit')->name('upazilla.update');
+    Route::post('upazilla/update/{id}', 'Backend\UpazillaController@update')->name('upazilla.update.submit');
+    Route::get('upazilla/show/{id}', 'Backend\UpazillaController@show')->name('upazilla.show');
+    Route::get('upazilla/delete/{id}', 'Backend\UpazillaController@destroy')->name('upazilla.delete');
 
 
 
@@ -170,10 +170,10 @@ Route::group( ['prefix' => 'admin', 'as' => 'admin.'], function() {
     Route::get('union/all', 'Backend\UnionController@index')->name('unions');
     Route::get('union/create', 'Backend\UnionController@create')->name('union.create');
     Route::post('union/create', 'Backend\UnionController@store')->name('union.create.submit');
-    Route::get('union/update', 'Backend\UnionController@edit')->name('union.update');
-    Route::post('union/update', 'Backend\UnionController@update')->name('union.update.submit');
-    Route::get('union/show', 'Backend\UnionController@show')->name('union.show');
-    Route::get('union/delete', 'Backend\UnionController@destroy')->name('union.delete');
+    Route::get('union/update/{id}', 'Backend\UnionController@edit')->name('union.update');
+    Route::post('union/update/{id}', 'Backend\UnionController@update')->name('union.update.submit');
+    Route::get('union/show/{id}', 'Backend\UnionController@show')->name('union.show');
+    Route::get('union/delete/{id}', 'Backend\UnionController@destroy')->name('union.delete');
 
 
 
@@ -183,10 +183,10 @@ Route::group( ['prefix' => 'admin', 'as' => 'admin.'], function() {
     Route::get('unit/all', 'Backend\UnitController@index')->name('units');
     Route::get('unit/create', 'Backend\UnitController@create')->name('unit.create');
     Route::post('unit/create', 'Backend\UnitController@store')->name('unit.create.submit');
-    Route::get('unit/update', 'Backend\UnitController@edit')->name('unit.update');
-    Route::post('unit/update', 'Backend\UnitController@update')->name('unit.update.submit');
-    Route::get('unit/show', 'Backend\UnitController@show')->name('unit.show');
-    Route::get('unit/delete', 'Backend\UnitController@destroy')->name('unit.delete');
+    Route::get('unit/update/{id}', 'Backend\UnitController@edit')->name('unit.update');
+    Route::post('unit/update/{id}', 'Backend\UnitController@update')->name('unit.update.submit');
+    Route::get('unit/show/{id}', 'Backend\UnitController@show')->name('unit.show');
+    Route::get('unit/delete/{id}', 'Backend\UnitController@destroy')->name('unit.delete');
 
 
     //Realtime=jquery

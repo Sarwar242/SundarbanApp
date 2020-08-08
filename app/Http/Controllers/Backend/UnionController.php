@@ -60,10 +60,10 @@ class UnionController extends Controller
         }
     }
 
-    public function show(Request  $request)
+    public function show($id)
     {
         try{
-            $union = Union::find($request->id);
+            $union = Union::find($id);
             if(is_null($union))
             return response()->json([
                 "sucess"  => false,
@@ -84,21 +84,22 @@ class UnionController extends Controller
         }
     }
 
-
+    public function edit($id){
+        $union=Union::find($id);
+        return view('backend.union.edit')->with('union',$union);
+    }
 
    
     public function update(Request $request)
     {
-        $validator = Validator::make($request->all(),[
-            'name' => 'sometimes|string',
-            'bn_name' => 'sometimes|string',
-            'longitude' => 'sometimes|string',
-            'latitude' => 'sometimes|string',
+        $this->validate($request,[
+            'name' => 'required|string',
+            'bn_name' => 'nullable|string',
+            'longitude' => 'nullable|string',
+            'latitude' => 'nullable|string',
             'upazilla_id' => 'required',
         ]);
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);
-        }
+        
         try{
             $union = Union::find($request->id);
             $union->name =$request->name;
@@ -108,40 +109,29 @@ class UnionController extends Controller
             $union->upazilla_id =$request->upazilla_id;
             $union->save();
 
-            return response()->json([
-                "sucess"  => true,
-                "message" => "Union has been updated!",
-                "union" => $union,
-            ]);
+            session()->flash('success', 'The Union has been Updated!!');
+            return redirect()->route('admin.union.update',$union->id);
         }catch(Exception $e){
-            return response()->json([
-                'success'=>false,
-                'message'=> ''.$e,
-            ]);
+            session()->flash('failed', 'Error occured! --'.$e);
+            return redirect()->route('admin.union.update',$union->id);
         }
     }
 
     
-    public function destroy(Request  $request)
+    public function destroy($id)
     {
         try{
-            $union = Union::find($request->id);
-            if(is_null($union))
-                return response()->json([
-                    "sucess"  => false,
-                    "message" => "No union Found!",    
-                ]);    
+            $union = Union::find($id);
+            if(is_null($union)){
+                session()->flash('failed', 'No Union found');
+                return redirect()->route('admin.unions');
+            }
             $union->delete();
-            return response()->json([
-                "sucess"  => true,
-                "message" => "Union has been deleted!",
-            ]);
-        }
-        catch(Exception $e){
-            return response()->json([
-                'success'=>false,
-                'message'=> ''.$e,
-            ]);
+            session()->flash('success', 'The Union has been Deleted!!');
+            return redirect()->route('admin.unions');
+        }catch(Exception $e){
+            session()->flash('failed', 'Error occured! --'.$e);
+            return redirect()->route('admin.unions');
         }
     }
 }

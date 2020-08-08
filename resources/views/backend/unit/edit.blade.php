@@ -1,5 +1,5 @@
 @extends('backend.layouts.master')
-@section('title','Add Unit')
+@section('title','Edit Unit')
 
 @section('contents')
 @include('backend.layouts.sidebar')
@@ -32,15 +32,15 @@
       
             @endif
             <div class="text-center">
-              <h2>Add Unit</h2>
+              <h2>Edit Unit</h2>
             </div>
           </div>
 
-            <form  method="POST" action="{{ route('admin.unit.create.submit') }}" enctype="multipart/form-data" novalidate="novalidate">
+            <form  method="POST" action="{{route('admin.unit.update.submit',$unit->id) }}" enctype="multipart/form-data" novalidate="novalidate">
               @csrf
               <div class="form-group">
                 <label for="Name">Name</label>
-                <input type="text" name="name" class="form-control @error('name') is-invalid @enderror"
+                <input type="text" value="{{$unit->name}}" name="name" class="form-control @error('name') is-invalid @enderror"
                  id="exampleFormControlInput1" placeholder="Kilogram">
                 @error('name')
                   <div class="alert alert-danger alert-block">
@@ -56,7 +56,7 @@
 
               <div class="form-group">
                 <label for="exampleFormControlInput1">Name in Bangla</label>
-                <input type="text" name="bn_name" class="form-control  @error('bn_name') is-invalid @enderror" id="exampleFormControlInput1" placeholder="">
+                <input type="text" value="{{$unit->bn_name}}" name="bn_name" class="form-control  @error('bn_name') is-invalid @enderror" id="exampleFormControlInput1" placeholder="">
                 @error('bn_name')
                   <div class="alert alert-danger alert-block">
                     <button type="button" class="close" data-dismiss="alert">
