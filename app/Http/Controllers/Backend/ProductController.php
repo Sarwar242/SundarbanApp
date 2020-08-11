@@ -8,6 +8,7 @@ use App\Models\ProductImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 use Auth;
 
 class ProductController extends Controller
@@ -42,7 +43,7 @@ class ProductController extends Controller
             'subcategory_id' => 'nullable',
             'unit_id' => 'required',
             'company_id' => 'nullable',
-            "image" => 'nullable|file|image|max:3000',
+            "image[]" => 'nullable|file|image|max:3000',
         ]);
        
         try{
@@ -79,7 +80,7 @@ class ProductController extends Controller
                     try{
                         $imagetbl = new ProductImage;
                         $imageName = time().$i.'.'.$file->extension();  
-                        $file->move(public_path('storage/product'), $imageName);
+                        $file->storeAs('/product',$imageName,'public');
                         $imagetbl->image =$imageName;
                         $imagetbl->product_id = $pid;
                         $imagetbl->priority = $i;
@@ -187,18 +188,20 @@ class ProductController extends Controller
         
             if (!empty($product->images)):
                 $i=0;
+                
                 foreach ($product->images as $img):
-                    File::delete(public_path('/storage/product/'.$img->image));
+                 
+                   Storage::disk('public')->delete('product/'.$img->image);
                 endforeach;
 
                 
             endif;
             $product->delete();
             session()->flash('success', 'A Product has been Deleted!!');
-            return redirect()->route('admin.dashboard');
+            return redirect()->route('admin.products');
         }catch(Exception $e){
             session()->flash('failed', 'Error occured! --'.$e);
-            return redirect()->route('admin.dashboard');
+            return redirect()->route('admin.products');
         }
     }
 

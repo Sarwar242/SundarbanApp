@@ -18,7 +18,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-         'email', 'password','is_company',
+         'email','phone', 'password','is_company',
     ];
 
     /**
@@ -37,6 +37,7 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'phone_verified_at' => 'datetime',
     ];
 
     public function sendPasswordResetNotification($token){
@@ -45,7 +46,10 @@ class User extends Authenticatable implements MustVerifyEmail
 
 
 
-
+    public function username()
+    {
+        return $this->phone;
+    }
 
     public function customer()
     {

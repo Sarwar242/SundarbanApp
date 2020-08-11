@@ -8,8 +8,9 @@ class Company extends Model
 {
     protected $fillable = [
         'name', 'bn_name','owners_name','owners_nid','phone1','phone2','ban','image',
-        'description','location','street','website','business_type','type','admin_id',
-        'zipcode','union_id','upazilla_id','district_id','division_id'
+        'description','bn_description','street','bn_street', 'location','bn_location','website',
+        'business_type','type','admin_id', 'zipcode',
+        'union_id','upazilla_id','district_id','division_id','category_id','subcategory_id'
    ];
 
    public function user()
@@ -21,6 +22,16 @@ class Company extends Model
    {
        return $this->belongsTo(Division::class);
    }
+
+   public function category()
+   {
+       return $this->belongsTo(Category::class);
+   }
+   public function subcategory()
+   {
+       return $this->belongsTo(Subcategory::class);
+   }
+
    public function district()
    {
        return $this->belongsTo(District::class);

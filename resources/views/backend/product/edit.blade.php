@@ -192,8 +192,8 @@
               </div>
 
               <div class="form-group">
-                <label for="exampleFormControlSelect1">Sub-Category</label>
-                <select class="form-control @error('subcategory_id') is-invalid @enderror" id="subcategory_id" >
+                <label for="Subcategory">Sub-Category</label>
+                <select  name="subcategory_id"  class="form-control @error('subcategory_id') is-invalid @enderror" id="subcategory_id" >
                   @if(!is_null($product->subcategory))
                     <option value="{{$product->subcategory->id}}" selected>
                       {{$product->subcategory->name}}</option>

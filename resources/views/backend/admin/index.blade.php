@@ -19,7 +19,10 @@
                 <th scope="col">Last Name</th>
                 <th scope="col">Username</th>
                 <th scope="col">Email</th>
-                <th scope="col">Phone</th>
+                <th scope="col">Image</th>
+                <th scope="col">Phone(1)</th>
+                <th scope="col">Phone(2)</th>
+                <th scope="col">Type</th>
                 <th scope="col" colspan="2">Edit</th>
               </tr>
             </thead>
@@ -31,9 +34,12 @@
                       <td>{{$admin->last_name}}</td>
                       <td>{{$admin->username}}</td>
                       <td>{{$admin->email}}</td>
+                      <td><img src="{{ asset('storage/admin')}}/{{$admin->image}}" 
+                        style="width:30px;" alt="Admin Image"></td>
                       <td>{{$admin->phone1}}</td>
-                      <td><a href="#">Edit</a></td>
-                      <td><a href="#">Delete</a></td>
+                      <td>{{$admin->phone2}}</td>
+                      <td>{{$admin->type}}</td>
+                      <td><a href="{{route('admin.admin.update',$admin->id)}}">Edit</a></td>
                   </tr>
               @endforeach
             </tbody>

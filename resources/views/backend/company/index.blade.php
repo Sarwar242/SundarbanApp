@@ -11,15 +11,16 @@
 				<h4>All The Companies are here</h4>
 			</div>
 		</center>
-		<table class="table">
+		<table id="dataTable" class="table">
 		  <thead class="thead-dark">
 			<tr>
 				<th scope="col">#</th>
 				<th scope="col">Name</th>
 				<th scope="col">Name In Bangla</th>
 				<th scope="col">Owners Name</th>
-				<th scope="col">Phone(1)</th>
+				<th scope="col">Phone</th>
 				<th scope="col">Email</th>
+				<th scope="col">Logo</th>
 				<th scope="col" colspan="2">Edit</th>
 			  </tr>
 		  </thead>
@@ -30,8 +31,10 @@
 					<td>{{$company->name}}</td>
 					<td>{{$company->bn_name}}</td>
 					<td>{{$company->owners_name}}</td>
-					<td>{{$company->phone1}}</td>
+					<td>{{$company->user->phone}}</td>
 					<td>{{$company->user->email}}</td>
+					<td><img src="{{ asset('storage/company')}}/{{$company->image}}" 
+                        style="width:30px;" alt="company Image"></td>
 					<td><a href="{{route('admin.company.update',$company->id)}}">Edit</a></td>
 					<td><a href="#">Delete</a></td>
 				</tr>

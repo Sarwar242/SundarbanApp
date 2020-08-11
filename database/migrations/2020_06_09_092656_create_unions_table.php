@@ -15,8 +15,8 @@ class CreateUnionsTable extends Migration
     {
         Schema::create('unions', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('bn_name')->nullable();
             $table->string('name')->nullable();
+            $table->string('bn_name')->nullable();
             $table->string('longitude')->nullable();
             $table->string('latitude')->nullable(); 
             $table->unsignedBigInteger('admin_id')->nullable();

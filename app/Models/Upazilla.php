@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Upazilla extends Model
 {
     protected $fillable = [
-        'bn_name', 'name','longitude','latitude','admin_id','district_id',
+         'name','bn_name','longitude','latitude','admin_id','district_id',
    ];
 
    

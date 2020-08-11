@@ -1,5 +1,5 @@
 @extends('backend.layouts.master')
-@section('title','Company')
+@section('title','Add Customer')
 
 @section('contents')
 @include('backend.layouts.sidebar')
@@ -34,16 +34,30 @@
     
           @endif
             <div class="text-center">
-              <h2>Add Company</h2>
+              <h2>Add Customer</h2>
             </div>
           </div>
 
             <form  method="POST" action="{{ route('admin.user.create.submit') }}" enctype="multipart/form-data" novalidate="novalidate">
               @csrf
               <div class="form-group">
-                <label for="exampleFormControlInput1">Company Name</label>
-                <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" id="exampleFormControlInput1" placeholder="Name Here">
-                @error('name')
+                <label for="exampleFormControlInput1">First Name</label>
+                <input type="text" name="first_name" class="form-control @error('first_name') is-invalid @enderror" id="exampleFormControlInput1" placeholder="First Name Here">
+                @error('first_name')
+                  <div class="alert alert-danger alert-block">
+                    <button type="button" class="close" data-dismiss="alert">
+                      x
+                    </button>
+                    <strong>
+                        {!! $message !!}
+                    </strong>
+                  </div>
+                @enderror
+              </div>
+              <div class="form-group">
+                <label for="exampleFormControlInput1">Last Name</label>
+                <input type="text" name="last_name" class="form-control @error('last_name') is-invalid @enderror" id="exampleFormControlInput1" placeholder="Last Name Here">
+                @error('last_name')
                   <div class="alert alert-danger alert-block">
                     <button type="button" class="close" data-dismiss="alert">
                       x
@@ -56,37 +70,8 @@
               </div>
 
               <div class="form-group">
-                <label for="exampleFormControlInput1">Company Name in Bangla</label>
-                <input type="text" name="bn_name" class="form-control @error('bn_name') is-invalid @enderror" id="exampleFormControlInput1" placeholder="">
-                @error('bn_name')
-                <div class="alert alert-danger alert-block">
-                  <button type="button" class="close" data-dismiss="alert">
-                    x
-                  </button>
-                  <strong>
-                      {!! $message !!}
-                  </strong>
-                </div>
-                @enderror
-              </div>
-
-              <div class="form-group">
-                <label for="exampleFormControlInput1">Owner's Name</label>
-                <input type="text" name="owners_name" class="form-control @error('owners_name') is-invalid @enderror" id="owners_name" placeholder="Name of the owner....">
-                @error('owners_name')
-                <div class="alert alert-danger alert-block">
-                  <button type="button" class="close" data-dismiss="alert">
-                    x
-                  </button>
-                  <strong>
-                      {!! $message !!}
-                  </strong>
-                </div>
-                @enderror
-              </div>
-              <div class="form-group">
-                <label for="Phone">Phone</label>
-                <input type="text" name="phone" class="form-control @error('phone') is-invalid @enderror" id="Phone" placeholder="Pease type a valid phone no...">
+                <label for="exampleFormControlInput1">Phone</label>
+                <input type="text" name="phone" class="form-control @error('phone') is-invalid @enderror" id="exampleFormControlInput1" placeholder="Pease type a valid phone no...">
                 @error('phone')
                 <div class="alert alert-danger alert-block">
                   <button type="button" class="close" data-dismiss="alert">
@@ -100,7 +85,7 @@
               </div>
               <div class="form-group">
                 <label for="exampleInputUsername">Email</label>
-                <input type="email" name="email" class="form-control" placeholder="Optional" autocomplete="email" >
+                <input type="email" name="email" placeholder="Type an Email [Optional]" class="form-control" required autocomplete="email" >
                 @error('email')
                   <div class="alert alert-danger alert-block">
                     <button type="button" class="close" data-dismiss="alert">
@@ -114,7 +99,7 @@
 				 	    </div>
               <div class="form-group">
                 <label for="exampleInputPassword1">Password</label>
-                <input type="password"  name="password" class="form-control @error('password') is-invalid @enderror" required>
+                <input type="password"  name="password" placeholder="Password" class="form-control @error('password') is-invalid @enderror" required>
                 @error('password')
                   <div class="alert alert-danger alert-block">
                     <button type="button" class="close" data-dismiss="alert">
@@ -128,14 +113,14 @@
               </div>
               <div class="form-group">
                 <label for="exampleInputPassword1">Password Confirm</label>
-                <input type="password"  name="password_confirmation" class="form-control @error('password') is-invalid @enderror" required>
+                <input type="password"  name="password_confirmation" placeholder="Type the password again..." class="form-control @error('password') is-invalid @enderror" required>
               </div>
 
-              <input type="hidden" name="is_company" value="1">
+              <input type="hidden" name="is_company" value="0">
 
               <center>
                 <input type="submit" class="btn btn-success btn-block" value="Submit">
-                <a href="#" class="btn btn-primary btn-block">Add More</a>
+                <a href="{{route('admin.customer.create')}}" class="btn btn-primary btn-block">Add New</a>
               </center>
             </form>
           </div>

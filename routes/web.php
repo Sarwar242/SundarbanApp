@@ -52,8 +52,11 @@ Route::group( ['prefix' => 'admin', 'as' => 'admin.'], function() {
     // ********Functionalities*********
 
     //Admin
-    Route::post('create', 'Backend\AdminController@createAdmin');
+    Route::get('admin/create', 'Backend\AdminController@createAdmin')->name('admin.create');
+    Route::post('admin/create', 'Backend\AdminController@storeAdmin')->name('admin.create.submit');
     Route::post('admin/ban', 'Backend\AdminController@customerBan');
+    Route::get('admin/update/{id}', 'Backend\AdminController@editAdmin')->name('admin.update');
+    Route::post('admin/update/{id}', 'Backend\AdminController@updateAdmin')->name('admin.update.submit');
     Route::get('admins', 'Backend\AdminController@admins')->name('admins');
     Route::get('profile', 'Backend\AdminController@profile');
     Route::get('profile/own', 'Backend\AdminController@show');
@@ -71,8 +74,7 @@ Route::group( ['prefix' => 'admin', 'as' => 'admin.'], function() {
 
     //Company
     Route::get('company/all', 'Backend\CompanyController@index')->name('companies');
-    Route::get('company/create', 'Backend\AdminController@companyCreateForm')->name('company.create');
-    Route::get('company/update/{id}', 'Backend\CompanyController@edit')->name('company.update');
+    Route::get('company/create', 'Backend\CompanyController@create')->name('company.create');
     Route::get('company/update/{id}', 'Backend\CompanyController@edit')->name('company.update');
     Route::post('company/update/{id}', 'Backend\CompanyController@update')->name('company.update.submit');
     Route::post('company/ban/{id}', 'Backend\AdminController@companyBan')->name('company.ban');
@@ -80,7 +82,8 @@ Route::group( ['prefix' => 'admin', 'as' => 'admin.'], function() {
 
     //Customer
     Route::get('customer/all', 'Backend\CustomerController@index')->name('customers');
-    Route::get('customer/create', 'Backend\AdminController@customerCreateForm')->name('customer.create');
+    Route::get('customer/create', 'Backend\CustomerController@create')->name('customer.create');
+    Route::get('customer/update/{id}', 'Backend\CustomerController@edit')->name('customer.update');
     Route::post('customer/update/{id}', 'Backend\CustomerController@update')->name('customer.update.submit');
     Route::post('customer/ban/{id}', 'Backend\AdminController@customerBan');
 

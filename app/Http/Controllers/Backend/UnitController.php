@@ -57,7 +57,6 @@ class UnitController extends Controller
                 "message" => "No Unit Found!",
                 
             ]);
-            
             return response()->json([
                 "sucess"  => true,
                 "unit" => $unit,

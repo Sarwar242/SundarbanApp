@@ -18,6 +18,7 @@ class CreateCustomersTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('first_name');
             $table->string('last_name');
+            $table->string('username')->nullable();
             $table->string('image')->nullable();
             $table->date('dob')->nullable();
             $table->string('hn')->comment('holding_number')->nullable();
@@ -25,8 +26,12 @@ class CreateCustomersTable extends Migration
             $table->boolean('ban')->nullable();
             $table->string('nid')->nullable();
             $table->string('gender')->nullable();
+            $table->text('about')->nullable();
+            $table->text('bn_about')->nullable();
             $table->string('street')->nullable();
-            $table->string('village')->nullable();
+            $table->string('bn_street')->nullable();
+            $table->string('location')->nullable();
+            $table->string('bn_location')->nullable();
             $table->string('zipcode')->nullable();
 
             $table->unsignedBigInteger('admin_id')->nullable();

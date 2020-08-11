@@ -15,8 +15,8 @@ class CreateDistrictsTable extends Migration
     {
         Schema::create('districts', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('bn_name')->nullable();
             $table->string('name')->nullable();
+            $table->string('bn_name')->nullable();
             $table->string('longitude')->nullable();
             $table->string('latitude')->nullable(); 
             $table->string('website')->nullable(); 

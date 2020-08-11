@@ -15,9 +15,9 @@ class CreateCompaniesTable extends Migration
     {
         Schema::create('companies', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('user_id');
-            $table->string('bn_name')->nullable();
+            $table->unsignedBigInteger('user_id');      
             $table->string('name');
+            $table->string('bn_name')->nullable();
             $table->string('owners_name')->nullable();
             $table->string('owners_nid')->nullable();
             $table->boolean('ban')->nullable();
@@ -25,14 +25,19 @@ class CreateCompaniesTable extends Migration
             $table->string('phone2')->nullable();
             $table->string('website')->nullable();
             $table->string('image')->nullable();
-            $table->string('description')->nullable();
+            $table->text('description')->nullable();
+            $table->text('bn_description')->nullable();
             $table->string('business_type')->comment('Product|Service')->nullable();
             $table->string('type')->comment('Wholesale|Retail|Export|Import')->nullable();
             $table->string('location')->nullable();
+            $table->string('bn_location')->nullable();
             $table->string('street')->nullable();
+            $table->string('bn_street')->nullable();
             $table->string('zipcode')->nullable();
 
             $table->unsignedBigInteger('admin_id')->nullable();
+            $table->unsignedBigInteger('category_id')->nullable();
+            $table->unsignedBigInteger('subcategory_id')->nullable();
             $table->unsignedBigInteger('union_id')->nullable();
             $table->unsignedBigInteger('upazilla_id')->nullable();
             $table->unsignedBigInteger('district_id')->nullable();
@@ -41,6 +46,14 @@ class CreateCompaniesTable extends Migration
 
             $table->foreign('admin_id')
             ->references('id')->on('admins')
+            ->onDelete('set null');
+                 
+            $table->foreign('category_id')
+            ->references('id')->on('categories')
+            ->onDelete('set null');
+
+            $table->foreign('subcategory_id')
+            ->references('id')->on('subcategories')
             ->onDelete('set null');
              
             $table->foreign('user_id')

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Division extends Model
 {
     protected $fillable = [
-        'bn_name', 'name','longitude','latitude',
+      'name',  'bn_name', 'longitude','latitude',
    ];
 
    

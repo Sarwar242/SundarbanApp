@@ -12,7 +12,7 @@
 				<h4>All your products details are here</h4>
 			</div>
 		</center>
-		<table class="table">
+		<table id="dataTable" class="table">
 		  <thead class="thead-dark">
 		    <tr>
 		      <th scope="col">#</th>

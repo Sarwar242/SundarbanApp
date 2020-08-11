@@ -29,8 +29,11 @@ class CreateAdminsTable extends Migration
             $table->string('phone2')->nullable();
             $table->string('image')->nullable();
             $table->text('about')->nullable();
+            $table->text('bn_about')->nullable();
             $table->string('location')->nullable();
+            $table->string('bn_location')->nullable();
             $table->string('street')->nullable();
+            $table->string('bn_street')->nullable();
             $table->string('zipcode')->nullable();
 
             $table->foreign('admin_id')
