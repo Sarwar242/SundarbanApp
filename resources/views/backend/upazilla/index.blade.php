@@ -31,7 +31,7 @@
 				<h4>All your Upazzila details are here</h4>
 			</div>
 		</center>
-		<table class="table">
+		<table id="dataTable" class="table">
 		  <thead class="thead-dark">
 		    <tr>
 		      <th scope="col">#</th>
@@ -40,12 +40,14 @@
 		      <th scope="col">District</th>
 		      <th scope="col">Division</th>
 		      <th scope="col">Longitude</th>
-		      <th scope="col">Lattitude</th>
-		      <th scope="col" colspan="2">Edit</th>
+			  <th scope="col">Lattitude</th>
+			  <th scope="col"></th>
+		      <th scope="col">Edit</th>
+		      <th scope="col">Action</th>
 		    </tr>
 		  </thead>
 		  <tbody>
-			@foreach(App\Models\Upazilla::upazillas() as $upazilla)
+			@foreach(App\Models\Upazilla::latest()->get() as $upazilla)
 		    <tr>
 		      <th scope="row">{{$loop->index+1}}</th>
 		      <td>{{$upazilla->name}}</td>
@@ -63,6 +65,7 @@
 			  @endif  
 			  <td>{{$upazilla->longitude}}</td>
 			  <td>{{$upazilla->latitude}}</td>
+			  <td></td>
 			  <td><a href="{{route('admin.upazilla.update',$upazilla->id)}}">Edit</a></td>
 			  <td><a class="delete" data-confirm="Are you sure to delete this item?" 
 				  href="{{route('admin.upazilla.delete',$upazilla->id)}}">Delete</a></td>
@@ -70,7 +73,7 @@
 			@endforeach
 		  </tbody>
 		</table>
-		{!! App\Models\Upazilla::upazillas()->render() !!}
+		{{-- {!! App\Models\Upazilla::all()->render() !!} --}}
 	</div>
 
 

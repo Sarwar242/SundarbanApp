@@ -24,11 +24,12 @@
 				<th scope="col">Email</th>
 				<th scope="col">Phone</th>
 				<th scope="col">Image</th>
-				<th scope="col" colspan="2">Edit</th>
+				<th scope="col"></th>
+				<th scope="col">Edit</th>
 			  </tr>
 			</thead>
 			<tbody>
-			  @foreach(App\Models\Customer::customers() as $customer)
+			  @foreach(App\Models\Customer::latest()->get() as $customer)
 				  <tr>
 					  <th scope="row">{{$loop->index+1}}</th>
 					  <td>{{$customer->first_name}}</td>
@@ -36,16 +37,17 @@
 					  <td>{{$customer->user->email}}</td>
 					  <td>{{$customer->user->phone}}</td>
 					  <td><img src="{{ asset('storage/customer')}}/{{$customer->image}}" 
-                        style="width:30px;" alt="customer Image"></td>
+						style="width:30px;" alt="customer Image"></td>
+						<td></td>
 					  <td><a href="{{route('admin.customer.update',$customer->id)}}">Edit</a></td>
-					  <td>
+					  <!-- <td>
 						<input type="checkbox" checked data-toggle="toggle" data-size="xs" data-onstyle="success" data-offstyle="danger" data-on="Enabled" data-off="Disabled">
-				  	  </td>
+				  	  </td> -->
 				  </tr>
 			  @endforeach
 			</tbody>
 		  </table>
-		  {!! App\Models\Customer::customers()->render() !!}
+		  {{-- {!! App\Models\Customer::customers()->render() !!} --}}
   
 	</div>
 

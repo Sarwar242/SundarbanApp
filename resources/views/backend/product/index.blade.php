@@ -17,29 +17,44 @@
 		    <tr>
 		      <th scope="col">#</th>
 		      <th scope="col">Name</th>
-		      <th scope="col">Code</th>
-		      <th scope="col">Description</th>
+		      <th scope="col">Code</th>  
 		      <th scope="col">Price</th>
-		      <th scope="col">Quantity</th>
-		      <th scope="col" colspan="2">Edit</th>
+			  <th scope="col">Quantity</th>
+			  <th scope="col">Category</th>
+			  <th scope="col">Subcategory</th>
+			  <th scope="col">Description</th>
+		      <th scope="col">Edit</th>
+		      <th scope="col">Action</th>
 		    </tr>
 		  </thead>
 		  <tbody>
-			@foreach(App\Models\Product::products() as $product)
+			@foreach(App\Models\Product::latest()->get() as $product)
 				<tr>
 					<th scope="row">{{$loop->index+1}}</th>
 					<td>{{$product->name}}</td>
 					<td>{{$product->code}}</td>
-					<td>{{$product->description}}</td>
+				
 					<td>{{$product->price}}</td>
 					<td>{{$product->quantity}}</td>
+					@if(!is_null($product->category))
+						<td>{{$product->category->name}}</td>
+					@else
+						<td></td>
+					@endif
+
+					@if(!is_null($product->subcategory))
+						<td>{{$product->subcategory->name}}</td>
+					@else
+						<td></td>
+					@endif
+
+					<td>{{$product->description}}</td>
 					<td><a href="{{route('admin.product.update',$product->id)}}">Edit</a></td>
 					<td><a class="delete" data-confirm="Are you sure to delete this item?" href="{{route('admin.product.delete',$product->id)}}">Delete</a></td>
 				</tr>
 			@endforeach
 		  </tbody>
 		</table>
-		{!! App\Models\Product::products()->render() !!}
 	</div>
 
 

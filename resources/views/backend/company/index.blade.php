@@ -20,12 +20,13 @@
 				<th scope="col">Owners Name</th>
 				<th scope="col">Phone</th>
 				<th scope="col">Email</th>
+				<th scope="col">Description</th>
 				<th scope="col">Logo</th>
-				<th scope="col" colspan="2">Edit</th>
+				<th scope="col">Edit</th>
 			  </tr>
 		  </thead>
 		  <tbody>
-		    @foreach(App\Models\Company::companies() as $company)
+		    @foreach(App\Models\Company::latest()->get() as $company)
 				<tr>
 					<th scope="row">{{$loop->index+1}}</th>
 					<td>{{$company->name}}</td>
@@ -33,15 +34,16 @@
 					<td>{{$company->owners_name}}</td>
 					<td>{{$company->user->phone}}</td>
 					<td>{{$company->user->email}}</td>
+					<td>{{$company->description}}</td>
 					<td><img src="{{ asset('storage/company')}}/{{$company->image}}" 
                         style="width:30px;" alt="company Image"></td>
 					<td><a href="{{route('admin.company.update',$company->id)}}">Edit</a></td>
-					<td><a href="#">Delete</a></td>
+				
 				</tr>
 			@endforeach
 		  </tbody>
 		</table>
-		{!! App\Models\Company::companies()->render() !!}
+		{{-- {!! App\Models\Company::companies()->render() !!} --}}
 	</div>
 
 

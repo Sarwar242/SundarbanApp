@@ -74,7 +74,11 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('#dataTable').DataTable({
-			responsive: true
+			responsive: true,
+			'aoColumnDefs': [{
+        'bSortable': false,
+        'aTargets': [-1,-2, -3] /* 1st one, start by the right */
+    }]
 		});
 	});
 </script>

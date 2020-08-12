@@ -11,7 +11,7 @@
 				<h4>All The Admins are here</h4>
 			</div>
 		</center>
-		<table class="table">
+		<table id="dataTable" class="table">
             <thead class="thead-dark">
               <tr>
                 <th scope="col">#</th>
@@ -19,32 +19,34 @@
                 <th scope="col">Last Name</th>
                 <th scope="col">Username</th>
                 <th scope="col">Email</th>
-                <th scope="col">Image</th>
+                <th scope="col">Type</th>
                 <th scope="col">Phone(1)</th>
                 <th scope="col">Phone(2)</th>
-                <th scope="col">Type</th>
-                <th scope="col" colspan="2">Edit</th>
+                <th scope="col"></th>
+                <th scope="col">Image</th>
+                <th scope="col">Edit</th>
               </tr>
             </thead>
             <tbody>
-              @foreach(App\Models\Admin::admins() as $admin)
+              @foreach(App\Models\Admin::latest()->get() as $admin)
                   <tr>
                       <th scope="row">{{$loop->index+1}}</th>
                       <td>{{$admin->first_name}}</td>
                       <td>{{$admin->last_name}}</td>
                       <td>{{$admin->username}}</td>
                       <td>{{$admin->email}}</td>
+                      <td>{{$admin->type}}</td>
+                      <td>{{$admin->phone1}}</td>
+                      <td>{{$admin->phone2}}</td> 
+                      <td></td>         
                       <td><img src="{{ asset('storage/admin')}}/{{$admin->image}}" 
                         style="width:30px;" alt="Admin Image"></td>
-                      <td>{{$admin->phone1}}</td>
-                      <td>{{$admin->phone2}}</td>
-                      <td>{{$admin->type}}</td>
                       <td><a href="{{route('admin.admin.update',$admin->id)}}">Edit</a></td>
                   </tr>
               @endforeach
             </tbody>
           </table>
-          {!! App\Models\Admin::admins()->render() !!}
+          {{-- {!! App\Models\Admin::admins()->render() !!} --}}
 	</div>
 
 

@@ -9,7 +9,7 @@
             <h4>All the Subcategories are here</h4>
         </div>
     </center>
-    <table class="table">
+    <table id="dataTable" class="table">
       <thead class="thead-dark">
         <tr>
           <th scope="col">#</th>
@@ -19,11 +19,12 @@
           <th scope="col">Description</th>
           <th scope="col">Description in Bangla</th>
           <th scope="col">Image</th>
-          <th scope="col" colspan="2">Edit</th>
+          <th scope="col">Edit</th>
+          <th scope="col">Action</th>
         </tr>
       </thead>
       <tbody>
-        @foreach(App\Models\Subcategory::subcategoies() as $subcategory)
+        @foreach(App\Models\Subcategory::latest()->get() as $subcategory)
             <tr>
                 <th scope="row">{{$loop->index+1}}</th>
                 <td>{{$subcategory->name}}</td>
@@ -44,7 +45,7 @@
         @endforeach
       </tbody>
     </table>
-    {!! App\Models\Subcategory::subcategoies()->render() !!}	
+    {{-- {!! App\Models\Subcategory::subcategoies()->render() !!}	 --}}
 </div>
 
 

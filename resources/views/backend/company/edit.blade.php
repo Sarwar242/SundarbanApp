@@ -103,7 +103,8 @@
 
               <div class="form-group">
                 <label for="image">Company Logo</label>
-                <input type="file" name="image" class="form-control @error('image') is-invalid @enderror" id="image">
+                <input type="file" name="image" class="form-control @error('image') is-invalid @enderror" id="image"> <span>[max size: <strong>1mb</strong>
+                   & resolution: <strong>400*300px]</strong> </span>
                 @error('image')
                   <div class="alert alert-danger alert-block">
                     <button type="button" class="close" data-dismiss="alert">

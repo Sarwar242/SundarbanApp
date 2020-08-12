@@ -69,7 +69,7 @@ class CompanyController extends Controller
             'category_id' => 'nullable|numeric',
             'subcategory_id' => 'nullable|numeric',
             'password'=>'nullable|min:8|confirmed',
-            'image' => 'nullable|file|image|max:3000',   
+            'image' => 'nullable|file|image|max:1000',   
         ]);
        
         try{
