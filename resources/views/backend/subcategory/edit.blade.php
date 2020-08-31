@@ -74,8 +74,8 @@
               </div>
 
               <div class="form-group">
-                <label for="exampleFormControlSelect1">Category</label>
-                <select class="form-control @error('category_id') is-invalid @enderror"  name="category_id" id="exampleFormControlSelect1">
+                <label for="Category">Category</label>
+                <select class="select2 form-control @error('category_id') is-invalid @enderror"  name="category_id" id="exampleFormControlSelect1">
                   @if(!is_null($subcategory->category))
                   @foreach(App\Models\Category::all() as $category)
                     @if($subcategory->category->id==$category->id)
@@ -107,7 +107,7 @@
               </div>
 
               <div class="form-group">
-                <label for="exampleFormControlFile1">Upload Image</label>
+                <label for="Image">Upload Image</label>
                 <input type="file"  name="image"  class="form-control @error('image') is-invalid @enderror" id="exampleFormControlFile1">
                 @error('image')
                 <div class="alert alert-danger alert-block">
@@ -157,7 +157,7 @@
 
               <center>
                 <input type="submit" value="Submit" class="btn btn-success btn-block">
-                <a href="#" class="btn btn-primary btn-block">Add More</a>
+                <a href="{{route('admin.subcategory.create')}}" class="btn btn-primary btn-block">Add More</a>
               </center>
             </form>
           </div>

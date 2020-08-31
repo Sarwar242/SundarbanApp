@@ -85,7 +85,7 @@ Route::group( ['prefix' => 'admin', 'as' => 'admin.'], function() {
     Route::get('customer/create', 'Backend\CustomerController@create')->name('customer.create');
     Route::get('customer/update/{id}', 'Backend\CustomerController@edit')->name('customer.update');
     Route::post('customer/update/{id}', 'Backend\CustomerController@update')->name('customer.update.submit');
-    Route::post('customer/ban/{id}', 'Backend\AdminController@customerBan');
+    Route::get('customer/ban', 'Backend\CustomerController@ban');
 
 
 

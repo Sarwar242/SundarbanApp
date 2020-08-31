@@ -98,8 +98,8 @@
                 @enderror
               </div>
               <div class="form-group">
-                <label for="exampleFormControlSelect1">Division</label>
-                <select name="division_id" id="division_id" class="form-control" id="exampleFormControlSelect1">
+                <label for="Division">Division</label>
+                <select name="division_id" id="division_id" class="select2 form-control" id="exampleFormControlSelect1">
                   <option value="" selected='selected' disabled>
                     Select a Division</option>
                   @foreach(App\Models\Division::all() as $division)
@@ -109,14 +109,14 @@
               </div>
 
               <div class="form-group">
-                <label for="exampleFormControlSelect1">District</label>
-                <select class="form-control" name="district_id" id="district_id">
+                <label for="District">District</label>
+                <select class="select2 form-control" name="district_id" id="district_id">
                 </select>
               </div>
 
               <div class="form-group">
-                <label for="exampleFormControlSelect1">Upazzila</label>
-                <select class="form-control @error('upazilla_id') is-invalid @enderror" name="upazilla_id" id="upazilla_id">
+                <label for="Upazilla">Upazzila</label>
+                <select class="select2 form-control @error('upazilla_id') is-invalid @enderror" name="upazilla_id" id="upazilla_id">
                 </select>
                 @error('upazilla_id')
                 <div class="alert alert-danger alert-block">

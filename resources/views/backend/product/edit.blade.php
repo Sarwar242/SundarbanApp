@@ -132,8 +132,8 @@
               </div>
 
               <div class="form-group">
-                <label for="exampleFormControlSelect1">In Unit</label>
-                <select class="form-control @error('unit_id') is-invalid @enderror" name="unit_id">
+                <label for="Unit">In Unit</label>
+                <select class="select2 form-control @error('unit_id') is-invalid @enderror" name="unit_id">
   
                   @foreach(App\Models\Unit::all() as $unit)
 
@@ -159,8 +159,8 @@
               </div>
 
               <div class="form-group">
-                <label for="exampleFormControlSelect1">Category</label>
-                <select class="form-control @error('category_id') is-invalid @enderror" name="category_id"  id="category_id" >
+                <label for="Category">Category</label>
+                <select class="select2 form-control @error('category_id') is-invalid @enderror" name="category_id"  id="category_id" >
                   @if(!is_null($product->category))
                   @foreach(App\Models\Category::all() as $category)
                     @if($product->category->id==$category->id)
@@ -193,7 +193,7 @@
 
               <div class="form-group">
                 <label for="Subcategory">Sub-Category</label>
-                <select  name="subcategory_id"  class="form-control @error('subcategory_id') is-invalid @enderror" id="subcategory_id" >
+                <select  name="subcategory_id"  class="select2 form-control @error('subcategory_id') is-invalid @enderror" id="subcategory_id" >
                   @if(!is_null($product->subcategory))
                     <option value="{{$product->subcategory->id}}" selected>
                       {{$product->subcategory->name}}</option>
@@ -215,7 +215,7 @@
 
               <div class="form-group">
                 <label for="exampleFormControlSelect1">Company</label>
-                <select class="form-control @error('company_id') is-invalid @enderror" name="company_id">
+                <select class="select2 form-control @error('company_id') is-invalid @enderror" name="company_id">
                   @if(!is_null($product->company))
                     @foreach(App\Models\Company::all() as $company)
 

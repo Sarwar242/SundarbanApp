@@ -74,8 +74,8 @@
               </div>
 
               <div class="form-group">
-                <label for="exampleFormControlSelect1">Category</label>
-                <select class="form-control @error('category_id') is-invalid @enderror"  name="category_id" id="exampleFormControlSelect1">
+                <label for="Category">Category</label>
+                <select class="select2 form-control @error('category_id') is-invalid @enderror"  name="category_id" id="exampleFormControlSelect1">
                   <option value="" selected='selected' disabled>
                     Select a Category</option>
                   @foreach(App\Models\Category::all() as $category)
@@ -95,7 +95,7 @@
               </div>
 
               <div class="form-group">
-                <label for="exampleFormControlFile1">Upload Image</label>
+                <label for="image">Upload Image</label>
                 <input type="file"  name="image"  class="form-control @error('image') is-invalid @enderror" id="exampleFormControlFile1">
                 @error('image')
                 <div class="alert alert-danger alert-block">
@@ -110,7 +110,7 @@
               </div>
               
               <div class="form-group">
-                <label for="exampleFormControlTextarea1">Description</label>
+                <label for="description">Description</label>
                 <textarea class="form-control @error('description') is-invalid @enderror" name="description"  id="exampleFormControlTextarea1" rows="3" placeholder="Write something about the Category..."></textarea>
                 @error('description')
                 <div class="alert alert-danger alert-block">

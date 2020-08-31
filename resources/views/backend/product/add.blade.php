@@ -128,8 +128,10 @@
               </div>
 
               <div class="form-group">
-                <label for="exampleFormControlSelect1">In Unit</label>
-                <select class="form-control @error('unit_id') is-invalid @enderror" name="unit_id">
+                <label for="Unit">In Unit</label>
+                <select class="select2 form-control @error('unit_id') is-invalid @enderror" name="unit_id">
+                  <option value="" selected='selected' disabled>
+                    Select an Unit</option>
                   @foreach(App\Models\Unit::all() as $unit)
                     <option value="{{$unit->id}}">{{$unit->name}}</option>
                   @endforeach
@@ -147,8 +149,8 @@
               </div>
 
               <div class="form-group">
-                <label for="exampleFormControlSelect1">Category</label>
-                <select class="form-control @error('category_id') is-invalid @enderror" name="category_id"  id="category_id" >
+                <label for="Category">Category</label>
+                <select class="select2 form-control @error('category_id') is-invalid @enderror" name="category_id"  id="category_id" >
                   <option value="" selected='selected' disabled>
                     Select a Category</option>
                   @foreach(App\Models\Category::all() as $category)
@@ -168,8 +170,8 @@
               </div>
 
               <div class="form-group">
-                <label for="exampleFormControlSelect1">Sub-Category</label>
-                <select class="form-control @error('subcategory_id') is-invalid @enderror" id="subcategory_id" >
+                <label for="SubCategory">Sub-Category</label>
+                <select class="select2 form-control @error('subcategory_id') is-invalid @enderror" id="subcategory_id" >
                  
                 </select>
                 @error('subcategory_id')
@@ -188,7 +190,7 @@
 
               <div class="form-group">
                 <label for="exampleFormControlSelect1">Company</label>
-                <select class="form-control @error('company_id') is-invalid @enderror" name="company_id">
+                <select class="select2 form-control @error('company_id') is-invalid @enderror" name="company_id">
                   <option value="" selected='selected' disabled>
                     Optional</option>
                   @foreach(App\Models\Company::all() as $company)

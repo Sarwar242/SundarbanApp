@@ -53,7 +53,7 @@
               </div>
 
               <div class="form-group">
-                <label for="exampleFormControlInput1">Name in Bangla</label>
+                <label for="Bangla Name">Name in Bangla</label>
                 <input type="text" value="{{$upazilla->bn_name}}" name="bn_name" class="form-control  @error('bn_name') is-invalid @enderror" id="exampleFormControlInput1" placeholder="">
                 @error('bn_name')
                   <div class="alert alert-danger alert-block">
@@ -67,7 +67,7 @@
                @enderror
               </div>
               <div class="form-group">
-                <label for="exampleFormControlInput1">Longitude</label>
+                <label for="Longitude">Longitude</label>
                 <input type="text" value="{{$upazilla->longitude}}" class="form-control @error('longitude') is-invalid @enderror" name="longitude"  id="exampleFormControlInput1" placeholder="">
                 @error('longitude')
                 <div class="alert alert-danger alert-block">
@@ -82,7 +82,7 @@
               </div>
 
               <div class="form-group">
-                <label for="exampleFormControlInput1">Latitude</label>
+                <label for="Latitude">Latitude</label>
                 <input type="text" value="{{$upazilla->latitude}}" class="form-control @error('latitude') is-invalid @enderror" name="latitude"  id="exampleFormControlInput1" placeholder="">
                 @error('latitude')
                 <div class="alert alert-danger alert-block">
@@ -98,8 +98,8 @@
 
 
               <div class="form-group">
-                <label for="exampleFormControlSelect1">Division</label>
-                <select class="form-control" name="division_id" id="division_id">
+                <label for="Division">Division</label>
+                <select class="select2 form-control" name="division_id" id="division_id">
                   @if(!is_null($upazilla->district))
                     @if(!is_null($upazilla->district->division))
                       @foreach(App\Models\Division::all() as $division)
@@ -129,8 +129,8 @@
               </div>
 
               <div class="form-group">
-                <label for="exampleFormControlSelect1">District</label>
-                <select class="form-control @error('district_id') is-invalid @enderror" name="district_id" id="district_id">
+                <label for="District">District</label>
+                <select class="select2 form-control @error('district_id') is-invalid @enderror" name="district_id" id="district_id">
                   @if(!is_null($upazilla->district))
                     <option value="{{$upazilla->district->id}}" selected>
                       {{$upazilla->district->name}}</option>

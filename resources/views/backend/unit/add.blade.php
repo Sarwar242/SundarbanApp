@@ -55,7 +55,7 @@
               </div>
 
               <div class="form-group">
-                <label for="exampleFormControlInput1">Name in Bangla</label>
+                <label for="Bangla Name">Name in Bangla</label>
                 <input type="text" name="bn_name" class="form-control  @error('bn_name') is-invalid @enderror" id="exampleFormControlInput1" placeholder="">
                 @error('bn_name')
                   <div class="alert alert-danger alert-block">

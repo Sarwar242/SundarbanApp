@@ -116,4 +116,40 @@ class CustomerController extends Controller
             }
     }
 
+    public function ban(Request $request){
+        try{
+            $customer=Customer::find($request->id);
+        
+            if(is_null($customer))
+            return json_encode([
+                "sucess"  => false,
+                "message" => "No customer Found!",      
+            ]);
+            if($customer->ban==1){
+                $customer->ban = 0;
+                $customer->save();
+
+                return json_encode([
+                    'success'=>true,
+                    'message'=> "The customer has been unbaned!",
+                   ]);
+            }
+                
+            else{
+                $customer->ban = 1;
+                $customer->save();
+                return json_encode([
+                    'success'=>true,
+                    'message'=> "The customer has been baned!",
+                   ]);
+            }
+                
+        }catch(Exception $e){
+            return json_encode([
+                'success'=>false,
+                'message'=> ''.$e,
+            ]);
+        }
+    }
+
 }

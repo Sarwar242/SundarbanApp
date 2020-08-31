@@ -50,7 +50,7 @@
               @csrf
               <div class="form-group">
                 <label for="Name">Name</label>
-                <input type="text" name="name" class="form-control @error('name') is-invalid @enderror"
+                <input type="text" name="name" class="select2 form-control @error('name') is-invalid @enderror"
                  id="exampleFormControlInput1" placeholder="Jhalokathi">
                 @error('name')
                   <div class="alert alert-danger alert-block">

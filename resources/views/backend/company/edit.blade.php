@@ -42,7 +42,7 @@
               @csrf
               <div class="form-group">
                 <label for="exampleFormControlInput1">Company Name</label>
-                <input type="text" name="name"  value="{{$company->name}}" class="form-control @error('name') is-invalid @enderror" id="exampleFormControlInput1" placeholder="Name Here">
+                <input type="text" name="name"  value="{{$company->name}}" class="form-control @error('name') is-invalid @enderror" id="namefield" placeholder="Name Here">
                 @error('name')
                   <div class="alert alert-danger alert-block">
                     <button type="button" class="close" data-dismiss="alert">
@@ -57,7 +57,7 @@
 
               <div class="form-group">
                 <label for="exampleFormControlInput1">Company Name in Bangla</label>
-                <input type="text" name="bn_name" value="{{$company->bn_name}}" class="form-control @error('bn_name') is-invalid @enderror" id="exampleFormControlInput1" placeholder="">
+                <input type="text" name="bn_name" value="{{$company->bn_name}}" class="form-control @error('bn_name') is-invalid @enderror" id="bn_namefield" placeholder="">
                 @error('bn_name')
                 <div class="alert alert-danger alert-block">
                   <button type="button" class="close" data-dismiss="alert">
@@ -284,7 +284,7 @@
               
               <div class="form-group">
                 <label for="exampleFormControlSelect1">Category</label>
-                <select class="form-control @error('category_id') is-invalid @enderror" name="category_id"  id="category_id" >
+                <select class="select2 form-control @error('category_id') is-invalid @enderror" name="category_id"  id="category_id" >
                   @if(!is_null($company->category))
                   @foreach(App\Models\Category::all() as $category)
                     @if($company->category->id==$category->id)
@@ -317,7 +317,7 @@
 
               <div class="form-group">
                 <label for="exampleFormControlSelect1">Sub-Category</label>
-                <select  name="subcategory_id"  class="form-control @error('subcategory_id') is-invalid @enderror" id="subcategory_id" >
+                <select  name="select2 subcategory_id"  class="form-control @error('subcategory_id') is-invalid @enderror" id="subcategory_id" >
                   @if(!is_null($company->subcategory))
                     <option value="{{$company->subcategory->id}}" selected >
                       {{$company->subcategory->name}}</option>
@@ -338,7 +338,7 @@
 
               <div class="form-group">
                 <label for="business_type">Provided Business type</label>
-                 <select class="form-control @error('business_type') is-invalid @enderror"
+                 <select class="select2 form-control @error('business_type') is-invalid @enderror"
                   name="business_type" >
                     @if(!is_null($company->business_type))
                       <option value="{{$company->business_type}}" disabled selected>
@@ -371,7 +371,7 @@
 
               <div class="form-group">
                 <label for="type">Type of Business</label>
-                 <select class="form-control @error('type') is-invalid @enderror"
+                 <select class="select2 form-control @error('type') is-invalid @enderror"
                   name="type" >
                     @if(!is_null($company->type))
                       <option value="{{$company->type}}" selected="selected"  disabled>
@@ -422,7 +422,7 @@
 
               <div class="form-group">
                 <label for="Division">Division</label>
-                <select name="division_id" id="division_id" class="form-control">
+                <select name="division_id" id="division_id" class="select2 form-control">
                   @if(!is_null($company->division))
                     @foreach(App\Models\Division::all() as $division)
                       @if($company->division->id==$division->id)
@@ -447,7 +447,7 @@
 
               <div class="form-group">
                 <label for="exampleFormControlSelect1">District</label>
-                <select class="form-control" name="district_id" id="district_id">
+                <select class="select2 form-control" name="district_id" id="district_id">
                   @if(!is_null($company->district))
                     <option value="{{$company->district->id}}" selected>
                       {{$company->district->name}}</option>
@@ -457,7 +457,7 @@
 
               <div class="form-group">
                 <label for="exampleFormControlSelect1">Upazila</label>
-                <select class="form-control @error('upazilla_id') is-invalid @enderror" name="upazilla_id" id="upazilla_id">
+                <select class="select2 form-control @error('upazilla_id') is-invalid @enderror" name="upazilla_id" id="upazilla_id">
                   @if(!is_null($company->upazilla))
                     <option value="{{$company->upazilla->id}}" selected>
                      {{$company->upazilla->name}}</option>
@@ -477,7 +477,7 @@
 
               <div class="form-group">
                 <label for="Union">Union</label>
-                <select class="form-control @error('union_id') is-invalid @enderror" name="union_id" id="union_id">
+                <select class="select2 form-control @error('union_id') is-invalid @enderror" name="union_id" id="union_id">
                   @if(!is_null($company->union))
                     <option value="{{$company->union->id}}" selected>
                      {{$company->union->name}}</option>
@@ -553,6 +553,8 @@
        $(document).on('change','#division_id',function(){
         var division = $("#division_id").val();
         $("#district_id").html("");
+        $("#upazilla_id").html("");
+        $("#union_id").html("");
         var option = " ";
     //send an ajax req to servers
         $.get(""+myapplink+"/admin/get-district/" +
@@ -573,6 +575,7 @@
     $(document).on('change','#district_id',function(){
         var district = $("#district_id").val();
         $("#upazilla_id").html("");
+        $("#union_id").html("");
         var option = " ";
     //send an ajax req to servers
         $.get(""+myapplink+"/admin/get-upazilla/" +
@@ -608,5 +611,5 @@
         }); 
     });
     </script>
-
+    
 @endsection

@@ -84,7 +84,7 @@
               </div>
 
               <div class="form-group">
-                <label for="exampleFormControlInput1">Latitude</label>
+                <label for="Latitude">Latitude</label>
                 <input type="text" value="{{$union->latitude}}"  class="form-control @error('latitude') is-invalid @enderror" name="latitude"  id="exampleFormControlInput1" placeholder="">
                 @error('latitude')
                 <div class="alert alert-danger alert-block">
@@ -98,8 +98,8 @@
                 @enderror
               </div>
               <div class="form-group">
-                <label for="exampleFormControlSelect1">Division</label>
-                <select name="division_id" id="division_id" class="form-control" id="exampleFormControlSelect1">
+                <label for="Division">Division</label>
+                <select name="division_id" id="division_id" class="select2 form-control" id="exampleFormControlSelect1">
                   @if(!is_null($union->upazilla))
                     @if(!is_null($union->upazilla->district))
                       @if(!is_null($union->upazilla->district->division))
@@ -137,8 +137,8 @@
               </div>
 
               <div class="form-group">
-                <label for="exampleFormControlSelect1">District</label>
-                <select class="form-control" name="district_id" id="district_id">
+                <label for="District">District</label>
+                <select class="select2 form-control" name="district_id" id="district_id">
                   @if(!is_null($union->upazilla))
                     @if(!is_null($union->upazilla->district))
                       <option value="{{$union->upazilla->district->id}}" selected>
@@ -149,8 +149,8 @@
               </div>
 
               <div class="form-group">
-                <label for="exampleFormControlSelect1">Upazila</label>
-                <select class="form-control @error('upazilla_id') is-invalid @enderror" name="upazilla_id" id="upazilla_id">
+                <label for="Upazilla">Upazila</label>
+                <select class="select2 form-control @error('upazilla_id') is-invalid @enderror" name="upazilla_id" id="upazilla_id">
                   @if(!is_null($union->upazilla))
                       <option value="{{$union->upazilla->id}}" selected>
                               {{$union->upazilla->name}}</option>
@@ -170,7 +170,7 @@
 
               <center>
                 <input type="submit" class="btn btn-success btn-block" value="Submit">
-                <a href="#" class="btn btn-primary btn-block">Add More</a>
+                <a href="{{route('admin.union.create')}}" class="btn btn-primary btn-block">Add More</a>
               </center>
             </form>
           </form>

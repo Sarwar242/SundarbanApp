@@ -118,7 +118,7 @@
 
               <div class="form-group">
                 <label for="exampleFormControlSelect1">Division</label>
-                <select name="division_id" class="form-control @error('division_id') is-invalid @enderror" id="exampleFormControlSelect1">
+                <select name="division_id" class="select2 form-control @error('division_id') is-invalid @enderror" id="exampleFormControlSelect1">
                   @if(!is_null($district->division))
                     @foreach(App\Models\Division::all() as $division)
                       @if($district->division->id==$division->id)

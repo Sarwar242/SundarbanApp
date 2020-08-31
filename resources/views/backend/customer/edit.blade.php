@@ -323,7 +323,7 @@
 
               <div class="form-group">
                 <label for="Division">Division</label>
-                <select name="division_id" id="division_id" class="form-control">
+                <select name="division_id" id="division_id" class="select2 form-control">
                   @if(!is_null($customer->division))
                     @foreach(App\Models\Division::all() as $division)
                       @if($customer->division->id==$division->id)
@@ -348,7 +348,7 @@
 
               <div class="form-group">
                 <label for="district_id">District</label>
-                <select class="form-control" name="district_id" id="district_id">
+                <select class="select2 form-control" name="district_id" id="district_id">
                   @if(!is_null($customer->district))
                     <option value="{{$customer->district->id}}" selected>
                       {{$customer->district->name}}</option>
@@ -358,7 +358,7 @@
 
               <div class="form-group">
                 <label for="exampleFormControlSelect1">Upazila</label>
-                <select class="form-control @error('upazilla_id') is-invalid @enderror" name="upazilla_id" id="upazilla_id">
+                <select class="select2 form-control @error('upazilla_id') is-invalid @enderror" name="upazilla_id" id="upazilla_id">
                   @if(!is_null($customer->upazilla))
                     <option value="{{$customer->upazilla->id}}" selected>
                      {{$customer->upazilla->name}}</option>
@@ -378,7 +378,7 @@
 
               <div class="form-group">
                 <label for="Union">Union</label>
-                <select class="form-control @error('union_id') is-invalid @enderror" name="union_id" id="union_id">
+                <select class="select2 form-control @error('union_id') is-invalid @enderror" name="union_id" id="union_id">
                   @if(!is_null($customer->union))
                     <option value="{{$customer->union->id}}" selected>
                      {{$customer->union->name}}</option>
