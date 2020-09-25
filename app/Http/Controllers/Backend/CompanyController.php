@@ -38,7 +38,6 @@ class CompanyController extends Controller
 
     public function edit($id){
         $company= Company::find($id);
-
         return view('backend.company.edit')->with('company',$company);
     }
     public function update(Request $request, $id)

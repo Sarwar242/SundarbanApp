@@ -73,7 +73,7 @@ class SubcategoryController extends Controller
             $subcategory->save();
 
             session()->flash('success', 'New Subcategory Added!!');
-            return redirect()->route('admin.subcategory.create');
+            return view('backend.subcategory.add')->with('subcategory', $subcategory->id);
         }catch(Exception $e){
             session()->flash('failed', 'Error occured! --'.$e);
             return redirect()->route('admin.subcategory.create');

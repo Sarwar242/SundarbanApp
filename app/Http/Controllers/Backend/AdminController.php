@@ -68,13 +68,14 @@ class AdminController extends Controller
                 $user->save();
                 $profile = new Company;
                 $profile->name=$request->name;
+                $profile->bn_name=$request->bn_name;
                 $profile->image="default.png";
                 $profile->user_id=$user->id; 
                 $profile->admin_id=Auth::guard('admin')->user()->id; 
-                $profile->owners_name=$user->owners_name;
+                $profile->owners_name=$request->owners_name;
                 $profile->save();
                 session()->flash('success', 'A Company has been created!!');
-                return redirect()->route('admin.company.create');
+                return view('backend.company.add')->with('profile',$profile->id);
             }catch(Exception $e){
                 session()->flash('failed', 'Error occured! --'.$e);
                 return redirect()->route('admin.company.create');
@@ -115,7 +116,7 @@ class AdminController extends Controller
 
                 $profile->save();
                 session()->flash('success', 'A Customer has been created!!');
-                return redirect()->route('admin.customer.create');
+                return view('backend.customer.add')->with('profile',$profile->id);
             }catch(Exception $e){
                 session()->flash('failed', 'Error occured! --'.$e);
                 return redirect()->route('admin.customer.create');

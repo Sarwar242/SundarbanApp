@@ -60,7 +60,7 @@ class CategoryController extends Controller
             $category->save();
 
             session()->flash('success', 'New Category Added!!');
-            return redirect()->route('admin.category.create');
+            return view('backend.category.add')->with('category',$category->id);
         }catch(Exception $e){
             session()->flash('failed', 'Error occured! --'.$e);
             return redirect()->route('admin.category.create');

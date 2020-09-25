@@ -16,7 +16,8 @@
                       x
                   </button>
                   <strong>
-                      {!! session('success') !!}
+                    {!! session('success')!!}   @php Session::forget('success') @endphp &nbsp;&nbsp; 
+                    @if(!is_null($category)) <a href="{{route('admin.category.update',$category)}}">Edit</a> @endif
                   </strong>
               </div>
             @endif
