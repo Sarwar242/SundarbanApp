@@ -54,7 +54,7 @@ class DistrictController extends Controller
             $district->save();
 
             session()->flash('success', 'A District has been Added!!');
-            return redirect()->route('admin.district.create');
+            return view('backend.district.add')->with('district', $district->id);
         }catch(Exception $e){
             session()->flash('failed', 'Error occured! --'.$e);
             return redirect()->route('admin.district.create');

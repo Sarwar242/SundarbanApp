@@ -15,7 +15,8 @@
                     x
                 </button>
                 <strong>
-                    {!! session('success') !!}
+                  {!! session('success')!!}   @php Session::forget('success') @endphp &nbsp;&nbsp; 
+                  @if(!is_null($union)) <a href="{{route('admin.union.update',$union)}}">Edit</a> @endif
                 </strong>
             </div>
           @endif
@@ -132,7 +133,7 @@
 
               <center>
                 <input type="submit" class="btn btn-success btn-block" value="Submit">
-                <a href="#" class="btn btn-primary btn-block">Add More</a>
+                <a href="{{ route('admin.union.create') }}" class="btn btn-primary btn-block">Add More</a>
               </center>
             </form>
           </form>

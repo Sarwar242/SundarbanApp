@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Auth;
 
 class SubcategoryController extends Controller
@@ -19,6 +20,8 @@ class SubcategoryController extends Controller
     }
     public function index()
     {
+        // $slug=Subcategory::slugComplete();
+        // dd($slug);
         return view('backend.subcategory.index');
     }
     public function test(){
@@ -33,7 +36,6 @@ class SubcategoryController extends Controller
 
     public function store(Request  $request)
     {
-
         $this->validate($request,[
             'name' => 'required|string',
             'bn_name' => 'nullable|string',
@@ -69,7 +71,16 @@ class SubcategoryController extends Controller
 
 
             $subcategory->admin_id=Auth::guard('admin')->user()->id; 
-         
+            
+            $slug = Str::slug(str_replace( ' ', '-', $request->name));
+            $i = 0;
+            while(Subcategory::whereSlug($slug)->exists())
+            {
+                $i++;
+                $slug = $slug ."-". $i;
+            }
+            $subcategory->slug =$slug;
+
             $subcategory->save();
 
             session()->flash('success', 'New Subcategory Added!!');
@@ -123,6 +134,9 @@ class SubcategoryController extends Controller
 
 
         $subcategory = Subcategory::find($id);
+        if($subcategory->name!=$request->name){
+            $slug_change=1;
+        }
         $subcategory->name =$request->name;
         $subcategory->bn_name =$request->bn_name;
         $subcategory->description =$request->description;
@@ -145,6 +159,17 @@ class SubcategoryController extends Controller
             $subcategory->image=$imageName;
         }
         $subcategory->category_id =$request->category_id;
+
+        if($slug_change==1){
+            $slug = Str::slug(str_replace( ' ', '-', $request->name));
+            $i = 0;
+            while(Subcategory::whereSlug($slug)->exists())
+            {
+                $i++;
+                $slug = $slug ."-". $i;
+            }
+            $subcategory->slug =$slug;
+        }
         $subcategory->save();
 
         session()->flash('success', 'Subcategory has been updated!!');

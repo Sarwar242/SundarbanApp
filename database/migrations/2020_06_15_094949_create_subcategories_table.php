@@ -17,6 +17,7 @@ class CreateSubcategoriesTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('bn_name')->nullable();
+            $table->string('slug')->nullable();
             $table->string('description');
             $table->string('bn_description');
             $table->string('image');

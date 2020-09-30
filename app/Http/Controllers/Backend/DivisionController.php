@@ -47,7 +47,7 @@ class DivisionController extends Controller
             $division->save();
 
             session()->flash('success', 'A Division has been Added!!');
-            return redirect()->route('admin.division.create');
+            return view('backend.division.add')->with('division', $division->id);
         }catch(Exception $e){
             session()->flash('failed', 'Error occured! --'.$e);
             return redirect()->route('admin.division.create');

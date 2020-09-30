@@ -40,7 +40,7 @@ class UnitController extends Controller
             $unit->save();
 
             session()->flash('success', 'A Unit has been Added!!');
-            return redirect()->route('admin.unit.create');
+            return view('backend.unit.add')->with('unit', $unit->id);
         }catch(Exception $e){
             session()->flash('failed', 'Error occured! --'.$e);
             return redirect()->route('admin.unit.create');

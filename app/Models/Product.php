@@ -3,11 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Product extends Model
 {
     protected $fillable = [
-        'code', 'name','bn_name','description','bn_description', 'price',
+        'code', 'name', 'slug', 'bn_name','description','bn_description', 'price',
         'discount','quantity', 'type','admin_id',
         'category_id','subcategory_id','unit_id','company_id'
    ];
@@ -54,4 +55,15 @@ class Product extends Model
 
        return $product;
    }
+
+   
+   public static function slugComplete() {
+    $categories = Product::all();
+    foreach($categories as $category){
+        $category->slug = Str::slug(str_replace( ' ', '-', $category->name));
+        $category->save();
+    }
+    return "Slug add to all";
+    }
+
 }

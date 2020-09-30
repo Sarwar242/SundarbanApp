@@ -42,11 +42,11 @@
 		  <thead class="thead-dark">
 		    <tr>
 		      <th scope="col">#</th>
+		      <th scope="col">Code</th>
 		      <th scope="col">Name</th>
 		      <th scope="col">Name In Bangla</th>
 		      <th scope="col">Owners Name</th>
-		      <th scope="col">Phone(1)</th>
-		      <th scope="col">Phone(2)</th>
+		      <th scope="col">Phone</th>
 		      <th scope="col">Email</th>
 		      <th scope="col" colspan="2">Edit</th>
 		    </tr>
@@ -55,11 +55,11 @@
 			@foreach(App\Models\Company::latest()->limit(10)->get() as $company)
 				<tr>
 					<th scope="row">{{$loop->index+1}}</th>
+					<td>{{$company->code}}</td>
 					<td>{{$company->name}}</td>
 					<td>{{$company->bn_name}}</td>
 					<td>{{$company->owners_name}}</td>
-					<td>{{$company->phone1}}</td>
-					<td>{{$company->phone2}}</td>
+					<td>{{$company->user->phone}}</td>
 					<td>{{$company->user->email}}</td>
 					<td><a href="{{route('admin.company.update',$company->id)}}">Edit</a></td>
 					<td><a href="#">Delete</a></td>

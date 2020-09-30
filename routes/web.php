@@ -73,7 +73,7 @@ Route::group( ['prefix' => 'admin', 'as' => 'admin.'], function() {
 
 
     //Company
-    Route::get('company/all', 'Backend\CompanyController@index')->name('companies');
+    Route::get('companies', 'Backend\CompanyController@index')->name('companies');
     Route::get('company/create', 'Backend\CompanyController@create')->name('company.create');
     Route::get('company/update/{id}', 'Backend\CompanyController@edit')->name('company.update');
     Route::post('company/update/{id}', 'Backend\CompanyController@update')->name('company.update.submit');
@@ -81,7 +81,7 @@ Route::group( ['prefix' => 'admin', 'as' => 'admin.'], function() {
 
 
     //Customer
-    Route::get('customer/all', 'Backend\CustomerController@index')->name('customers');
+    Route::get('customers', 'Backend\CustomerController@index')->name('customers');
     Route::get('customer/create', 'Backend\CustomerController@create')->name('customer.create');
     Route::get('customer/update/{id}', 'Backend\CustomerController@edit')->name('customer.update');
     Route::post('customer/update/{id}', 'Backend\CustomerController@update')->name('customer.update.submit');
@@ -92,7 +92,7 @@ Route::group( ['prefix' => 'admin', 'as' => 'admin.'], function() {
 
     //Product-Part
 
-    Route::get('product/all', 'Backend\ProductController@index')->name('products');
+    Route::get('products', 'Backend\ProductController@index')->name('products');
     Route::get('product/create', 'Backend\ProductController@create')->name('product.create');
     Route::post('product/create', 'Backend\ProductController@store')->name('product.create.submit');
     Route::get('product/update/{id}', 'Backend\ProductController@edit')->name('product.update');
@@ -107,7 +107,7 @@ Route::group( ['prefix' => 'admin', 'as' => 'admin.'], function() {
 
         
     //Category
-    Route::get('category/all', 'Backend\CategoryController@index')->name('categories');
+    Route::get('categories', 'Backend\CategoryController@index')->name('categories');
     Route::get('category/create', 'Backend\CategoryController@create')->name('category.create');
     Route::post('category/create', 'Backend\CategoryController@store')->name('category.create.submit');
     Route::get('category/update/{id}', 'Backend\CategoryController@edit')->name('category.update');
@@ -119,7 +119,7 @@ Route::group( ['prefix' => 'admin', 'as' => 'admin.'], function() {
 
 
     //Subcategory
-    Route::get('subcategory/all', 'Backend\SubcategoryController@index')->name('subcategories');
+    Route::get('subcategories', 'Backend\SubcategoryController@index')->name('subcategories');
     Route::get('subcategory/create', 'Backend\SubcategoryController@create')->name('subcategory.create');
     Route::post('subcategory/create', 'Backend\SubcategoryController@store')->name('subcategory.create.submit');
     Route::get('subcategory/update/{id}', 'Backend\SubcategoryController@edit')->name('subcategory.update');
@@ -132,7 +132,7 @@ Route::group( ['prefix' => 'admin', 'as' => 'admin.'], function() {
 
 
     //Division
-    Route::get('division/all', 'Backend\DivisionController@index')->name('divisions');
+    Route::get('divisions', 'Backend\DivisionController@index')->name('divisions');
     Route::get('division/create', 'Backend\DivisionController@create')->name('division.create');
     Route::post('division/create', 'Backend\DivisionController@store')->name('division.create.submit');
     Route::get('division/update/{id}', 'Backend\DivisionController@edit')->name('division.update');
@@ -144,7 +144,7 @@ Route::group( ['prefix' => 'admin', 'as' => 'admin.'], function() {
 
 
     //District
-    Route::get('district/all', 'Backend\DistrictController@index')->name('districts');
+    Route::get('districts', 'Backend\DistrictController@index')->name('districts');
     Route::get('district/create', 'Backend\DistrictController@create')->name('district.create');;
     Route::post('district/create', 'Backend\DistrictController@store')->name('district.create.submit');
     Route::get('district/update/{id}', 'Backend\DistrictController@edit')->name('district.update');
@@ -157,7 +157,7 @@ Route::group( ['prefix' => 'admin', 'as' => 'admin.'], function() {
 
 
     //Upazilla
-    Route::get('upazilla/all', 'Backend\UpazillaController@index')->name('upazillas');
+    Route::get('upazillas', 'Backend\UpazillaController@index')->name('upazillas');
     Route::get('upazilla/create', 'Backend\UpazillaController@create')->name('upazilla.create');
     Route::post('upazilla/create', 'Backend\UpazillaController@store')->name('upazilla.create.submit');
     Route::get('upazilla/update/{id}', 'Backend\UpazillaController@edit')->name('upazilla.update');
@@ -170,7 +170,7 @@ Route::group( ['prefix' => 'admin', 'as' => 'admin.'], function() {
 
 
     //Union
-    Route::get('union/all', 'Backend\UnionController@index')->name('unions');
+    Route::get('unions', 'Backend\UnionController@index')->name('unions');
     Route::get('union/create', 'Backend\UnionController@create')->name('union.create');
     Route::post('union/create', 'Backend\UnionController@store')->name('union.create.submit');
     Route::get('union/update/{id}', 'Backend\UnionController@edit')->name('union.update');
@@ -183,7 +183,7 @@ Route::group( ['prefix' => 'admin', 'as' => 'admin.'], function() {
 
 
     //Unit
-    Route::get('unit/all', 'Backend\UnitController@index')->name('units');
+    Route::get('units', 'Backend\UnitController@index')->name('units');
     Route::get('unit/create', 'Backend\UnitController@create')->name('unit.create');
     Route::post('unit/create', 'Backend\UnitController@store')->name('unit.create.submit');
     Route::get('unit/update/{id}', 'Backend\UnitController@edit')->name('unit.update');

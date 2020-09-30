@@ -18,6 +18,11 @@ class CreateCompaniesTable extends Migration
             $table->unsignedBigInteger('user_id');      
             $table->string('name');
             $table->string('bn_name')->nullable();
+            $table->string('slug')->nullable();
+            $table->unsignedBigInteger('code')->nullable();
+            $table->time('open')->nullable();
+            $table->time('close')->nullable();
+            $table->string('off_day')->nullable();
             $table->string('owners_name')->nullable();
             $table->string('owners_nid')->nullable();
             $table->boolean('ban')->nullable();

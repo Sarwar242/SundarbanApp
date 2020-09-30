@@ -3,11 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Subcategory extends Model
 {
     protected $fillable = [
-        'name','bn_name','description','bn_description', 'image','admin_id','category_id',
+        'name', 'slug','bn_name','description','bn_description', 'image','admin_id','category_id',
    ];
 
    public function products()
@@ -25,4 +26,13 @@ class Subcategory extends Model
        $subcategoies = Subcategory::latest()->paginate(10);
        return $subcategoies;
    }
+      
+   public static function slugComplete() {
+    $categories = Subcategory::all();
+    foreach($categories as $category){
+        $category->slug = Str::slug(str_replace( ' ', '-', $category->name));
+        $category->save();
+    }
+    return "Slug add to all";
+    }
 }

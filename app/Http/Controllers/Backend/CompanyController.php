@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Auth;
 
 
@@ -28,6 +29,8 @@ class CompanyController extends Controller
     }
     
     public function index(){
+        // $slug=Company::slugComplete();
+        // dd($slug);
         return view('backend.company.index');
     }  
     
@@ -42,10 +45,12 @@ class CompanyController extends Controller
     }
     public function update(Request $request, $id)
     {
+        $company = Company::find($id);
         $this->validate($request,[
             'name' => 'required|string',
             'email' => 'nullable|email',
-            'phone' => 'required|numeric|phone',
+            'phone' => 'required|numeric|phone|unique:users,phone,'.$company->user->id,
+            'code' => 'required|numeric|unique:companies,code,'.$company->id,
             'bn_name' => 'nullable|string',
             'owners_name' => 'nullable|string',
             'owners_nid' => 'nullable|string',
@@ -57,8 +62,12 @@ class CompanyController extends Controller
             'bn_street' => 'nullable|string',
             'location' => 'nullable|string',
             'bn_location' => 'nullable|string',
+            'open' => 'nullable',
+            'close' => 'nullable|after:open',
+            'off_day' => 'nullable|string',
             'website' => 'nullable|string',
             'business_type' => 'nullable|string',
+
             'type' => 'nullable|string',
             'zipcode' => 'nullable|string',
             'union_id' => 'nullable|numeric',
@@ -72,12 +81,29 @@ class CompanyController extends Controller
         ]);
        
         try{
-            $company = Company::find($id);
+            
+            $slug_change =0;
+            if($company->name!=$request->name){
+                $slug_change=1;
+            }
+            if($slug_change==1){
+                $slug = Str::slug(str_replace( ' ', '-', $request->name));
+                $i = 0;
+                while(Company::whereSlug($slug)->exists())
+                {
+                    $i++;
+                    $slug = $slug ."-". $i;
+                }
+                $company->slug =$slug;
+            }
+            
             $company->name =$request->name;
             $company->user->phone =$request->phone;
             $company->user->email =$request->email;
+
             //dd($company->user->email);
             $company->bn_name =$request->bn_name;
+            $company->code =$request->code;
             $company->owners_name =$request->owners_name;
             $company->owners_nid =$request->owners_nid;
             $company->phone1 =$request->phone1;
@@ -86,6 +112,9 @@ class CompanyController extends Controller
             $company->bn_description =$request->bn_description;
             $company->location =$request->location;
             $company->bn_location =$request->bn_location;
+            $company->open = $request->open;
+            $company->close = $request->close;
+            $company->off_day = $request->off_day;
             $company->street =$request->street;
             $company->bn_street =$request->bn_street;
             $company->website =$request->website;

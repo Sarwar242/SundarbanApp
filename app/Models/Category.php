@@ -3,11 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Category extends Model
 {
     protected $fillable = [
-        'name','bn_name','description','bn_description', 'image','admin_id'
+        'name','bn_name', 'slug','description','bn_description', 'image','admin_id'
    ];
 
    
@@ -25,8 +26,18 @@ class Category extends Model
 
    public static function categoies()
    {
-       $categoies = Category::latest()->paginate(10);
+       $categories = Category::latest()->paginate(10);
 
-       return $categoies;
+       return $categories;
    }
+
+    public static function slugComplete() {
+        $categories = Category::all();
+        foreach($categories as $category){
+            $category->slug = Str::slug(str_replace( ' ', '-', $category->name));
+            $category->save();
+        }
+        return "Slug add to all";
+    }
+
 }

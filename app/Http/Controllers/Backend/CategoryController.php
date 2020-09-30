@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Log;
 use Auth;
 class CategoryController extends Controller
 {
@@ -18,6 +20,8 @@ class CategoryController extends Controller
 
     public function index()
     {
+        // $slug=Category::slugComplete();
+        // dd($slug);
         return view('backend.category.index');
     }
 
@@ -57,6 +61,16 @@ class CategoryController extends Controller
                 $request->image->storeAs('/category',$imageName,'public');
                 $category->image=$imageName;
             }
+
+            $slug = Str::slug(str_replace( ' ', '-', $request->name));
+            $i = 0;
+            while(Category::whereSlug($slug)->exists())
+            {
+                $i++;
+                $slug = $slug ."-". $i;
+            }
+            $category->slug =$slug;
+
             $category->save();
 
             session()->flash('success', 'New Category Added!!');
@@ -108,6 +122,9 @@ class CategoryController extends Controller
             'image' => 'nullable|file|image|max:3000',
         ]);
         $category = Category::find($request->id);
+        if($category->name!=$request->name){
+            $slug_change=1;
+        }
         $category->name =$request->name;
         $category->bn_name =$request->bn_name;
         $category->description =$request->description;
@@ -121,6 +138,17 @@ class CategoryController extends Controller
             $imageName = time().'.'.$request->image->extension();  
             $request->image->storeAs('/category',$imageName,'public');
             $category->image=$imageName;
+        }
+
+        if($slug_change==1){
+            $slug = Str::slug(str_replace( ' ', '-', $request->name));
+            $i = 0;
+            while(Category::whereSlug($slug)->exists())
+            {
+                $i++;
+                $slug = $slug ."-". $i;
+            }
+            $category->slug =$slug;
         }
         $category->save();
 

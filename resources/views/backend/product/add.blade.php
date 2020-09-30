@@ -17,7 +17,8 @@
                     x
                 </button>
                 <strong>
-                    {!! session('success') !!}
+                  {!! session('success')!!}   @php Session::forget('success') @endphp &nbsp;&nbsp; 
+                  @if(!is_null($product))<a href="{{route('admin.product.update',$product)}}">Edit</a>@endif
                 </strong>
             </div>
             @endif
@@ -259,7 +260,7 @@
 
               <center>
                 <input type="submit" value="Submit" class="btn btn-success btn-block">
-                <a href="#" class="btn btn-primary btn-block">Add More</a>
+                <a href="{{ route('admin.product.create') }}" class="btn btn-primary btn-block">Add More</a>
               </center>
             </form>
           </div>

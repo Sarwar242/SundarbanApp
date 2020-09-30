@@ -17,7 +17,8 @@
                     x
                 </button>
                 <strong>
-                    {!! session('success') !!}
+                  {!! session('success')!!}   @php Session::forget('success') @endphp &nbsp;&nbsp; 
+                  @if(!is_null($profile))<a href="{{route('admin.admin.update',$profile)}}">Edit</a>@endif
                 </strong>
             </div>
           @endif

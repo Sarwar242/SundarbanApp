@@ -15,7 +15,9 @@
                       x
                   </button>
                   <strong>
-                      {!! session('success') !!}
+                    {!! session('success')!!}   @php Session::forget('success') @endphp &nbsp;&nbsp; 
+                    @if(!is_null($district))<a href="{{route('admin.district.update',$district)}}">Edit</a>@endif
+  
                   </strong>
               </div>
             @endif
@@ -50,8 +52,8 @@
               @csrf
               <div class="form-group">
                 <label for="Name">Name</label>
-                <input type="text" name="name" class="select2 form-control @error('name') is-invalid @enderror"
-                 id="exampleFormControlInput1" placeholder="Jhalokathi">
+                <input type="text" name="name" class="form-control @error('name') is-invalid @enderror"
+                 id="" placeholder="Jhalokathi">
                 @error('name')
                   <div class="alert alert-danger alert-block">
                     <button type="button" class="close" data-dismiss="alert">
@@ -65,7 +67,7 @@
               </div>
 
               <div class="form-group">
-                <label for="exampleFormControlInput1">Name in Bangla</label>
+                <label for="">Name in Bangla</label>
                 <input type="text" name="bn_name" class="form-control  @error('bn_name') is-invalid @enderror" id="exampleFormControlInput1" placeholder="">
                 @error('bn_name')
                   <div class="alert alert-danger alert-block">
@@ -150,7 +152,7 @@
 
               <center>
                 <input type="submit" class="btn btn-success btn-block" value="Submit">
-                <a href="#" class="btn btn-primary btn-block">Add More</a>
+                <a href="{{route('admin.district.create')}}" class="btn btn-primary btn-block">Add More</a>
               </center>
             </form>
           </div>

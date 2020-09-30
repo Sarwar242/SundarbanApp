@@ -50,7 +50,7 @@ class UpazillaController extends Controller
             $upazilla->save();
 
             session()->flash('success', 'A Upazilla has been Added!!');
-            return redirect()->route('admin.upazilla.create');
+            return view('backend.upazilla.add')->with('upazilla',$upazilla->id);
         }catch(Exception $e){
             session()->flash('failed', 'Error occured! --'.$e);
             return redirect()->route('admin.upazilla.create');

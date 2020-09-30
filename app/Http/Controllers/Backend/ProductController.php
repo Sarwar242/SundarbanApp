@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Auth;
 
 class ProductController extends Controller
@@ -20,6 +21,8 @@ class ProductController extends Controller
 
     public function index()
     {
+        // $slug=Product::slugComplete();
+        // dd($slug);
         return view('backend.product.index');
     }
 
@@ -66,6 +69,16 @@ class ProductController extends Controller
             $product->subcategory_id =$request->subcategory_id;
             $product->unit_id =$request->unit_id;
             $product->company_id =$request->company_id;
+
+            
+            $slug = Str::slug(str_replace( ' ', '-', $request->name));
+            $i = 0;
+            while(Product::whereSlug($slug)->exists())
+            {
+                $i++;
+                $slug = $slug ."-". $i;
+            }
+            $product->slug =$slug;
             $product->save();
 
             
@@ -92,7 +105,7 @@ class ProductController extends Controller
             endif;
 
             session()->flash('success', 'New product Added!!');
-            return redirect()->route('admin.product.create');
+            return view('backend.product.add')->with('product',$product->id);
         }catch(Exception $e){
             session()->flash('failed', 'Error occured! --'.$e);
             return redirect()->route('admin.product.create');
@@ -151,6 +164,10 @@ class ProductController extends Controller
        
         $product = Product::find($id);
         $product->code =$request->code;
+        $slug_change =0;
+        if($product->name!=$request->name){
+            $slug_change=1;
+        }
         $product->name =$request->name;
         $product->bn_name =$request->bn_name;
         $product->description =$request->description;
@@ -169,6 +186,16 @@ class ProductController extends Controller
         $product->subcategory_id =$request->subcategory_id;
         $product->unit_id =$request->unit_id;
         $product->company_id =$request->company_id;
+        if($slug_change==1){
+            $slug = Str::slug(str_replace( ' ', '-', $request->name));
+            $i = 0;
+            while(Product::whereSlug($slug)->exists())
+            {
+                $i++;
+                $slug = $slug ."-". $i;
+            }
+            $product->slug =$slug;
+        }
         
         $product->save();
 

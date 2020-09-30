@@ -15,7 +15,8 @@
                       x
                   </button>
                   <strong>
-                      {!! session('success') !!}
+                    {!! session('success')!!}   @php Session::forget('success') @endphp &nbsp;&nbsp; 
+                    @if(!is_null($unit)) <a href="{{route('admin.unit.update',$unit)}}">Edit</a> @endif
                   </strong>
               </div>
             @endif
@@ -70,7 +71,7 @@
               </div>
               <center>
                 <input type="submit" class="btn btn-success btn-block" value="Submit">
-                <a href="#" class="btn btn-primary btn-block">Add More</a>
+                <a href="{{ route('admin.unit.create') }}" class="btn btn-primary btn-block">Add More</a>
               </center>
             </form>
           </div>

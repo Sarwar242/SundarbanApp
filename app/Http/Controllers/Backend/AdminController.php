@@ -49,6 +49,7 @@ class AdminController extends Controller
    
 
         $encryptedPass= Hash::make($request->password);
+        //if user creating a company
         if($request->is_company==1){
             $this->validate($request,[
                 'email'=>'email|nullable',
@@ -73,6 +74,25 @@ class AdminController extends Controller
                 $profile->user_id=$user->id; 
                 $profile->admin_id=Auth::guard('admin')->user()->id; 
                 $profile->owners_name=$request->owners_name;
+                $slug = Str::slug(str_replace( ' ', '-', $request->name));
+                $i = 0;
+                while(Company::whereSlug($slug)->exists())
+                {
+                    $i++;
+                    $slug = $slug . $i;
+                }
+                $profile->slug = $slug;
+
+                $lastId = Company::latest('id')->first()->id;
+                $code =  100000000+$lastId+1;
+                $i = 0;
+                while(Company::whereCode($code)->exists())
+                {
+                    $i++;
+                    $code = $code + $i;
+                }
+                $profile->code = $code;
+
                 $profile->save();
                 session()->flash('success', 'A Company has been created!!');
                 return view('backend.company.add')->with('profile',$profile->id);
@@ -164,7 +184,7 @@ class AdminController extends Controller
 
             $admin->save();
             session()->flash('success', 'An Admin has been created!!');
-            return redirect()->route('admin.admin.create');
+            return view('backend.admin.add')->with('profile',$admin->id);
         }catch(Exception $e){
             session()->flash('failed', 'Error occured! --'.$e);
             return redirect()->route('admin.admin.create');

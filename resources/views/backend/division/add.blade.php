@@ -15,7 +15,8 @@
                       x
                   </button>
                   <strong>
-                      {!! session('success') !!}
+                    {!! session('success')!!}   @php Session::forget('success') @endphp &nbsp;&nbsp; 
+                    @if(!is_null($division))<a href="{{route('admin.division.update',$division)}}">Edit</a>@endif
                   </strong>
               </div>
             @endif
@@ -100,7 +101,7 @@
 
               <center>
                 <input type="submit" class="btn btn-success btn-block" value="Submit">
-                <a href="#" class="btn btn-primary btn-block">Add More</a>
+                <a href="{{route('admin.division.create')}}" class="btn btn-primary btn-block">Add More</a>
               </center>
             </form>
           </div>

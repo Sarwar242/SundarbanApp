@@ -298,8 +298,8 @@
               </div>
 
               <center>
-                <input type="submit" value="Submit" class="btn btn-success btn-block">
-                <a href="#" class="btn btn-primary btn-block">Add More</a>
+                <input type="submit" value="Update" class="btn btn-success btn-block">
+                <a href="{{ route('admin.product.create') }}" class="btn btn-primary btn-block">Add More</a>
               </center>
             </form>
           </div>

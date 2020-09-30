@@ -150,7 +150,7 @@
 
               <center>
                 <input type="submit" class="btn btn-success btn-block" value="Submit">
-                <a href="#" class="btn btn-primary btn-block">Add More</a>
+                <a href="{{ route('admin.upazilla.create') }}" class="btn btn-primary btn-block">Add More</a>
               </center>
             </form>
           </div>

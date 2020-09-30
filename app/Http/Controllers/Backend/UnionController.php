@@ -53,7 +53,7 @@ class UnionController extends Controller
             $union->save();
 
             session()->flash('success', 'A Union has been Added!!');
-            return redirect()->route('admin.union.create');
+            return view('backend.union.add')->with('union', $union->id);
         }catch(Exception $e){
             session()->flash('failed', 'Error occured! --'.$e);
             return redirect()->route('admin.union.create');

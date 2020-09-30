@@ -71,9 +71,24 @@
               </div>     
               
               <div class="form-group">
-                <label for="exampleFormControlInput1">Phone(*)</label>
+                <label for="">Phone(*)</label>
                 <input type="text" name="phone" value="{{$company->user->phone}}" class="form-control @error('phone') is-invalid @enderror" placeholder="Pease type a valid phone no...">
                 @error('phone')
+                <div class="alert alert-danger alert-block">
+                  <button type="button" class="close" data-dismiss="alert">
+                    x
+                  </button>
+                  <strong>
+                      {!! $message !!}
+                  </strong>
+                </div>
+                @enderror
+              </div>  
+
+              <div class="form-group">
+                <label for="Code">Code(*)</label>
+                <input type="text" name="code" value="{{$company->code}}" class="form-control @error('code') is-invalid @enderror" placeholder="Please type a numeric code...">
+                @error('code')
                 <div class="alert alert-danger alert-block">
                   <button type="button" class="close" data-dismiss="alert">
                     x
@@ -238,6 +253,90 @@
               </div>
 
               <div class="form-group">
+                <label for="Open">Openning Time</label>
+                <input type="time" name="open"  value="{{$company->open}}"  class="form-control @error('open') is-invalid @enderror">
+                @error('open')
+                <div class="alert alert-danger alert-block">
+                  <button type="button" class="close" data-dismiss="alert">
+                    x
+                  </button>
+                  <strong>
+                      {!! $message !!}
+                  </strong>
+                </div>
+                @enderror
+              </div>
+
+              <div class="form-group">
+                <label for="Close">Closing Time</label>
+                <input type="time" name="close"  value="{{$company->close}}"  class="form-control @error('close') is-invalid @enderror">
+                @error('close')
+                <div class="alert alert-danger alert-block">
+                  <button type="button" class="close" data-dismiss="alert">
+                    x
+                  </button>
+                  <strong>
+                      {!! $message !!}
+                  </strong>
+                </div>
+                @enderror
+              </div>
+
+              <div class="form-group">
+                <label for="Off_Day">Off Day</label>
+                 <select class="select2 form-control @error('off_day') is-invalid @enderror"
+                  name="off_day" >
+                    @if(!is_null($company->off_day))
+                      <option value="{{$company->off_day}}" disabled selected>
+                          {{$company->off_day}}</option>
+                      <option value="Sunday">
+                        Sunday</option> 
+                      <option value="Monday">
+                        Monday</option> 
+                      <option value="Tuesday">
+                        Tuesday</option>
+                      <option value="Wednesday">
+                        Wednesday</option>
+                      <option value=Thursday">
+                        Thursday</option>
+                      <option value="Friday">
+                        Friday</option>
+                      <option value="Saturday">
+                        Saturday</option>
+                    @else
+                    <option value="" selected='selected' disabled>
+                      Select one</option>
+                      <option value="Sunday">
+                        Sunday</option> 
+                      <option value="Monday">
+                        Monday</option> 
+                      <option value="Tuesday">
+                        Tuesday</option>
+                      <option value="Wednesday">
+                        Wednesday</option>
+                      <option value=Thursday">
+                        Thursday</option>
+                      <option value="Friday">
+                        Friday</option>
+                      <option value="Saturday">
+                        Saturday</option>
+                    @endif
+                 
+                </select>
+                @error('off_day')
+                <div class="alert alert-danger alert-block">
+                  <button type="button" class="close" data-dismiss="alert">
+                    x
+                  </button>
+                  <strong>
+                      {!! $message !!}
+                  </strong>
+                </div>
+                @enderror
+              </div>
+
+
+              <div class="form-group">
                 <label for="Street">Street</label>
                 <input type="text" name="street"  value="{{$company->street}}"  class="form-control @error('street') is-invalid @enderror" placeholder="Street name if remain ...">
                 @error('street')
@@ -378,7 +477,8 @@
                           {{$company->type}}</option>
                       <option value="Wholesale">
                         Wholesale</option> 
-                      <option value="Retail">Retail</option>
+                      <option value="Retailer">Retailer</option>
+                      <option value="Manufacturer">Manufacturer</option>
                       <option value="Export">Export</option>
                       <option value="Import">Import</option>
                     @else
@@ -386,7 +486,8 @@
                       Select one</option>
                       <option value="Wholesale">
                         Wholesale</option> 
-                      <option value="Retail">Retail</option>
+                      <option value="Retailer">Retailer</option>
+                      <option value="Manufacturer">Manufacturer</option>
                       <option value="Export">Export</option>
                       <option value="Import">Import</option>
                     @endif

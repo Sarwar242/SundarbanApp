@@ -61,7 +61,7 @@
 
               <div class="form-group">
                 <label for="exampleFormControlInput1">Name in Bangla</label>
-                <input type="text" name="bn_name" class="form-control  @error('bn_name') is-invalid @enderror" id="exampleFormControlInput1" placeholder="">
+                <input type="text" name="bn_name" class="form-control  @error('bn_name') is-invalid @enderror" placeholder="">
                 @error('bn_name')
                   <div class="alert alert-danger alert-block">
                     <button type="button" class="close" data-dismiss="alert">
@@ -76,7 +76,7 @@
 
               <div class="form-group">
                 <label for="Category">Category</label>
-                <select class="select2 form-control @error('category_id') is-invalid @enderror"  name="category_id" id="exampleFormControlSelect1">
+                <select class="select2 form-control @error('category_id') is-invalid @enderror"  name="category_id" >
                   <option value="" selected='selected' disabled>
                     Select a Category</option>
                   @foreach(App\Models\Category::all() as $category)
@@ -97,7 +97,7 @@
 
               <div class="form-group">
                 <label for="image">Upload Image</label>
-                <input type="file"  name="image"  class="form-control @error('image') is-invalid @enderror" id="exampleFormControlFile1">
+                <input type="file"  name="image"  class="form-control @error('image') is-invalid @enderror">
                 @error('image')
                 <div class="alert alert-danger alert-block">
                   <button type="button" class="close" data-dismiss="alert">
@@ -112,7 +112,7 @@
               
               <div class="form-group">
                 <label for="description">Description</label>
-                <textarea class="form-control @error('description') is-invalid @enderror" name="description"  id="exampleFormControlTextarea1" rows="3" placeholder="Write something about the Category..."></textarea>
+                <textarea class="form-control @error('description') is-invalid @enderror" name="description"  rows="3" placeholder="Write something about the Sub-Category..."></textarea>
                 @error('description')
                 <div class="alert alert-danger alert-block">
                   <button type="button" class="close" data-dismiss="alert">
@@ -127,7 +127,7 @@
 
               <div class="form-group">
                 <label for="exampleFormControlTextarea1">Description in Bangla</label>
-                <textarea class="form-control @error('bn_description') is-invalid @enderror" name="bn_description"  id="exampleFormControlTextarea1" rows="3" placeholder="Write something about the Category..."></textarea>
+                <textarea class="form-control @error('bn_description') is-invalid @enderror" name="bn_description" rows="3" placeholder="Write something about the Sub-Category..."></textarea>
                 @error('bn_description')
                 <div class="alert alert-danger alert-block">
                   <button type="button" class="close" data-dismiss="alert">

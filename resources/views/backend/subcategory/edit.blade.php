@@ -122,10 +122,10 @@
               </div>
               
               <div class="form-group">
-                <label for="exampleFormControlTextarea1">Description</label>
+                <label for="Description">Description</label>
                 <textarea class="form-control @error('description') is-invalid @enderror" 
-                name="description"  id="exampleFormControlTextarea1" rows="3" 
-                placeholder="Write something about the Category...">{!!$subcategory->description!!}</textarea>
+                name="description"  id="" rows="3" 
+                placeholder="Write something about the Sub-Category...">{!!$subcategory->description!!}</textarea>
                 @error('description')
                 <div class="alert alert-danger alert-block">
                   <button type="button" class="close" data-dismiss="alert">
@@ -141,8 +141,8 @@
               <div class="form-group">
                 <label for="exampleFormControlTextarea1">Description in Bangla</label>
                 <textarea class="form-control @error('bn_description') is-invalid @enderror" 
-                name="bn_description"  id="exampleFormControlTextarea1" rows="3" 
-                placeholder="Write something about the Category...">{!!$subcategory->bn_description!!}</textarea>
+                name="bn_description"  rows="3" 
+                placeholder="Write something about the Sub-Category...">{!!$subcategory->bn_description!!}</textarea>
                 @error('bn_description')
                 <div class="alert alert-danger alert-block">
                   <button type="button" class="close" data-dismiss="alert">
@@ -156,7 +156,7 @@
               </div>
 
               <center>
-                <input type="submit" value="Submit" class="btn btn-success btn-block">
+                <input type="submit" value="Update" class="btn btn-success btn-block">
                 <a href="{{route('admin.subcategory.create')}}" class="btn btn-primary btn-block">Add More</a>
               </center>
             </form>
