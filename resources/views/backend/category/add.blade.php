@@ -73,7 +73,7 @@
 
               <div class="form-group">
                 <label for="exampleFormControlFile1">Upload Image</label>
-                <input type="file" name="image" class="form-control @error('image') is-invalid @enderror" id="exampleFormControlFile1">
+                <input type="file" name="image" class="form-control @error('image') is-invalid @enderror" id="image"  accept="image/*" onchange="showImgPreview(event);">
                 @error('image')
                   <div class="alert alert-danger alert-block">
                     <button type="button" class="close" data-dismiss="alert">
@@ -84,6 +84,9 @@
                     </strong>
                   </div>
                 @enderror
+                <div class="preview">
+                  <img id="img-preview">
+                </div>
               </div>
               
               <div class="form-group">

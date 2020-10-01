@@ -107,8 +107,11 @@
               </div>
 
               <div class="form-group">
-                <label for="Image">Upload Image</label>
-                <input type="file"  name="image"  class="form-control @error('image') is-invalid @enderror" id="exampleFormControlFile1">
+                <label for="Image">Subcategory Image :</label>
+                <div class="preview">
+                  <img style="display:block; max-width: 200px; padding-left: 10px;padding-bottom: 3px; margin-left: 60px;" src="{{ asset('storage/subcategory')}}/{{$subcategory->image}}" >
+                </div>
+                <input type="file"  name="image"  class="form-control @error('image') is-invalid @enderror" id="image"  accept="image/*" onchange="showImgPreview(event);">
                 @error('image')
                 <div class="alert alert-danger alert-block">
                   <button type="button" class="close" data-dismiss="alert">
@@ -119,6 +122,9 @@
                   </strong>
                 </div>
                 @enderror
+                <div class="preview">
+                  <img id="img-preview">
+                </div>
               </div>
               
               <div class="form-group">

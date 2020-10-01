@@ -56,7 +56,23 @@
 	</header>
 
 
-    @yield('contents')
+	@yield('contents')
+	{{-- image preview --}}
+	<script>
+		function showImgPreview(event){
+		if (event.target.files.length>0) {
+			var src = URL.createObjectURL(event.target.files[0]);
+			var preview = document.getElementById("img-preview");
+			preview.src = src;
+			preview.style.display = "block";
+			preview.style.maxWidth= "200px";
+			preview.style.marginLeft= "60px";
+			preview.style.marginTop= "5px";
+			preview.style.paddingLeft= "10px";	
+		}
+	}
+	</script>
+
 	
 			<!-- Datatables js-->
 			
@@ -72,6 +88,8 @@
 <script type="text/javascript" src="https://cdn.datatables.net/searchpanes/1.1.1/js/dataTables.searchPanes.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/searchpanes/1.1.1/js/searchPanes.bootstrap4.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/select/1.3.1/js/dataTables.select.min.js"></script>
+
+
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('#dataTable').DataTable({
@@ -95,6 +113,7 @@
   });
 </script>
   
+
 
 <!-- JS, Popper.js, and jQuery -->
 	

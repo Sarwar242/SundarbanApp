@@ -118,7 +118,11 @@
 
               <div class="form-group">
                 <label for="image">Company Logo</label>
-                <input type="file" name="image" class="form-control @error('image') is-invalid @enderror" id="image"> <span>[max size: <strong>1mb</strong>
+                <div class="preview">
+                  <img style="display:block; max-width: 200px; padding-left: 10px;padding-bottom: 3px; margin-left: 60px;" src="{{ asset('storage/company')}}/{{$company->image}}" >
+                </div>
+                <input type="file" name="image" class="form-control @error('image') is-invalid @enderror" id="image"
+                accept="image/*" onchange="showImgPreview(event);"> <span>[max size: <strong>1mb</strong>
                    & resolution: <strong>400*300px]</strong> </span>
                 @error('image')
                   <div class="alert alert-danger alert-block">
@@ -130,6 +134,10 @@
                     </strong>
                   </div>
                 @enderror
+                
+                <div class="preview">
+                  <img id="img-preview">
+                </div>
               </div>
 
               <div class="form-group">
