@@ -36,6 +36,11 @@ class Customer extends Model
        return $this->belongsTo(Union::class);
    }
    
+   public function admin()
+   {
+       return $this->belongsTo(Admin::class);
+   }
+
    public static function customers()
    {
        $customers = Customer::latest()->paginate(10);

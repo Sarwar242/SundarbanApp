@@ -3,8 +3,6 @@
 
 @section('contents')
 @include('backend.layouts.sidebar')
-<body>
-
 	<div class="content">
 		<center>
 			<div class="heading">
@@ -33,7 +31,7 @@
                       <th scope="row">{{$loop->index+1}}</th>
                       <td>{{$admin->first_name}}</td>
                       <td>{{$admin->last_name}}</td>
-                      <td>{{$admin->username}}</td>
+                      <td  onclick="window.location.href='{{route('admin.profile', $admin->username)}}'" style="cursor: pointer">{{$admin->username}}</td>
                       <td>{{$admin->email}}</td>
                       <td>{{$admin->type}}</td>
                       <td>{{$admin->phone1}}</td>

@@ -26,6 +26,11 @@ class CustomerController extends Controller
         return view('backend.customer.index');
     } 
 
+    public function profile($username){
+        $customer = Customer::where('username', '=', $username)->first();
+        // dd($company);
+        return view('backend.customer.profile')->with('customer', $customer);
+    }
 
     public function create()
     {

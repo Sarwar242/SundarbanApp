@@ -31,7 +31,7 @@
 				<tr>
 					<th scope="row">{{$loop->index+1}}</th>
 					<td>{{$company->code}}</td>
-					<td>{{$company->name}}</td>
+					<td style="cursor: pointer;" onclick="window.location.href='{{route('admin.company.profile', $company->slug)}}'">{{$company->name}}</td>
 					<td>{{$company->bn_name}}</td>
 					<td>{{$company->owners_name}}</td>
 					<td>{{$company->user->phone}}</td>

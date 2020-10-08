@@ -56,6 +56,10 @@ class Product extends Model
        return $product;
    }
 
+   public function admin()
+   {
+       return $this->belongsTo(Admin::class);
+   }
    
    public static function slugComplete() {
     $categories = Product::all();

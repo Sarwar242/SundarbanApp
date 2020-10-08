@@ -59,7 +59,7 @@
 
 				  	<center>
 					  	<div class="form-group form-writings">
-					  		<a class="btn btn-danger btn-block" href="password_recover.html">Forgot your password?</a>
+					  		<a class="btn btn-danger btn-block" href="#">Forgot your password?</a>
 					  	</div>
 				  	</center>
 				</form>

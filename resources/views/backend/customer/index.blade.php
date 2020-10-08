@@ -5,12 +5,10 @@
 @include('backend.layouts.sidebar')
 <body>
 
-	
-
 	<div class="content">
 		<center>
 			<div class="heading">
-				<h4>All your customers details are here</h4>
+				<h4>All your Customers details are here</h4>
 			</div>
 		</center>
 		<table id="dataTable" class="table">
@@ -31,8 +29,8 @@
 			  @foreach(App\Models\Customer::latest()->get() as $customer)
 				  <tr>
 					  <th scope="row">{{$loop->index+1}}</th>
-					  <td>{{$customer->first_name}}</td>
-					  <td>{{$customer->last_name}}</td>
+					  <td onclick="window.location.href='{{route('admin.customer.profile', $customer->username)}}'" style="cursor: pointer">{{$customer->first_name}}</td>
+					  <td onclick="window.location.href='{{route('admin.customer.profile', $customer->username)}}'" style="cursor: pointer">{{$customer->last_name}}</td>
 					  <td>{{$customer->user->email}}</td>
 					  <td>{{$customer->user->phone}}</td>
 					  <td><img src="{{ asset('storage/customer')}}/{{$customer->image}}" 

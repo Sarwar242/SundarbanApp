@@ -48,7 +48,7 @@
 		      <th scope="col">Owners Name</th>
 		      <th scope="col">Phone</th>
 		      <th scope="col">Email</th>
-		      <th scope="col" colspan="2">Edit</th>
+		      {{-- <th scope="col" colspan="2">Edit</th> --}}
 		    </tr>
 		  </thead>
 		  <tbody>
@@ -61,8 +61,8 @@
 					<td>{{$company->owners_name}}</td>
 					<td>{{$company->user->phone}}</td>
 					<td>{{$company->user->email}}</td>
-					<td><a href="{{route('admin.company.update',$company->id)}}">Edit</a></td>
-					<td><a href="#">Delete</a></td>
+					{{-- <td><a href="{{route('admin.company.update',$company->id)}}">Edit</a></td>
+					<td><a href="#">Delete</a></td> --}}
 				</tr>
 			@endforeach
 		  </tbody>

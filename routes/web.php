@@ -58,8 +58,8 @@ Route::group( ['prefix' => 'admin', 'as' => 'admin.'], function() {
     Route::get('admin/update/{id}', 'Backend\AdminController@editAdmin')->name('admin.update');
     Route::post('admin/update/{id}', 'Backend\AdminController@updateAdmin')->name('admin.update.submit');
     Route::get('admins', 'Backend\AdminController@admins')->name('admins');
-    Route::get('profile', 'Backend\AdminController@profile');
-    Route::get('profile/own', 'Backend\AdminController@show');
+    Route::get('profile/{username}', 'Backend\AdminController@profile')->name('profile');
+    Route::get('profile', 'Backend\AdminController@show')->name('profile.own');
     Route::post('profile/update', 'Backend\AdminController@update');
    
 
@@ -76,7 +76,9 @@ Route::group( ['prefix' => 'admin', 'as' => 'admin.'], function() {
     Route::get('companies', 'Backend\CompanyController@index')->name('companies');
     Route::get('company/create', 'Backend\CompanyController@create')->name('company.create');
     Route::get('company/update/{id}', 'Backend\CompanyController@edit')->name('company.update');
+    Route::get('company/profile/{slug}', 'Backend\CompanyController@profile')->name('company.profile');
     Route::post('company/update/{id}', 'Backend\CompanyController@update')->name('company.update.submit');
+    Route::post('company/delete/{id}', 'Backend\CompanyController@destroy')->name('company.delete');
     Route::post('company/ban/{id}', 'Backend\AdminController@companyBan')->name('company.ban');
 
 
@@ -86,6 +88,7 @@ Route::group( ['prefix' => 'admin', 'as' => 'admin.'], function() {
     Route::get('customer/update/{id}', 'Backend\CustomerController@edit')->name('customer.update');
     Route::post('customer/update/{id}', 'Backend\CustomerController@update')->name('customer.update.submit');
     Route::get('customer/ban', 'Backend\CustomerController@ban');
+    Route::get('customer/profile/{username}', 'Backend\CustomerController@profile')->name('customer.profile');
 
 
 
@@ -97,11 +100,11 @@ Route::group( ['prefix' => 'admin', 'as' => 'admin.'], function() {
     Route::post('product/create', 'Backend\ProductController@store')->name('product.create.submit');
     Route::get('product/update/{id}', 'Backend\ProductController@edit')->name('product.update');
     Route::post('product/update/{id}', 'Backend\ProductController@update')->name('product.update.submit');
-    Route::get('product/show/{id}', 'Backend\ProductController@show');
+    Route::get('product/show/{slug}', 'Backend\ProductController@show')->name('product.show');
     Route::get('product/delete/{id}', 'Backend\ProductController@destroy')->name('product.delete');
-    Route::post('product/image/upload', 'Backend\ProductController@uploadImage');
+    Route::post('product/image/upload/{id}', 'Backend\ProductController@uploadImage')->name('product.image.store');
     Route::post('product/image/setpriority/{id}', 'Backend\ProductController@setPriority');
-    Route::get('product/image/delete/{id}', 'Backend\ProductController@deleteImage');
+    Route::get('product/image/delete/{id}', 'Backend\ProductController@deleteImage')->name('product.image.delete');
 
 
 

@@ -26,6 +26,11 @@ class ProductController extends Controller
         return view('backend.product.index');
     }
 
+    public function show($slug){
+        $product = Product::where('slug', '=', $slug)->first();
+        return view('backend.product.single')->with('product', $product);
+    }
+
     public function create(){
         return view('backend.product.add');
     }
@@ -112,30 +117,6 @@ class ProductController extends Controller
         }
     }
 
-    public function show(Request  $request)
-    {
-        try{
-            $product = Product::find($request->id);
-            if(is_null($product))
-            return response()->json([
-                "sucess"  => false,
-                "message" => "No Product Found!",
-                
-            ]);
-            $company = $product->company;
-            $images=$product->images;
-            return response()->json([
-                "sucess"  => true,
-                "product" => $product,
-            ]);
-        }
-        catch(Exception $e){
-            return response()->json([
-                'success'=>false,
-                'message'=> ''.$e,
-            ]);
-        }
-    }
 
     public function edit($id){
         $product=Product::find($id);
@@ -232,40 +213,33 @@ class ProductController extends Controller
         }
     }
 
-    public function deleteImage(Request $request)
+    public function deleteImage($id)
     {
-        $productimagetbl = ProductImage::find($request->id);
+        $productimagetbl = ProductImage::find($id);
+        $product=$productimagetbl->product->slug;
         if(is_null($productimagetbl))
-            return response()->json([
-                "sucess"  => false,
-                "message" => "Image already deleted!", 
-            ]);
-       
-        File::delete(public_path('/storage/product/'.$productimagetbl->image));
+            return back();
+        Storage::disk('public')->delete('product/'.$productimagetbl->image);
         $productimagetbl->delete();
 
-        return response()->json([
-            "sucess"  => true,
-            "message" => "Product image has been deleted!",
-        ]);
+        return redirect()->route('admin.product.show', $product);;
 
     }
 
-    public function uploadImage(Request $request)
+    public function uploadImage(Request $request, $id)
     {
         $files = $request->file('image');
        
         if(!empty($files)): 
             $i=0;
             foreach($files as $file):
-                // dd($file) ;
                 $i++;
                 try{
                 $imagetbl = new ProductImage;
                 $imageName = time().$i.'.'.$file->extension(); 
-                $file->move(public_path('storage/product'), $imageName);
+                $file->storeAs('/product',$imageName,'public');
                 $imagetbl->image =$imageName;
-                $imagetbl->product_id = $request->id;
+                $imagetbl->product_id =$id;
                 $imagetbl->priority = $i;
                 $imagetbl->save();   
 
@@ -273,19 +247,10 @@ class ProductController extends Controller
                     ['message'=> ' '.$e.' '];
             }
             endforeach;
-            return response()->json([
-                "sucess"  => true,
-                "message" => "Product image has been uploaded!",
-                
-            ]);
+            return back();
 
         else:
-            return response()->json([
-                "sucess"  => false,
-                "message" => "Product image  upload failed!",
-                
-            ]);
-
+            return back();
         endif;
 
     }

@@ -31,8 +31,8 @@
 			@foreach(App\Models\Product::latest()->get() as $product)
 				<tr>
 					<th scope="row">{{$loop->index+1}}</th>
-					<td>{{$product->name}}</td>
-					<td>{{$product->code}}</td>
+					<td onclick="window.location.href='{{route('admin.product.show', $product->slug)}}'" style="cursor: pointer">{{$product->name}}</td>
+					<td onclick="window.location.href='{{route('admin.product.show', $product->slug)}}'" style="cursor: pointer">{{$product->code}}</td>
 				
 					<td>{{$product->price}}</td>
 					<td>{{$product->quantity}}</td>

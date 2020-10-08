@@ -4,6 +4,9 @@
 	<title>Shundarbon || @yield('title')</title>
 	<link rel="stylesheet" href="{{ asset('css/backend/bootstrap.css') }}?ver=1.1">
 	<link rel="stylesheet" type="text/css" href="{{ asset('css/backend/global.css') }}?ver=1.1">
+	<link rel="stylesheet" type="text/css" href="{{ asset('css/backend/profile.css') }}?ver=1.1">
+	<link rel="stylesheet" type="text/css" href="{{ asset('css/backend/slider.css') }}?ver=1.1">
+	<link rel="stylesheet" type="text/css" href="{{ asset('css/backend/product.css') }}?ver=1.1">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
 	<link rel="stylesheet" type="text/css" href="{{ asset('css/backend/sidebar.css') }}?ver=1.1">
 	<link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
@@ -15,7 +18,8 @@
 	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/scroller/2.0.2/css/scroller.bootstrap4.min.css"/>
 	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/searchpanes/1.1.1/css/searchPanes.bootstrap4.min.css"/>
 	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/select/1.3.1/css/select.bootstrap4.min.css"/>
-	 
+	
+	{{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css"/> --}}
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/js/all.min.js"></script>
 	
 	<!-- Select2 css-->
@@ -23,10 +27,10 @@
 
 
 
-	<script type="text/javascript">
-		const myapplink = "http://192.168.43.131:8000";
-	</script>
+	
 	<script src="{{ asset('js/backend/jquery.min.js') }}" ></script>
+	<script src="{{ asset('js/server.js') }}" ></script>
+
 
 	<script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
 	{{-- <script src="{{ asset('js/backend/jquery-3.3.1.min.js')}}"></script> --}}
@@ -47,7 +51,7 @@
 			
 			<a href="{{route('admin.logout')}}" class="btn btn-primary btn-sm">Logout</a>
 
-			<div class="user">
+			<div class="user" onclick="window.location.href='{{route('admin.profile.own')}}'" style="cursor: pointer">
 				<img src="{{ asset('storage/admin')}}/{{Auth::guard('admin')->user()->image}}" class="user-image" alt=" ">
 			<h4 class="user-name">{{Auth::guard('admin')->user()->username}}</h4>
 			</div>
@@ -122,7 +126,7 @@
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 	
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+	<script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 
-	
 </body>
 </html>

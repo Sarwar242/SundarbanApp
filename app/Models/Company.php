@@ -54,6 +54,11 @@ class Company extends Model
 
        return $companies;
    }
+   public function admin()
+   {
+       return $this->belongsTo(Admin::class);
+   }
+
 
    public static function slugComplete() {
     $companies = Company::all();

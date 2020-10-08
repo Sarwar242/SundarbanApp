@@ -28,6 +28,12 @@ class CompanyController extends Controller
         $this->middleware('auth:admin');
     }
     
+    public function profile($slug){
+        $company = Company::where('slug', '=', $slug)->first();
+        // dd($company);
+        return view('backend.company.profile')->with('company', $company);
+    }
+
     public function index(){
         // $slug=Company::slugComplete();
         // dd($slug);

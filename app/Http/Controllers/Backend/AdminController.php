@@ -31,6 +31,18 @@ class AdminController extends Controller
     {
         return view('backend.index');
     }
+    
+    public function profile($username)
+    {
+        $admin= Admin::where('username', '=', $username)->first();
+        return view('backend.admin.profile')->with('admin', $admin);
+    }  
+    public function show()
+    {
+        $admin_id=Auth::guard('admin')->user()->id; 
+        $admin= Admin::find($admin_id);
+        return view('backend.admin.own_profile')->with('admin', $admin);
+    }
     public function admins()
     {
         return view('backend.admin.index');
