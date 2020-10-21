@@ -18,7 +18,7 @@ class UnionController extends Controller
         try{
             $unions = Union::all();
             return response()->json([
-                "sucess"  => true,
+                "success"  => true,
                 "unions" => $unions,
             ]);
         }
@@ -53,7 +53,7 @@ class UnionController extends Controller
             $union->save();
 
             return response()->json([
-                "sucess"  => true,
+                "success"  => true,
                 "message" => "Union has been added!",
                 "union" => $union,
             ]);
@@ -71,13 +71,13 @@ class UnionController extends Controller
             $union = Union::find($request->id);
             if(is_null($union))
             return response()->json([
-                "sucess"  => false,
+                "success"  => false,
                 "message" => "No union Found!",
                 
             ]);
             
             return response()->json([
-                "sucess"  => true,
+                "success"  => true,
                 "union" => $union,
             ]);
         }

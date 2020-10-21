@@ -16,7 +16,7 @@ class DistrictController extends Controller
         try{
             $districts = District::all();
             return response()->json([
-                "sucess"  => true,
+                "success"  => true,
                 "districts" => $districts,
             ]);
         }
@@ -54,7 +54,7 @@ class DistrictController extends Controller
             $district->save();
 
             return response()->json([
-                "sucess"  => true,
+                "success"  => true,
                 "message" => "District has been added!",
                 "district" => $district,
             ]);
@@ -72,13 +72,13 @@ class DistrictController extends Controller
             $district = District::find($request->id);
             if(is_null($district))
             return response()->json([
-                "sucess"  => false,
+                "success"  => false,
                 "message" => "No District Found!",
                 
             ]);
             
             return response()->json([
-                "sucess"  => true,
+                "success"  => true,
                 "district" => $district,
             ]);
         }
@@ -118,7 +118,7 @@ class DistrictController extends Controller
             $district->save();
 
             return response()->json([
-                "sucess"  => true,
+                "success"  => true,
                 "message" => "District has been updated!",
                 "district" => $district,
             ]);

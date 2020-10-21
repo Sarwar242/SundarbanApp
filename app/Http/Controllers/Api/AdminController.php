@@ -169,7 +169,7 @@ class AdminController extends Controller
             $admin->save();
 
             return response()->json([
-                "sucess"  => true,
+                "success"  => true,
                 "message" => "Admin profile has been updated!",
                 "admin" => $admin
             ]);
@@ -240,7 +240,7 @@ class AdminController extends Controller
             $admin->save();
 
             return response()->json([
-                "sucess"  => true,
+                "success"  => true,
                 "message" => "New Admin profile has been created!",
                 "admin" => $admin
             ]);
@@ -447,7 +447,7 @@ class AdminController extends Controller
             $company=Company::find($request->id);
             if(is_null($company))
             return response()->json([
-                "sucess"  => false,
+                "success"  => false,
                 "message" => "No company Found!",
                 
             ]);
@@ -487,8 +487,8 @@ class AdminController extends Controller
             $customer=Customer::find($request->id);
             if(is_null($customer))
             return response()->json([
-                "sucess"  => false,
-                "message" => "No customer Found!",
+                "success"  => false,
+                "message" => "No such customer Found!",
                 
             ]);
             if($customer->ban==1){
@@ -527,7 +527,7 @@ class AdminController extends Controller
             $admin=Admin::find($request->id);
             if(is_null($admin))
             return response()->json([
-                "sucess"  => false,
+                "success"  => false,
                 "message" => "No Admin Found!",
                 
             ]);

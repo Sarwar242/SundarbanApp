@@ -14,7 +14,7 @@ class UnitController extends Controller
         try{
             $units = Unit::all();
             return response()->json([
-                "sucess"  => true,
+                "success"  => true,
                 "units" => $units,
             ]);
         }
@@ -43,7 +43,7 @@ class UnitController extends Controller
             $unit->save();
 
             return response()->json([
-                "sucess"  => true,
+                "success"  => true,
                 "message" => "Unit has been added!",
                 "unit" => $unit,
             ]);
@@ -61,13 +61,13 @@ class UnitController extends Controller
             $unit = Unit::find($request->id);
             if(is_null($unit))
             return response()->json([
-                "sucess"  => false,
+                "success"  => false,
                 "message" => "No Unit Found!",
                 
             ]);
             
             return response()->json([
-                "sucess"  => true,
+                "success"  => true,
                 "unit" => $unit,
             ]);
         }
@@ -98,7 +98,7 @@ class UnitController extends Controller
             $unit->save();
 
             return response()->json([
-                "sucess"  => true,
+                "success"  => true,
                 "message" => "Unit has been updated!",
                 "unit" => $unit
             ]);
@@ -118,12 +118,12 @@ class UnitController extends Controller
             $unit = Unit::find($request->id);
             if(is_null($unit))
             return response()->json([
-                "sucess"  => false,
+                "success"  => false,
                 "message" => "No Unit Found!",    
             ]);    
             $unit->delete();
             return response()->json([
-                "sucess"  => true,
+                "success"  => true,
                 "message" => "Unit has been deleted!",
             ]);
         }

@@ -25,7 +25,7 @@ class ProductController extends Controller
             endforeach;
             
             return response()->json([
-                "sucess"  => true,
+                "success"  => true,
                 "product" => $products,
             ]);
         }
@@ -101,7 +101,7 @@ class ProductController extends Controller
             endif;
 
             return response()->json([
-                "sucess"  => true,
+                "success"  => true,
                 "message" => "New product created!",
                 "product" => $product,
             ]);
@@ -119,14 +119,14 @@ class ProductController extends Controller
             $product = Product::find($request->id);
             if(is_null($product))
             return response()->json([
-                "sucess"  => false,
+                "success"  => false,
                 "message" => "No Product Found!",
                 
             ]);
             $company = $product->company;
             $images=$product->images;
             return response()->json([
-                "sucess"  => true,
+                "success"  => true,
                 "product" => $product,
             ]);
         }

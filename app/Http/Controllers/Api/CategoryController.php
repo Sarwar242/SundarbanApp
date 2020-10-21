@@ -31,7 +31,7 @@ class CategoryController extends Controller
                 }
             }
             return response()->json([
-                "sucess"  => true,
+                "success"  => true,
                 "categories" => $categories,
             ]);
         }
@@ -72,7 +72,7 @@ class CategoryController extends Controller
             $category->save();
 
             return response()->json([
-                "sucess"  => true,
+                "success"  => true,
                 "message" => "New Category created!",
                 "category" => $category,
             ]);
@@ -90,7 +90,7 @@ class CategoryController extends Controller
             $category = Category::find($request->id);
             if(is_null($category))
             return response()->json([
-                "sucess"  => false,
+                "success"  => false,
                 "message" => "No Category Found!",
                 
             ]);
@@ -105,7 +105,7 @@ class CategoryController extends Controller
                 }
             
             return response()->json([
-                "sucess"  => true,
+                "success"  => true,
                 "category" => $category,
             ]);
         }
@@ -145,7 +145,7 @@ class CategoryController extends Controller
         $category->save();
 
         return response()->json([
-            "sucess"  => true,
+            "success"  => true,
             "message" => "Category has been updated!",
             "category" => $category
         ]);
@@ -158,7 +158,7 @@ class CategoryController extends Controller
             $category = Category::find($request->id);
             if(is_null($category))
             return response()->json([
-                "sucess"  => false,
+                "success"  => false,
                 "message" => "No Category Found!",
                 
             ]);
@@ -167,7 +167,7 @@ class CategoryController extends Controller
             }
             $category->delete();
             return response()->json([
-                "sucess"  => true,
+                "success"  => true,
                 "message" => "Category has been deleted!",
             ]);
         }

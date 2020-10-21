@@ -87,7 +87,7 @@ class CompanyController extends Controller
             $company->save();
 
             return response()->json([
-                "sucess"  => true,
+                "success"  => true,
                 "message" => "Company profile has been updated!",
                 "company" => $company
             ]);

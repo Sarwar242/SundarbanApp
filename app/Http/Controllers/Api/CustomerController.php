@@ -83,7 +83,7 @@ class CustomerController extends Controller
             $customer->save();
 
             return response()->json([
-                "sucess"  => true,
+                "success"  => true,
                 "message" => "Customer profile has been updated!",
                 "customer" => $customer
             ]);

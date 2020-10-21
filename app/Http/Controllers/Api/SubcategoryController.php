@@ -28,7 +28,7 @@ class SubcategoryController extends Controller
                 }
             endforeach;   
             return response()->json([
-                "sucess"  => true,
+                "success"  => true,
                 "subcategories" => $subcategories,
             ]);
         }
@@ -88,7 +88,7 @@ class SubcategoryController extends Controller
             $subcategory->save();
 
             return response()->json([
-                "sucess"  => true,
+                "success"  => true,
                 "message" => "New Subcategory created!",
                 "subcategory" => $subcategory,
             ]);
@@ -106,7 +106,7 @@ class SubcategoryController extends Controller
             $subcategory = Subcategory::find($request->id);
             if(is_null($subcategory))
             return response()->json([
-                "sucess"  => false,
+                "success"  => false,
                 "message" => "No Subcategory Found!",
                 
             ]);
@@ -120,7 +120,7 @@ class SubcategoryController extends Controller
                     }
                 }
             return response()->json([
-                "sucess"  => true,
+                "success"  => true,
                 "subcategory" => $subcategory,
             ]);
         }
@@ -157,7 +157,7 @@ class SubcategoryController extends Controller
         $subcategory->save();
 
         return response()->json([
-            "sucess"  => true,
+            "success"  => true,
             "message" => "Subcategory has been updated!",
             "subcategory" => $subcategory
         ]);
@@ -170,7 +170,7 @@ class SubcategoryController extends Controller
             $subcategory = Subcategory::find($request->id);
             if(is_null($subcategory)){
                 return response()->json([
-                    "sucess"  => false,
+                    "success"  => false,
                     "message" => "No Subcategory Found!",
                     ]);
             }
@@ -181,7 +181,7 @@ class SubcategoryController extends Controller
             }
             $subcategory->delete();
             return response()->json([
-                "sucess"  => true,
+                "success"  => true,
                 "message" => "Subcategory has been deleted!",
             ]);
         }

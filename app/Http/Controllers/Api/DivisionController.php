@@ -16,7 +16,7 @@ class DivisionController extends Controller
         try{
             $divisions = Division::all();
             return response()->json([
-                "sucess"  => true,
+                "success"  => true,
                 "divisions" => $divisions,
             ]);
         }
@@ -50,7 +50,7 @@ class DivisionController extends Controller
             $division->save();
 
             return response()->json([
-                "sucess"  => true,
+                "success"  => true,
                 "message" => "Division has been added!",
                 "division" => $division,
             ]);
@@ -68,13 +68,13 @@ class DivisionController extends Controller
             $division = Division::find($request->id);
             if(is_null($division))
             return response()->json([
-                "sucess"  => false,
+                "success"  => false,
                 "message" => "No Division Found!",
                 
             ]);
             
             return response()->json([
-                "sucess"  => true,
+                "success"  => true,
                 "division" => $division,
             ]);
         }
@@ -109,7 +109,7 @@ class DivisionController extends Controller
             $division->save();
 
             return response()->json([
-                "sucess"  => true,
+                "success"  => true,
                 "message" => "Division has been updated!",
                 "division" => $division
             ]);
@@ -129,12 +129,12 @@ class DivisionController extends Controller
             $division = Division::find($request->id);
             if(is_null($division))
             return response()->json([
-                "sucess"  => false,
+                "success"  => false,
                 "message" => "No Division Found!",    
             ]);    
             $division->delete();
             return response()->json([
-                "sucess"  => true,
+                "success"  => true,
                 "message" => "Division has been deleted!",
             ]);
         }

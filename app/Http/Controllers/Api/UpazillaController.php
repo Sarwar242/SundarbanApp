@@ -17,7 +17,7 @@ class UpazillaController extends Controller
         try{
             $upazillas = Upazilla::all();
             return response()->json([
-                "sucess"  => true,
+                "success"  => true,
                 "upazillas" => $upazillas,
             ]);
         }
@@ -52,7 +52,7 @@ class UpazillaController extends Controller
             $upazilla->save();
 
             return response()->json([
-                "sucess"  => true,
+                "success"  => true,
                 "message" => "Upazilla has been added!",
                 "upazilla" => $upazilla,
             ]);
@@ -70,13 +70,13 @@ class UpazillaController extends Controller
             $upazilla = Upazilla::find($request->id);
             if(is_null($upazilla))
             return response()->json([
-                "sucess"  => false,
+                "success"  => false,
                 "message" => "No upazilla Found!",
                 
             ]);
             
             return response()->json([
-                "sucess"  => true,
+                "success"  => true,
                 "upazilla" => $upazilla,
             ]);
         }
@@ -113,7 +113,7 @@ class UpazillaController extends Controller
             $upazilla->save();
 
             return response()->json([
-                "sucess"  => true,
+                "success"  => true,
                 "message" => "Upazilla has been updated!",
                 "upazilla" => $upazilla,
             ]);
@@ -132,12 +132,12 @@ class UpazillaController extends Controller
             $upazilla = Upazilla::find($request->id);
             if(is_null($upazilla))
             return response()->json([
-                "sucess"  => false,
+                "success"  => false,
                 "message" => "No Upazilla Found!",    
             ]);    
             $upazilla->delete();
             return response()->json([
-                "sucess"  => true,
+                "success"  => true,
                 "message" => "Upazilla has been deleted!",
             ]);
         }
