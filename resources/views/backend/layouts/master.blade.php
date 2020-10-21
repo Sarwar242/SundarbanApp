@@ -25,7 +25,14 @@
 	<!-- Select2 css-->
 	<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
 
-
+	<style>.select2-container, .select2-dropdown, .select2-search, .select2-results {
+		-webkit-transition: none !important;
+		-moz-transition: none !important;
+		-ms-transition: none !important;
+		-o-transition: none !important;
+		transition: none !important;
+	}
+	</style>
 
 	
 	<script src="{{ asset('js/backend/jquery.min.js') }}" ></script>

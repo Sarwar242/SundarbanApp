@@ -84,6 +84,9 @@ class AdminController extends Controller
                 $profile->bn_name=$request->bn_name;
                 $profile->image="default.png";
                 $profile->user_id=$user->id; 
+                $profile->off_day="Friday"; 
+                $profile->open="09:00:00"; 
+                $profile->close="21:00:00"; 
                 $profile->admin_id=Auth::guard('admin')->user()->id; 
                 $profile->owners_name=$request->owners_name;
                 $slug = Str::slug(str_replace( ' ', '-', $request->name));

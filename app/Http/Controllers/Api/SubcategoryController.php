@@ -18,6 +18,14 @@ class SubcategoryController extends Controller
             $subcategories = Subcategory::all();   
             foreach($subcategories as $subcategory ):
                 $subcategory->category;
+                $products=$subcategory->products;
+                if(!is_null($products))
+                {
+                    foreach ($products as $product) {
+                        $product->category;
+                        $product->subcategory;
+                    }
+                }
             endforeach;   
             return response()->json([
                 "sucess"  => true,
@@ -102,7 +110,15 @@ class SubcategoryController extends Controller
                 "message" => "No Subcategory Found!",
                 
             ]);
-            
+            $category= $subcategory->category;
+            $products =$subcategory->products;
+            if(!is_null($products))
+                {
+                    foreach ($products as $product) {
+                        $product->category;
+                        $product->subcategory;
+                    }
+                }
             return response()->json([
                 "sucess"  => true,
                 "subcategory" => $subcategory,

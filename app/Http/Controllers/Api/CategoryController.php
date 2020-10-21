@@ -19,6 +19,17 @@ class CategoryController extends Controller
     {
         try{
             $categories = Category::all();   
+            foreach ($categories as $category) {
+                $subcategories = $category->subcategories;
+                $products=$category->products;
+                if(!is_null($products))
+                {
+                    foreach ($products as $product) {
+                        $product->category;
+                        $product->subcategory;
+                    }
+                }
+            }
             return response()->json([
                 "sucess"  => true,
                 "categories" => $categories,
@@ -83,6 +94,15 @@ class CategoryController extends Controller
                 "message" => "No Category Found!",
                 
             ]);
+            $category->subcategories;
+            $products= $category->products;
+            if(!is_null($products))
+                {
+                    foreach ($products as $product) {
+                        $product->category;
+                        $product->subcategory;
+                    }
+                }
             
             return response()->json([
                 "sucess"  => true,
