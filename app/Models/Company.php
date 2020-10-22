@@ -5,8 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
+
 class Company extends Model
 {
+
     protected $fillable = [
         'name', 'slug', 'bn_name', 'code','owners_name','owners_nid','phone1','phone2','ban','image',
         'description','bn_description','street','bn_street', 'location','bn_location','website',
@@ -57,6 +59,10 @@ class Company extends Model
    public function admin()
    {
        return $this->belongsTo(Admin::class);
+   }   
+   public function followers()
+   {
+       return $this->hasMany(User::class);
    }
 
 

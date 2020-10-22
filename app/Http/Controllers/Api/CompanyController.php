@@ -27,6 +27,7 @@ class CompanyController extends Controller
     public function profile(Request $request)
     {
         $company= Company::find($request->id);
+        $company->followers()->get()->count() ;
         return response()->json([
             'success'=>true,
             'company'=>$company

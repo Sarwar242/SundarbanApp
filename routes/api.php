@@ -41,6 +41,20 @@ Route::get('email/verify/{id}/{hash}', 'Api\VerificationController@verify')
 
 
 
+/*
+|--------------------------------------------------------------------------
+| Follow and Review Rating API Routes
+|--------------------------------------------------------------------------
+*/
+Route::post('company/follow', 'Api\FollowController@follow');
+Route::post('company/rate', 'Api\RatingController@rate');
+
+
+
+
+
+
+
 
 
 /*

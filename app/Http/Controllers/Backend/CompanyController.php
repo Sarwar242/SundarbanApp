@@ -139,7 +139,7 @@ class CompanyController extends Controller
 
             if(!is_null($request->password)){
                 $encryptedPass= Hash::make($request->password);
-                $company->user->password =$request->password;
+                $company->user->password = $encryptedPass;
             }
             
             if(request()->hasFile('image')){

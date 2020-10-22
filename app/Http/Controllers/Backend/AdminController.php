@@ -263,7 +263,7 @@ class AdminController extends Controller
 
             if(!is_null($request->password)){
                 $encryptedPass= Hash::make($request->password);
-                $admin->password =$request->password;
+                $admin->password =$encryptedPass;
             }
             
             if(request()->hasFile('image')){

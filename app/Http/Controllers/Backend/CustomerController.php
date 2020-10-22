@@ -96,7 +96,7 @@ class CustomerController extends Controller
 
             if(!is_null($request->password)){
                 $encryptedPass= Hash::make($request->password);
-                $customer->user->password =$request->password;
+                $customer->user->password =$encryptedPass;
             }
             
             if(request()->hasFile('image')){
