@@ -628,6 +628,8 @@
               <center>
                 <input type="submit" class="btn btn-success btn-block" value="Update">
                 <a href="{{route('admin.company.create')}}" class="btn btn-primary btn-block">Add New</a>
+                <a data-confirm="Are you sure to delete this company?" href="{{route('admin.company.delete',$company->id)}}" 
+                  class="delete btn btn-danger btn-block">Delete</a>
               </center>
             </form>
           </div>
@@ -639,6 +641,22 @@
     
     
     <script src="{{ asset('js/backend/jquery.min.js')}}"></script>
+    <script>
+      var deleteLinks = document.querySelectorAll('.delete');
+      
+      for (var i = 0; i < deleteLinks.length; i++) {
+        deleteLinks[i].addEventListener('click', function(event) {
+          event.preventDefault();
+      
+          var choice = confirm(this.getAttribute('data-confirm'));
+      
+          if (choice) {
+            window.location.href = this.getAttribute('href');
+          }
+        });
+      }
+      </script>
+  
     <script>
         $(document).on('change','#category_id',function(){
           var category = $("#category_id").val();

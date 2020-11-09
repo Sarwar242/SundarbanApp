@@ -160,6 +160,37 @@ class CompanyController extends Controller
             return redirect()->route('admin.company.update',$company->id);
         }catch(Exception $e){
             session()->flash('failed', 'Error occured! --'.$e);
+            return redirect()->route('admin.company.index');
+        }
+    }
+
+    
+    public function destroy($id)
+    {
+        try{
+            $company = Company::find($id);
+            if(is_null($company)){
+                session()->flash('failed', 'No company found !!!');
+                return redirect()->route('admin.companies');
+            }
+            if (!is_null($company->image) && $company->image !="default.png" &&  $company->image !="default.jpg") {
+                $exists = Storage::disk('public')->exists('company/'.$company->image);
+                if($exists)
+                   Storage::disk('public')->delete('company/'.$company->image);
+            }
+            $user_id=$company->user_id;
+            $user= User::find($user_id);
+            if(!is_null($user)){
+                $user->delete();
+            }
+            else{
+                $company->delete();
+            }
+            
+            session()->flash('success', 'A Company has been Deleted!!');
+            return redirect()->route('admin.companies');
+        }catch(Exception $e){
+            session()->flash('failed', 'Error occured! --'.$e);
             return redirect()->route('admin.dashboard');
         }
     }

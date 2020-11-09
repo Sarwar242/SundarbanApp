@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Shundarbon || @yield('title')</title>
+	<title>Egol.com.bd || @yield('title')</title>
 	<link rel="stylesheet" href="{{ asset('css/backend/bootstrap.css') }}?ver=1.1">
 	<link rel="stylesheet" type="text/css" href="{{ asset('css/backend/global.css') }}?ver=1.1">
 	<link rel="stylesheet" type="text/css" href="{{ asset('css/backend/profile.css') }}?ver=1.1">
@@ -51,7 +51,7 @@
 			<i class="fa fa-bars" id="sidebar-btn"></i>
 		</label>
 		<div class="left-area">
-			<h3>Sundarban<span>.com</span></h3>
+			<h3>Egol<span>.com.bd</span></h3>
 		</div>
 
 		<div class="right-area">

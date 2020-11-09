@@ -163,7 +163,7 @@ class CategoryController extends Controller
             $category = Category::find($id);
             if(is_null($category)){
             session()->flash('failed', 'No category found !!!');
-            return redirect()->route('admin.dashboard');
+            return redirect()->route('admin.categories');
         }
             if (!is_null($category->image) && $category->image !="default.png" &&  $category->image !="default.jpg") {
                 $exists = Storage::disk('public')->exists('category/'.$category->image);
@@ -172,7 +172,7 @@ class CategoryController extends Controller
             }
             $category->delete();
             session()->flash('success', 'A Category has been Deleted!!');
-            return view('backend.category.index');
+            return redirect()->route('admin.categories');
         }catch(Exception $e){
             session()->flash('failed', 'Error occured! --'.$e);
             return redirect()->route('admin.dashboard');

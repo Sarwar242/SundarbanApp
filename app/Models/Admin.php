@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Notifications\AdminPasswordResetNotification;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -15,7 +16,7 @@ class Admin  extends Authenticatable
     use Notifiable, HasApiTokens;
 
     protected $guard = 'admin';
-    
+
     protected $fillable = [
          'email', 'password','first_name',
          'last_name', 'username','type','ban',
@@ -33,17 +34,17 @@ class Admin  extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-
-    // public function sendPasswordResetNotification($token){
-    //     $this->notify(new PasswordResetNotification($token));
-    // }
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new AdminPasswordResetNotification($token));
+    }
 
     public function division()
    {
        return $this->belongsTo(Division::class);
    }
-    
-   
+
+
    public function district()
    {
        return $this->belongsTo(District::class);
@@ -61,11 +62,11 @@ class Admin  extends Authenticatable
        return $this->belongsTo(Admin::class);
    }
 
-   
+
     public static function admins()
     {
         $admins = Admin::latest()->paginate(10);
- 
+
         return $admins;
     }
 

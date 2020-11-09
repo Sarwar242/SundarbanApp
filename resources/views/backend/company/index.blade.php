@@ -6,6 +6,26 @@
 <body>
 
 	<div class="content">
+		@if(Session::has('success'))
+            <div class="alert alert-success alert-block">
+                <button type="button" class="close" data-dismiss="alert">
+                    x
+                </button>
+                <strong>
+                  {!! session('success')!!}   @php Session::forget('success') @endphp
+                </strong>
+            </div>
+        @endif
+        @if(Session::has('failed'))
+            <div class="alert alert-error alert-block">
+                <button type="button" class="close" data-dismiss="alert">
+                    x
+                </button>
+                <strong>
+                    {!! session('failed') !!}
+                </strong>
+            </div>
+        @endif
 		<center>
 			<div class="heading">
 				<h4>All The Companies are here</h4>

@@ -22,7 +22,7 @@
             </div>
           @endif
           @if(Session::has('failed'))
-  
+
             <div class="alert alert-error alert-block">
                 <button type="button" class="close" data-dismiss="alert">
                     x
@@ -31,7 +31,7 @@
                     {!! session('failed') !!}
                 </strong>
             </div>
-    
+
           @endif
             <div class="text-center">
               <h2>Edit Customer</h2>
@@ -69,11 +69,44 @@
                 @enderror
               </div>
 
-  
+
               <div class="form-group">
                 <label for="exampleFormControlInput1">Phone(*)</label>
                 <input type="text" name="phone" value="{{$customer->user->phone}}" class="form-control @error('phone') is-invalid @enderror" placeholder="Pease type a valid phone no...">
                 @error('phone')
+                <div class="alert alert-danger alert-block">
+                  <button type="button" class="close" data-dismiss="alert">
+                    x
+                  </button>
+                  <strong>
+                      {!! $message !!}
+                  </strong>
+                </div>
+                @enderror
+              </div>
+
+              <div class="form-group">
+                <label for="option">Phone Option</label>
+                <select class="form-control @error('phone_hide') is-invalid @enderror"
+                  name="phone_hide" >
+                    @if(!is_null($customer->phone_hide))
+                        <option value="{{$customer->phone_hide}}" disabled selected>
+                           @if($customer->phone_hide==1) Hide @else Show @endif </option>
+                        @if($customer->phone_hide==1)
+                           <option value="0">
+                                Show</option>
+                        @else
+                        <option value="1">
+                                Hide</option>
+                        @endif
+                    @else
+                        <option value="" selected='selected' disabled>
+                            Select one</option>
+                        <option value="0">Show</option>
+                        <option value="1">Hide</option>
+                    @endif
+                </select>
+                 @error('phone_hide')
                 <div class="alert alert-danger alert-block">
                   <button type="button" class="close" data-dismiss="alert">
                     x
@@ -132,8 +165,8 @@
 
               <div class="form-group">
                 <label for="Phone Number">Date of Birth</label>
-                <input type="date" name="dob" placeholder="dd-mm-yyyy" 
-                 min="1997-01-01" max="2030-12-31"  value="{{$customer->dob}}" 
+                <input type="date" name="dob" placeholder="dd-mm-yyyy"
+                 min="1997-01-01" max="2030-12-31"  value="{{$customer->dob}}"
                   class="form-control @error('dob') is-invalid @enderror">
                 @error('dob')
                 <div class="alert alert-danger alert-block">
@@ -147,7 +180,7 @@
                 @enderror
               </div>
 
-              
+
               <div class="form-group">
                 <label for="business_type">Gender</label>
                  <select class="form-control @error('gender') is-invalid @enderror"
@@ -156,22 +189,22 @@
                       <option value="{{$customer->gender}}" disabled selected>
                           {{$customer->gender}}</option>
                       <option value="Male">
-                            Male</option> 
+                            Male</option>
                       <option value="Female">
-                            Female</option>       
+                            Female</option>
                       <option value="Other">
                             Other</option>
                     @else
                     <option value="" selected='selected' disabled>
                       Select one</option>
                       <option value="Male">
-                        Male</option> 
+                        Male</option>
                   <option value="Female">
-                        Female</option>       
+                        Female</option>
                   <option value="Other">
                         Other</option>
                     @endif
-                 
+
                 </select>
                 @error('gender')
                 <div class="alert alert-danger alert-block">
@@ -208,7 +241,7 @@
 
               <div class="form-group">
                 <label for="about">About</label>
-                <textarea class="form-control @error('about') is-invalid @enderror" 
+                <textarea class="form-control @error('about') is-invalid @enderror"
                 name="about" rows="3" placeholder="About the Customer...">{!!$customer->about!!}</textarea>
                 @error('about')
                 <div class="alert alert-danger alert-block">
@@ -224,7 +257,7 @@
 
               <div class="form-group">
                 <label for="bn_about">About in Bangla</label>
-                <textarea class="form-control @error('bn_about') is-invalid @enderror" 
+                <textarea class="form-control @error('bn_about') is-invalid @enderror"
                 name="bn_about" rows="3" placeholder="About the Customer in BD...">{!!$customer->bn_about!!}</textarea>
                 @error('bn_about')
                 <div class="alert alert-danger alert-block">
@@ -240,7 +273,7 @@
 
               <div class="form-group">
                 <label for="Zip Code">Zip Code</label>
-                <input type="text" name="zipcode"  value="{{$customer->zipcode}}"  
+                <input type="text" name="zipcode"  value="{{$customer->zipcode}}"
                   class="form-control @error('zipcode') is-invalid @enderror" placeholder="Zipcode...">
                 @error('zipcode')
                 <div class="alert alert-danger alert-block">
@@ -267,7 +300,7 @@
                   </strong>
                 </div>
                 @enderror
-              </div>  
+              </div>
               <div class="form-group">
                 <label for="Location">Location/Village in Bangla</label>
                 <input type="text" name="bn_location"  value="{{$customer->bn_location}}"  class="form-control @error('bn_location') is-invalid @enderror" placeholder="Exact Location in Bangla ...">
@@ -343,8 +376,8 @@
                   @else
                   <option value="" selected='selected' disabled>
                     Select a Division</option>
-                    @foreach(App\Models\Division::all() as $division)   
-                   
+                    @foreach(App\Models\Division::all() as $division)
+
                       <option value="{{ $division->id }}">
                           {{ $division->name}}</option>
                     @endforeach
@@ -424,6 +457,8 @@
               <center>
                 <input type="submit" class="btn btn-success btn-block" value="Update">
                 <a href="{{route('admin.customer.create')}}" class="btn btn-primary btn-block">Add New</a>
+                <a data-confirm="Are you sure to delete this Customer?" href="{{route('admin.customer.delete',$customer->id)}}"
+                  class="delete btn btn-danger btn-block">Delete</a>
               </center>
             </form>
           </div>
@@ -432,9 +467,25 @@
     </section>
 
 
-    
-    
+
+
     <script src="{{ asset('js/backend/jquery.min.js')}}"></script>
+    <script>
+      var deleteLinks = document.querySelectorAll('.delete');
+
+      for (var i = 0; i < deleteLinks.length; i++) {
+        deleteLinks[i].addEventListener('click', function(event) {
+          event.preventDefault();
+
+          var choice = confirm(this.getAttribute('data-confirm'));
+
+          if (choice) {
+            window.location.href = this.getAttribute('href');
+          }
+        });
+      }
+      </script>
+
     <script>
        $(document).on('change','#division_id',function(){
         var division = $("#division_id").val();
@@ -449,13 +500,13 @@
           option = "<option selected disabled>Select one</option>";
             var d = JSON.parse(data);
             d.forEach(function(element) {
-              
+
                 console.log(element.id);
                 option += "<option value='" + element.id + "'>" + element.name + "</option>";
             });
 
             $("#district_id").html(option);
-        }); 
+        });
     });
 
     $(document).on('change','#district_id',function(){
@@ -475,7 +526,7 @@
             });
 
             $("#upazilla_id").html(option);
-        }); 
+        });
     });
 
     $(document).on('change','#upazilla_id',function(){
@@ -494,7 +545,7 @@
             });
 
             $("#union_id").html(option);
-        }); 
+        });
     });
     </script>
 

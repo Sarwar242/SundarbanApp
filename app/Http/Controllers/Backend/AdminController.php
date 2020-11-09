@@ -284,6 +284,30 @@ class AdminController extends Controller
             }catch(Exception $e){
                 session()->flash('failed', 'Error occured! --'.$e);
                 return redirect()->route('admin.admin.update',$admin->id);
-            }
+        }
     }
+
+    public function destroy($id)
+    {
+        try{
+            $admin = Admin::find($id);
+            if(is_null($admin)){
+                session()->flash('failed', 'No admin found !!!');
+                return redirect()->route('admin.admins');
+            }
+            if (!is_null($admin->image) && $admin->image !="default.png" &&  $admin->image !="default.jpg") {
+                $exists = Storage::disk('public')->exists('admin/'.$admin->image);
+                if($exists)
+                   Storage::disk('public')->delete('admin/'.$admin->image);
+            }
+            $admin->delete();
+           
+            session()->flash('success', 'A Admin has been Deleted!!');
+            return redirect()->route('admin.admins');
+        }catch(Exception $e){
+            session()->flash('failed', 'Error occured! --'.$e);
+            return redirect()->route('admin.dashboard');
+        }
+    }
+
 }

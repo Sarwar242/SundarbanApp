@@ -40,8 +40,21 @@ Route::group( ['prefix' => 'admin', 'as' => 'admin.'], function() {
 
     //Authorization
     Route::get('/login','Backend\Auth\AdminAuthController@showLoginForm')->name('login');
+    
     Route::post('/login', 'Backend\Auth\AdminAuthController@login')->name('login.submit');
     Route::get('logout/', 'Backend\Auth\AdminAuthController@logout')->name('logout');
+
+    // Password Reset
+    Route::get('/password/reset','Backend\Auth\AdminAuthController@showLinkRequestForm')
+    ->name('password.request');
+    Route::post('/password/email','Backend\Auth\ResetPasswordController@sendResetLinkEmail')
+    ->name('password.email');
+
+    Route::get('/password/reset/{token}', 'Backend\Auth\ResetPasswordController@showResetForm')
+    ->name('password.reset');
+    Route::post('/password/reset', 'Backend\Auth\ResetPasswordController@reset')
+        ->name('password.update');
+
 
     //Dashboard
     Route::get('/', 'Backend\AdminController@index')->name('dashboard');
@@ -54,13 +67,14 @@ Route::group( ['prefix' => 'admin', 'as' => 'admin.'], function() {
     //Admin
     Route::get('admin/create', 'Backend\AdminController@createAdmin')->name('admin.create');
     Route::post('admin/create', 'Backend\AdminController@storeAdmin')->name('admin.create.submit');
-    Route::post('admin/ban', 'Backend\AdminController@customerBan');
+    Route::post('admin/ban', 'Backend\AdminController@adminBan');
     Route::get('admin/update/{id}', 'Backend\AdminController@editAdmin')->name('admin.update');
     Route::post('admin/update/{id}', 'Backend\AdminController@updateAdmin')->name('admin.update.submit');
     Route::get('admins', 'Backend\AdminController@admins')->name('admins');
     Route::get('profile/{username}', 'Backend\AdminController@profile')->name('profile');
     Route::get('profile', 'Backend\AdminController@show')->name('profile.own');
     Route::post('profile/update', 'Backend\AdminController@update');
+    Route::get('admin/delete/{id}', 'Backend\AdminController@destroy')->name('admin.delete');
    
 
 
@@ -78,7 +92,7 @@ Route::group( ['prefix' => 'admin', 'as' => 'admin.'], function() {
     Route::get('company/update/{id}', 'Backend\CompanyController@edit')->name('company.update');
     Route::get('company/profile/{slug}', 'Backend\CompanyController@profile')->name('company.profile');
     Route::post('company/update/{id}', 'Backend\CompanyController@update')->name('company.update.submit');
-    Route::post('company/delete/{id}', 'Backend\CompanyController@destroy')->name('company.delete');
+    Route::get('company/delete/{id}', 'Backend\CompanyController@destroy')->name('company.delete');
     Route::post('company/ban/{id}', 'Backend\AdminController@companyBan')->name('company.ban');
 
 
@@ -87,6 +101,7 @@ Route::group( ['prefix' => 'admin', 'as' => 'admin.'], function() {
     Route::get('customer/create', 'Backend\CustomerController@create')->name('customer.create');
     Route::get('customer/update/{id}', 'Backend\CustomerController@edit')->name('customer.update');
     Route::post('customer/update/{id}', 'Backend\CustomerController@update')->name('customer.update.submit');
+    Route::get('customer/delete/{id}', 'Backend\CustomerController@destroy')->name('customer.delete');
     Route::get('customer/ban', 'Backend\CustomerController@ban');
     Route::get('customer/profile/{username}', 'Backend\CustomerController@profile')->name('customer.profile');
 

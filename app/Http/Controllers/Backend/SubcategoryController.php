@@ -183,7 +183,7 @@ class SubcategoryController extends Controller
             $subcategory = Subcategory::find($id);
             if(is_null($subcategory)){
                 session()->flash('failed', 'No Subcategory found !!!');
-                return redirect()->route('admin.dashboard');
+                return redirect()->route('admin.subcategories');
             }
             if (!is_null($subcategory->image) && $subcategory->image !="default.png" &&  $subcategory->image !="default.jpg") {
                 $exists = Storage::disk('public')->exists('subcategory/'.$subcategory->image);
@@ -192,7 +192,7 @@ class SubcategoryController extends Controller
             }
             $subcategory->delete();
             session()->flash('success', 'A Subcategory has been Deleted!!');
-            return redirect()->route('admin.dashboard');
+            return redirect()->route('admin.subcategories');
         }catch(Exception $e){
             session()->flash('failed', 'Error occured! --'.$e);
             return redirect()->route('admin.dashboard');

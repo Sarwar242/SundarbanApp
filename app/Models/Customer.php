@@ -7,22 +7,22 @@ use Illuminate\Database\Eloquent\Model;
 class Customer extends Model
 {
     protected $fillable = [
-        'first_name', 'last_name','username','user_id','dob','image','nid','gender','phone',
+        'first_name', 'last_name','username','user_id','dob','image','nid','gender','phone','phone_hide',
         'about','bn_about','zipcode', 'street','bn_street', 'location','bn_location',
         'ban','hn','admin_id','union_id','upazilla_id','district_id','division_id'
-   ]; 
+   ];
 
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    
+
    public function division()
    {
        return $this->belongsTo(Division::class);
    }
-       
+
    public function district()
    {
        return $this->belongsTo(District::class);
@@ -35,7 +35,7 @@ class Customer extends Model
    {
        return $this->belongsTo(Union::class);
    }
-   
+
    public function admin()
    {
        return $this->belongsTo(Admin::class);

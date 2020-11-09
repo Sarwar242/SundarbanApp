@@ -191,14 +191,13 @@ class ProductController extends Controller
             $product = Product::find($id);
             if(is_null($product)){
                 session()->flash('failed', 'No Product found !!!');
-                return redirect()->route('admin.dashboard');
+                return redirect()->route('admin.products');
             }
         
             if (!empty($product->images)):
                 $i=0;
                 
                 foreach ($product->images as $img):
-                 
                    Storage::disk('public')->delete('product/'.$img->image);
                 endforeach;
 

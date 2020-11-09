@@ -23,6 +23,7 @@ class CreateCustomersTable extends Migration
             $table->date('dob')->nullable();
             $table->string('hn')->comment('holding_number')->nullable();
             $table->string('phone')->nullable();
+            $table->boolean('phone_hide')->default(0);
             $table->boolean('ban')->nullable();
             $table->string('nid')->nullable();
             $table->string('gender')->nullable();
@@ -41,11 +42,11 @@ class CreateCustomersTable extends Migration
             $table->unsignedBigInteger('division_id')->nullable();
 
             $table->timestamps();
-            
+
             $table->foreign('admin_id')
             ->references('id')->on('admins')
             ->onDelete('set null');
-            
+
             $table->foreign('user_id')
             ->references('id')->on('users')
             ->onDelete('cascade');
@@ -57,7 +58,7 @@ class CreateCustomersTable extends Migration
             $table->foreign('upazilla_id')
             ->references('id')->on('upazillas')
             ->onDelete('set null');
-            
+
             $table->foreign('district_id')
             ->references('id')->on('districts')
             ->onDelete('set null');

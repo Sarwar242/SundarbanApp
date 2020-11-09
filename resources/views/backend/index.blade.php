@@ -48,7 +48,7 @@
 		      <th scope="col">Owners Name</th>
 		      <th scope="col">Phone</th>
 		      <th scope="col">Email</th>
-		      {{-- <th scope="col" colspan="2">Edit</th> --}}
+		      <th scope="col" colspan="2">Edit</th>
 		    </tr>
 		  </thead>
 		  <tbody>
@@ -61,8 +61,8 @@
 					<td>{{$company->owners_name}}</td>
 					<td>{{$company->user->phone}}</td>
 					<td>{{$company->user->email}}</td>
-					{{-- <td><a href="{{route('admin.company.update',$company->id)}}">Edit</a></td>
-					<td><a href="#">Delete</a></td> --}}
+					<td><a href="{{route('admin.company.update',$company->id)}}">Edit</a></td>
+					<td><a  class="delete" data-confirm="Are you sure to delete this company?"  href="{{route('admin.company.delete',$company->id)}}">Delete</a></td>
 				</tr>
 			@endforeach
 		  </tbody>
@@ -93,8 +93,8 @@
 					<td>{{$customer->last_name}}</td>
 					<td>{{$customer->user->email}}</td>
 					<td>{{$customer->phone}}</td>
-					<td><a href="#">Edit</a></td>
-					<td><a href="#">Delete</a></td>
+					<td><a href="{{route('admin.customer.update',$customer->id)}}">Edit</a></td>
+					<td><a class="delete" data-confirm="Are you sure to delete this customer?" href="{{route('admin.customer.delete',$customer->id)}}">Delete</a></td>
 				</tr>
 			@endforeach
 		  </tbody>
@@ -129,8 +129,8 @@
 					<td>{{$admin->username}}</td>
 					<td>{{$admin->email}}</td>
 					<td>{{$admin->phone1}}</td>
-					<td><a href="#">Edit</a></td>
-					<td><a href="#">Delete</a></td>
+					<td><a href="{{route('admin.admin.update',$admin->id)}}">Edit</a></td>
+					<td><a class="delete" data-confirm="Are you sure to delete the Admin?"  href="{{route('admin.admin.delete',$admin->id)}}">Delete</a></td>
 				</tr>
 			@endforeach
 		  </tbody>

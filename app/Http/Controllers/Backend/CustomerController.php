@@ -16,15 +16,15 @@ use Illuminate\Support\Facades\Validator;
 class CustomerController extends Controller
 {
 
-    
+
     public function __construct()
     {
         $this->middleware('auth:admin');
     }
-    
+
     public function index(){
         return view('backend.customer.index');
-    } 
+    }
 
     public function profile($username){
         $customer = Customer::where('username', '=', $username)->first();
@@ -54,6 +54,7 @@ class CustomerController extends Controller
             'gender' => 'nullable|string',
             'email' => 'nullable|email',
             'phone' => 'required|numeric|phone',
+            'phone_hide' => 'nullable|boolean',
             'phone2' => 'nullable|numeric|phone',
             'street' => 'nullable|string',
             'bn_street' => 'nullable|string',
@@ -67,7 +68,7 @@ class CustomerController extends Controller
             'district_id' => 'nullable|string',
             'division_id' => 'nullable|string',
             'password'=>'nullable|min:8|confirmed',
-            'image' => 'nullable|file|image|max:3000',   
+            'image' => 'nullable|file|image|max:3000',
         ]);
         try{
             $customer = Customer::find($id);
@@ -75,6 +76,7 @@ class CustomerController extends Controller
             $customer->last_name =$request->last_name;
             $customer->user->email =$request->email;
             $customer->user->phone =$request->phone;
+            $customer->phone_hide =$request->phone_hide;
             $customer->dob =$request->dob;
             $customer->hn =$request->hn;
             $customer->nid =$request->nid;
@@ -98,14 +100,14 @@ class CustomerController extends Controller
                 $encryptedPass= Hash::make($request->password);
                 $customer->user->password =$encryptedPass;
             }
-            
+
             if(request()->hasFile('image')){
                 if(!is_null($customer->image) && $customer->image !="default.png" &&  $customer->image !="default.jpg"){
                     $exists = Storage::disk('public')->exists('customer/'.$customer->image);
                     if($exists)
                         Storage::disk('public')->delete('customer/'.$customer->image);
                 }
-                $imageName = time().'.'.$request->image->extension();  
+                $imageName = time().'.'.$request->image->extension();
                 $request->image->storeAs('/customer',$imageName,'public');
                 $customer->image=$imageName;
             }
@@ -124,11 +126,11 @@ class CustomerController extends Controller
     public function ban(Request $request){
         try{
             $customer=Customer::find($request->id);
-        
+
             if(is_null($customer))
             return json_encode([
                 "sucess"  => false,
-                "message" => "No customer Found!",      
+                "message" => "No customer Found!",
             ]);
             if($customer->ban==1){
                 $customer->ban = 0;
@@ -139,7 +141,7 @@ class CustomerController extends Controller
                     'message'=> "The customer has been unbaned!",
                    ]);
             }
-                
+
             else{
                 $customer->ban = 1;
                 $customer->save();
@@ -148,12 +150,42 @@ class CustomerController extends Controller
                     'message'=> "The customer has been baned!",
                    ]);
             }
-                
+
         }catch(Exception $e){
             return json_encode([
                 'success'=>false,
                 'message'=> ''.$e,
             ]);
+        }
+    }
+
+    public function destroy($id)
+    {
+        try{
+            $customer = Customer::find($id);
+            if(is_null($customer)){
+                session()->flash('failed', 'No customer found !!!');
+                return redirect()->route('admin.customers');
+            }
+            if (!is_null($customer->image) && $customer->image !="default.png" &&  $customer->image !="default.jpg") {
+                $exists = Storage::disk('public')->exists('customer/'.$customer->image);
+                if($exists)
+                   Storage::disk('public')->delete('customer/'.$customer->image);
+            }
+            $user_id=$customer->user_id;
+            $user= User::find($user_id);
+            if(!is_null($user)){
+                $user->delete();
+            }
+            else{
+                $customer->delete();
+            }
+
+            session()->flash('success', 'A customer has been Deleted!!');
+            return redirect()->route('admin.customers');
+        }catch(Exception $e){
+            session()->flash('failed', 'Error occured! --'.$e);
+            return redirect()->route('admin.dashboard');
         }
     }
 
