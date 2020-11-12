@@ -14,47 +14,48 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Laravel\Passport\HasApiTokens;
+use Illuminate\Support\Facades\Storage;
 use Auth;
 
 
 class AdminController extends Controller
 {
-    public function __construct()
-    {
-        
-        Config::set('auth.providers', ['users' => [
-            'driver' => 'eloquent',
-            'model' => Admin::class,
-        ]]);
-    }
+    // public function __construct()
+    // {
 
-    
-    
-    public function login(Request $request)
-    {
-        $loginData = $request->validate([
-            'email'=>'email|required',
-            'password' => 'required',
-        ]);
-       
-        if(!$token = auth()->attempt($loginData)){
-                return response()->json([
-                    'success'=>false,
-                    'message'=>'Invalid Credintials'
-             ]);
-            }
-        
-        $user=Auth::user();
-        $accessToken = $user->createToken('authToken')->accessToken;
-        
+    //     Config::set('auth.providers', ['users' => [
+    //         'driver' => 'eloquent',
+    //         'model' => Admin::class,
+    //     ]]);
+    // }
 
-        return response()->json([
-        'success'=>true,
-        'access_token'=> $accessToken,
-        'admin' =>auth()->user(),
-        ]);    
-    
-    }
+
+
+    // public function login(Request $request)
+    // {
+    //     $loginData = $request->validate([
+    //         'email'=>'email|required',
+    //         'password' => 'required',
+    //     ]);
+
+    //     if(!$token = auth()->attempt($loginData)){
+    //             return response()->json([
+    //                 'success'=>false,
+    //                 'message'=>'Invalid Credintials'
+    //          ]);
+    //         }
+
+    //     $user=Auth::user();
+    //     $accessToken = $user->createToken('authToken')->accessToken;
+
+
+    //     return response()->json([
+    //     'success'=>true,
+    //     'access_token'=> $accessToken,
+    //     'admin' =>auth()->user(),
+    //     ]);
+
+    // }
 
     public function hash(Request $request)
     {
@@ -71,15 +72,15 @@ class AdminController extends Controller
         //
     }
 
-    public function show()
-    {
-        $admin=Auth::guard('api')->user();
-        return response()->json([
-            'success'=>true,
-            'admin'=> $admin,
-           ]);
-        
-    }
+    // public function show()
+    // {
+    //     $admin=Auth::guard('api')->user();
+    //     return response()->json([
+    //         'success'=>true,
+    //         'admin'=> $admin,
+    //        ]);
+
+    // }
 
     public function profile(Request $request)
     {
@@ -88,37 +89,37 @@ class AdminController extends Controller
             'success'=>true,
             'admin'=> $admin,
            ]);
-        
+
     }
 
-    
 
-    public function logout(Request $request){
-        if(auth('api')->check()){
-            auth('api')->user()->token()->revoke() ;
-            return response()->json([
-                'success'=>true,
-                'message'=> 'Logout Success'
-               ]);
-        }
-        else{
-            return response()->json([
-                'success'=>false,
-                'message'=> 'invalid request!'
-            ]);
-        }
-    }
+
+    // public function logout(Request $request){
+    //     if(auth('api')->check()){
+    //         auth('api')->user()->token()->revoke() ;
+    //         return response()->json([
+    //             'success'=>true,
+    //             'message'=> 'Logout Success'
+    //            ]);
+    //     }
+    //     else{
+    //         return response()->json([
+    //             'success'=>false,
+    //             'message'=> 'invalid request!'
+    //         ]);
+    //     }
+    // }
 
      public function admins(Request $request)
      {
         $admins=Admin::all();
-         
+
         return response()->json([
             'success'=>true,
             'admins'=>$admins
            ]);
      }
-     
+
 
     public function update(Request $request)
     {
@@ -138,7 +139,7 @@ class AdminController extends Controller
             'upazilla_id' => 'sometimes|string',
             'district_id' => 'sometimes|string',
             'division_id' => 'sometimes|string',
-            'image' => 'sometimes|file|image|max:3000',   
+            'image' => 'sometimes|file|image|max:3000',
         ]);
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
@@ -160,9 +161,9 @@ class AdminController extends Controller
             $admin->upazilla_id =$request->upazilla_id;
             $admin->district_id =$request->district_id;
             $admin->division_id =$request->division_id;;
-            
+
             if(request()->hasFile('image')){
-                $imageName = time().'.'.$request->image->extension();  
+                $imageName = time().'.'.$request->image->extension();
                 $request->image->move(public_path('storage/admin'), $imageName);
                 $admin->image=$imageName;
             }
@@ -201,7 +202,7 @@ class AdminController extends Controller
             'upazilla_id' => 'sometimes|string',
             'district_id' => 'sometimes|string',
             'division_id' => 'sometimes|string',
-            'image' => 'sometimes|file|image|max:3000',   
+            'image' => 'sometimes|file|image|max:3000',
         ]);
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
@@ -231,9 +232,9 @@ class AdminController extends Controller
             $admin->upazilla_id =$request->upazilla_id;
             $admin->district_id =$request->district_id;
             $admin->division_id =$request->division_id;;
-            
+
             if(request()->hasFile('image')){
-                $imageName = time().'.'.$request->image->extension();  
+                $imageName = time().'.'.$request->image->extension();
                 $request->image->move(public_path('storage/admin'), $imageName);
                 $admin->image=$imageName;
             }
@@ -251,7 +252,7 @@ class AdminController extends Controller
             ]);
         }
     }
-     
+
      public function users(Request $request)
      {
          $users=User::all();
@@ -307,7 +308,7 @@ class AdminController extends Controller
 
 //User create
 
-    
+
 
     public function userCreate(Request $request){
 
@@ -335,7 +336,7 @@ class AdminController extends Controller
                 if ($validator2->fails()) {
                     return response()->json($validator2->errors(), 422);
                  }
-            
+
                 try {
                     $user = new User;
                     $user->email =$request->email;
@@ -350,7 +351,7 @@ class AdminController extends Controller
                     return response()->json([
                         'success'=>true,
                         'user'=> $user,
-                        'profile'=> $profile,               
+                        'profile'=> $profile,
                    ]);
             }catch(Exception $e){
                 return response()->json([
@@ -358,9 +359,9 @@ class AdminController extends Controller
                     'message'=> ''.$e
                    ]);
             }
-        } 
+        }
         else if($request->is_company==0){
-            
+
             $validator2 = Validator::make($request->all(),[
                 'email'=>'email|required',
                 'password' => 'required|min:8',
@@ -371,7 +372,7 @@ class AdminController extends Controller
             if ($validator2->fails()) {
                 return response()->json($validator2->errors(), 422);
             }
-            try{                   
+            try{
                 $user = new User;
                 $user->email =$request->email;
                 $user->password =$encryptedPass;
@@ -442,14 +443,14 @@ class AdminController extends Controller
 
 
     public function companyBan(Request $request){
- 
+
         try{
             $company=Company::find($request->id);
             if(is_null($company))
             return response()->json([
                 "success"  => false,
                 "message" => "No company Found!",
-                
+
             ]);
             if($company->ban==1){
                 $company->ban = 0;
@@ -460,7 +461,7 @@ class AdminController extends Controller
                     'message'=> "The company has been unbaned!",
                    ]);
             }
-                
+
             else{
                 $company->ban = 1;
                 $company->save();
@@ -469,7 +470,7 @@ class AdminController extends Controller
                     'message'=> "The company has been baned!",
                    ]);
             }
-                
+
         }catch(Exception $e){
             return response()->json([
                 'success'=>false,
@@ -480,16 +481,16 @@ class AdminController extends Controller
 
 
 
-    
+
     public function customerBan(Request $request){
- 
+
         try{
             $customer=Customer::find($request->id);
             if(is_null($customer))
             return response()->json([
                 "success"  => false,
                 "message" => "No such customer Found!",
-                
+
             ]);
             if($customer->ban==1){
                 $customer->ban = 0;
@@ -500,7 +501,7 @@ class AdminController extends Controller
                     'message'=> "The customer has been unbaned!",
                    ]);
             }
-                
+
             else{
                 $customer->ban = 1;
                 $customer->save();
@@ -509,7 +510,7 @@ class AdminController extends Controller
                     'message'=> "The customer has been baned!",
                    ]);
             }
-                
+
         }catch(Exception $e){
             return response()->json([
                 'success'=>false,
@@ -520,16 +521,16 @@ class AdminController extends Controller
 
 
 
-    
+
     public function adminBan(Request $request){
- 
+
         try{
             $admin=Admin::find($request->id);
             if(is_null($admin))
             return response()->json([
                 "success"  => false,
                 "message" => "No Admin Found!",
-                
+
             ]);
             if($admin->ban==1){
                 $admin->ban = 0;
@@ -540,7 +541,7 @@ class AdminController extends Controller
                     'message'=> "The admin has been unbaned!",
                    ]);
             }
-                
+
             else{
                 $admin->ban = 1;
                 $admin->save();
@@ -549,7 +550,7 @@ class AdminController extends Controller
                     'message'=> "The admin has been baned!",
                    ]);
             }
-                
+
         }catch(Exception $e){
             return response()->json([
                 'success'=>false,

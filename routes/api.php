@@ -35,7 +35,7 @@ Route::post('password/email', 'Api\ForgotPasswordController@sendResetLinkEmail')
 
 Route::get('email/resend', 'Api\VerificationController@resend')
             ->name('verification.resend');
-            
+
 Route::get('email/verify/{id}/{hash}', 'Api\VerificationController@verify')
             ->name('verification.verify');
 
@@ -47,6 +47,8 @@ Route::get('email/verify/{id}/{hash}', 'Api\VerificationController@verify')
 |--------------------------------------------------------------------------
 */
 Route::post('company/follow', 'Api\FollowController@follow');
+Route::get('company/followers', 'Api\FollowController@followers');
+Route::get('company/following', 'Api\FollowController@following');
 Route::post('company/rate', 'Api\RatingController@rate');
 
 
@@ -90,28 +92,28 @@ Route::post('customer/update', 'Api\CustomerController@update');
 | Admin API Routes
 |--------------------------------------------------------------------------
 */
-Route::post('oauth/token', '\Laravel\Passport\Http\Controllers\AccessTokenController@issueToken')
-    ->name('api.passport.token');
-Route::post('admin/login', 'Api\AdminController@login');
-Route::get('admin/logout', 'Api\AdminController@logout')->middleware('auth:api');
-Route::post('admin/password/change', 'Api\AdminController@change_password')->middleware('auth:api');
-Route::get('admin/show', 'Api\AdminController@show')
-        ->middleware(['auth:api']);
+// Route::post('oauth/token', '\Laravel\Passport\Http\Controllers\AccessTokenController@issueToken')
+//     ->name('api.passport.token');
+// Route::post('admin/login', 'Api\AdminController@login');
+// Route::get('admin/logout', 'Api\AdminController@logout')->middleware('auth:api');
+// Route::post('admin/password/change', 'Api\AdminController@change_password')->middleware('auth:api');
+// Route::get('admin/show', 'Api\AdminController@show')
+//         ->middleware(['auth:api']);
 
 
-Route::post('admin/create', 'Api\AdminController@createAdmin');
-Route::post('admin/user/create', 'Api\AdminController@userCreate');
-Route::post('admin/company/update', 'Api\CompanyController@update');
-Route::post('admin/customer/update', 'Api\CustomerController@update');
-Route::post('admin/user/change', 'Api\AdminController@user_change_password');
-Route::post('admin/company/ban', 'Api\AdminController@companyBan');
-Route::post('admin/customer/ban', 'Api\AdminController@customerBan');
-Route::post('admin/admin/ban', 'Api\AdminController@customerBan');
-Route::get('admin/users', 'Api\AdminController@users');
-Route::get('admin/admins', 'Api\AdminController@admins');
-Route::get('admin/profile', 'Api\AdminController@profile');
-Route::get('admin/profile/own', 'Api\AdminController@show');
-Route::post('admin/profile/update', 'Api\AdminController@update');
+// Route::post('admin/create', 'Api\AdminController@createAdmin');
+// Route::post('admin/user/create', 'Api\AdminController@userCreate');
+// Route::post('admin/company/update', 'Api\CompanyController@update');
+// Route::post('admin/customer/update', 'Api\CustomerController@update');
+// Route::post('admin/user/change', 'Api\AdminController@user_change_password');
+// Route::post('admin/company/ban', 'Api\AdminController@companyBan');
+// Route::post('admin/customer/ban', 'Api\AdminController@customerBan');
+// Route::post('admin/admin/ban', 'Api\AdminController@customerBan');
+// Route::get('admin/users', 'Api\AdminController@users');
+// Route::get('admin/admins', 'Api\AdminController@admins');
+// Route::get('admin/profile', 'Api\AdminController@profile');
+// Route::get('admin/profile/own', 'Api\AdminController@show');
+// Route::post('admin/profile/update', 'Api\AdminController@update');
 
 
 
@@ -121,7 +123,7 @@ Route::post('admin/profile/update', 'Api\AdminController@update');
 
 //Product-Part->middleware('auth:api');
 
-Route::get('product/all', 'Api\ProductController@index');
+Route::get('products', 'Api\ProductController@index');
 Route::post('product/create', 'Api\ProductController@store');
 Route::post('product/update', 'Api\ProductController@update');
 Route::get('product/show', 'Api\ProductController@show');
@@ -134,7 +136,7 @@ Route::get('product/image/delete', 'Api\ProductController@deleteImage');
 
 
 //Category
-Route::get('category/all', 'Api\CategoryController@index');
+Route::get('categories', 'Api\CategoryController@index');
 Route::post('category/create', 'Api\CategoryController@store');
 Route::post('category/update', 'Api\CategoryController@update');
 Route::get('category/show', 'Api\CategoryController@show');
@@ -144,7 +146,7 @@ Route::get('category/delete', 'Api\CategoryController@destroy');
 
 
 //Subcategory
-Route::get('subcategory/all', 'Api\SubcategoryController@index');
+Route::get('subcategories', 'Api\SubcategoryController@index');
 Route::post('subcategory/create', 'Api\SubcategoryController@store')->name('api.test');
 Route::post('subcategory/update', 'Api\SubcategoryController@update');
 Route::get('subcategory/show', 'Api\SubcategoryController@show');
@@ -152,47 +154,82 @@ Route::get('subcategory/delete', 'Api\SubcategoryController@destroy');
 
 
 
+//Unit
+Route::get('units', 'Api\UnitController@index');
+Route::post('unit/create', 'Api\UnitController@store');
+Route::post('unit/update', 'Api\UnitController@update');
+Route::get('unit/show', 'Api\UnitController@show');
+Route::get('unit/delete', 'Api\UnitController@destroy');
+
+
 
 
 
 //Division
-Route::get('division/all', 'Api\DivisionController@index');
-Route::post('division/create', 'Api\DivisionController@store');
-Route::post('division/update', 'Api\DivisionController@update');
+Route::get('divisions', 'Api\DivisionController@index');
+// Route::post('division/create', 'Api\DivisionController@store');
+// Route::post('division/update', 'Api\DivisionController@update');
 Route::get('division/show', 'Api\DivisionController@show');
-Route::get('division/delete', 'Api\DivisionController@destroy');
+// Route::get('division/delete', 'Api\DivisionController@destroy');
 
 
 
 
 //District
-Route::get('district/all', 'Api\DistrictController@index');
-Route::post('district/create', 'Api\DistrictController@store');
-Route::post('district/update', 'Api\DistrictController@update');
+Route::get('districts', 'Api\DistrictController@index');
+// Route::post('district/create', 'Api\DistrictController@store');
+// Route::post('district/update', 'Api\DistrictController@update');
 Route::get('district/show', 'Api\DistrictController@show');
-Route::get('district/delete', 'Api\DistrictController@destroy');
+// Route::get('district/delete', 'Api\DistrictController@destroy');
 
 
 
 
 
 //Upazilla
-Route::get('upazilla/all', 'Api\UpazillaController@index');
-Route::post('upazilla/create', 'Api\UpazillaController@store');
-Route::post('upazilla/update', 'Api\UpazillaController@update');
+Route::get('upazillas', 'Api\UpazillaController@index');
+// Route::post('upazilla/create', 'Api\UpazillaController@store');
+// Route::post('upazilla/update', 'Api\UpazillaController@update');
 Route::get('upazilla/show', 'Api\UpazillaController@show');
-Route::get('upazilla/delete', 'Api\UpazillaController@destroy');
+// Route::get('upazilla/delete', 'Api\UpazillaController@destroy');
 
 
 
 
 
 //Union
-Route::get('union/all', 'Api\UnionController@index');
-Route::post('union/create', 'Api\UnionController@store');
-Route::post('union/update', 'Api\UnionController@update');
+Route::get('unions', 'Api\UnionController@index');
+// Route::post('union/create', 'Api\UnionController@store');
+// Route::post('union/update', 'Api\UnionController@update');
 Route::get('union/show', 'Api\UnionController@show');
-Route::get('union/delete', 'Api\UnionController@destroy');
+// Route::get('union/delete', 'Api\UnionController@destroy');
+
+
+
+Route::get('/get-subcategories', function (Request $request) {
+    return response()->json([
+        "success"  => true,
+        "subcategories" =>App\Models\Subcategory::where('category_id', $request->id)->get(),
+    ]);
+});
+Route::get('/get-districts', function (Request $request) {
+    return response()->json([
+        "success"  => true,
+        "districts" =>App\Models\District::where('division_id', $request->id)->get(),
+    ]);
+});
+Route::get('/get-upazillas', function (Request $request) {
+    return response()->json([
+        "success"  => true,
+        "upazillas" =>App\Models\Upazilla::where('district_id', $request->id)->get(),
+    ]);
+});
+Route::get('/get-unions', function (Request $request) {
+    return response()->json([
+        "success"  => true,
+        "unions" =>App\Models\Union::where('upazilla_id', $request->id)->get(),
+    ]);
+});
 
 
 
@@ -200,10 +237,11 @@ Route::get('union/delete', 'Api\UnionController@destroy');
 
 
 
-//Unit
-Route::get('unit/all', 'Api\UnitController@index');
-Route::post('unit/create', 'Api\UnitController@store');
-Route::post('unit/update', 'Api\UnitController@update');
-Route::get('unit/show', 'Api\UnitController@show');
-Route::get('unit/delete', 'Api\UnitController@destroy');
+
+/*
+|--------------------------------------------------------------------------
+| Search API Routes
+|--------------------------------------------------------------------------
+*/
+Route::get('product-search', 'Api\SearchController@productSearch');
 

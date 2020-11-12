@@ -6,14 +6,14 @@ use App\Notifications\AdminPasswordResetNotification;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Passport\HasApiTokens;
+// use Laravel\Passport\HasApiTokens;
 
 use App\Notifications\PasswordResetNotification;
 
 
 class Admin  extends Authenticatable
 {
-    use Notifiable, HasApiTokens;
+    use Notifiable;//HasApiTokens
 
     protected $guard = 'admin';
 

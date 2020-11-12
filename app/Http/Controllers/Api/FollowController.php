@@ -27,4 +27,53 @@ class FollowController extends Controller
         $follow->save();
         return response()->json(['success'=>'true','message'=>'followed']);
     }
+
+    public function followers(Request $request){
+        $company= Company::find($request->id);
+        if(is_null($company)){
+            return response()->json([
+                'success'=>false,
+                'message'=>'No company found in database!'
+               ]);
+        }
+
+        $followers=$company->followers()->get();
+        foreach($followers as $follower){
+            if($follower->is_company==0){
+                $follower->customer;
+            }
+            else{
+                $follower->company;
+            }
+        }
+        return response()->json([
+            'success'=>true,
+            'followers'=>$followers
+           ]);
+    }
+
+
+    public function following(Request $request){
+        $user= User::find($request->id);
+        if(is_null($user)){
+            return response()->json([
+                'success'=>false,
+                'message'=>'No User found in database!'
+               ]);
+        }
+
+        $followings=$user->followings()->get();
+        foreach($followings as $following){
+            if($following->is_company==0){
+                $following->customer;
+            }
+            else{
+                $following->company;
+            }
+        }
+        return response()->json([
+            'success'=>true,
+            'following'=>$followings
+           ]);
+    }
 }

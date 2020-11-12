@@ -49,7 +49,12 @@ class Company extends Model
        return $this->belongsTo(Union::class);
    }
 
-   
+   public function products()
+   {
+       return $this->hasMany(Product::class);
+   }
+
+
    public static function companies()
    {
        $companies = Company::latest()->paginate(10);
@@ -59,10 +64,10 @@ class Company extends Model
    public function admin()
    {
        return $this->belongsTo(Admin::class);
-   }   
+   }
    public function followers()
    {
-       return $this->hasMany(User::class);
+       return $this->belongsToMany(User::class,'follows');
    }
 
 

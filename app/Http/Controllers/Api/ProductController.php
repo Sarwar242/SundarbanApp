@@ -9,21 +9,26 @@ use App\Models\ProductImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
-    
+
     public function index()
     {
         try{
             $products = Product::all();
             foreach($products as $product ):
+                $unit=$product->unit;
+                $category = $product->category;
+                $subcategory=$product->subcategory;
                 $product->company;
                 foreach($product->images as $image):
                     $image->image;
                 endforeach;
             endforeach;
-            
+
             return response()->json([
                 "success"  => true,
                 "product" => $products,
@@ -41,62 +46,82 @@ class ProductController extends Controller
     {
 
         $validator = Validator::make($request->all(),[
-            'code'=>'required',
-            'name' => 'sometimes|string',
-            'bn_name' => 'sometimes|string',
-            'description' => 'sometimes|string',
-            'bn_description' => 'sometimes|string',
+            'name' => 'required|string',
+            'bn_name' => 'nullable|string',
+            'description' => 'required|string',
+            'bn_description' => 'nullable|string',
             'price' => 'required|regex:/^\d+(\.\d{1,2})?$/',
-            'discount' => 'required|numeric',
+            'discount' => 'nullable|numeric',
             'quantity' => 'required|numeric',
-            'type' => 'sometimes|string',
+            'type' => 'nullable|string',
             'category_id' => 'required',
-            'subcategory_id' => 'required',
+            'subcategory_id' => 'nullable',
             'unit_id' => 'required',
-            'company_id' => 'sometimes',
-            //"image" => 'sometimes|file|image|max:3000',
+            'company_id' => 'nullable',
+            "image[]" => 'nullable|file|image|max:3000',
         ]);
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
         try{
             $product= new Product;
-            $product->code =$request->code;
+            if(!is_null(Product::generateProductCode()))
+                $product->code = Product::generateProductCode();
+            else
+                $product->code =0000;
             $product->name =$request->name;
             $product->bn_name =$request->bn_name;
-            $product->description =$request->description;
+            if(request()->has('description'))
+                $product->description =$request->description;
+            else
+                $product->description = "N/A";
             $product->bn_description =$request->bn_description;
             $product->price =$request->price;
-            $product->discount =$request->discount;
+
+            if(!is_null($product->discount))
+                $product->discount =$request->discount;
+            else
+                $product->discount=0;
+
             $product->quantity =$request->quantity;
             $product->type =$request->type;
             $product->category_id =$request->category_id;
             $product->subcategory_id =$request->subcategory_id;
             $product->unit_id =$request->unit_id;
             $product->company_id =$request->company_id;
+
+
+            $slug = Str::slug(str_replace( ' ', '-', $request->name));
+            $i = 0;
+            while(Product::whereSlug($slug)->exists())
+            {
+                $i++;
+                $slug = $slug ."-". $i;
+            }
+            $product->slug =$slug;
             $product->save();
 
-            
             $pid= $product->id;
             $files = $request->file('image');
-        
-            if (!empty($files)):  
+
+            if (!empty($files)):
                 $i=0;
                 foreach($files as $file):
-                    // dd($file) ;
                     $i++;
                     try{
-                    $imagetbl = new ProductImage;
-                    $imageName = time().$i.'.'.$file->extension();  
-                    $file->move(public_path('storage/product'), $imageName);
-                    $imagetbl->image =$imageName;
-                    $imagetbl->product_id = $pid;
-                    $imagetbl->priority = $i;
-                    $imagetbl->save();   
-
-                }catch(Exception $e){
-                        ['message'=> ' '.$e.' '];
-                }
+                        $imagetbl = new ProductImage;
+                        $imageName = time().$i.'.'.$file->extension();
+                        $file->storeAs('/product',$imageName,'public');
+                        $imagetbl->image =$imageName;
+                        $imagetbl->product_id = $pid;
+                        $imagetbl->priority = $i;
+                        $imagetbl->save();
+                    }catch(Exception $e){
+                        return response()->json([
+                            'success'=>false,
+                            'message'=> ''.$e,
+                        ]);
+                    }
                 endforeach;
             endif;
 
@@ -118,12 +143,15 @@ class ProductController extends Controller
         try{
             $product = Product::find($request->id);
             if(is_null($product))
-            return response()->json([
-                "success"  => false,
-                "message" => "No Product Found!",
-                
-            ]);
-            $company = $product->company;
+                return response()->json([
+                    "success"  => false,
+                    "message" => "No Product Found!",
+                ]);
+
+            $unit=$product->unit;
+            $category = $product->category;
+            $subcategory=$product->subcategory;
+            $product->company;
             $images=$product->images;
             return response()->json([
                 "success"  => true,
@@ -140,41 +168,60 @@ class ProductController extends Controller
 
 
 
-   
+
     public function update(Request $request)
     {
         $validator = Validator::make($request->all(),[
-            'code'=>'required',
-            'name' => 'sometimes|string',
-            'bn_name' => 'sometimes|string',
-            'description' => 'sometimes|string',
-            'bn_description' => 'sometimes|string',
+            'name' => 'required|string',
+            'bn_name' => 'nullable|string',
+            'description' => 'nullable|string',
+            'bn_description' => 'nullable|string',
             'price' => 'required|regex:/^\d+(\.\d{1,2})?$/',
-            'discount' => 'required|numeric',
-            'quantity' => 'required|numeric',
-            'type' => 'sometimes|string',
+            'discount' => 'nullable|numeric',
+            'quantity' => 'nullable|numeric',
+            'type' => 'nullable|string',
             'category_id' => 'required',
-            'subcategory_id' => 'required',
+            'subcategory_id' => 'nullable',
             'unit_id' => 'required',
-            'company_id' => 'sometimes',
+            'company_id' => 'nullable'
         ]);
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
         $product = Product::find($request->id);
-        $product->code =$request->code;
+        $slug_change =0;
+        if($product->name!=$request->name){
+            $slug_change=1;
+        }
         $product->name =$request->name;
         $product->bn_name =$request->bn_name;
         $product->description =$request->description;
         $product->bn_description =$request->bn_description;
+
+        if(!is_null($product->discount))
+            $product->discount =$request->discount;
+        else
+            $product->discount=0;
+
         $product->price =$request->price;
-        $product->discount =$request->discount;
+
         $product->quantity =$request->quantity;
         $product->type =$request->type;
         $product->category_id =$request->category_id;
         $product->subcategory_id =$request->subcategory_id;
         $product->unit_id =$request->unit_id;
-        //$product->company_id =$request->company_id;
+        $product->company_id =$request->company_id;
+        if($slug_change==1){
+            $slug = Str::slug(str_replace( ' ', '-', $request->name));
+            $i = 0;
+            while(Product::whereSlug($slug)->exists())
+            {
+                $i++;
+                $slug = $slug ."-". $i;
+            }
+            $product->slug =$slug;
+        }
+
         $product->save();
 
         return response()->json([
@@ -184,7 +231,7 @@ class ProductController extends Controller
         ]);
     }
 
-    
+
     public function destroy(Request  $request)
     {
         try{
@@ -194,14 +241,11 @@ class ProductController extends Controller
                 "sucess"  => false,
                 "message" => "No Product Found!",
             ]);
-        
-            if (!empty($product->images)):
-                $i=0;
-                foreach ($product->images as $img):
-                    File::delete(public_path('/storage/product/'.$img->image));
-                endforeach;
 
-                
+            if (!empty($product->images)):
+                foreach ($product->images as $img):
+                   Storage::disk('public')->delete('product/'.$img->image);
+                endforeach;
             endif;
             $product->delete();
             return response()->json([
@@ -223,10 +267,10 @@ class ProductController extends Controller
         if(is_null($productimagetbl))
             return response()->json([
                 "sucess"  => false,
-                "message" => "Image already deleted!", 
+                "message" => "Image already deleted!",
             ]);
-       
-        File::delete(public_path('/storage/product/'.$productimagetbl->image));
+
+        Storage::disk('public')->delete('product/'.$productimagetbl->image);
         $productimagetbl->delete();
 
         return response()->json([
@@ -239,20 +283,19 @@ class ProductController extends Controller
     public function uploadImage(Request $request)
     {
         $files = $request->file('image');
-       
-        if(!empty($files)): 
+
+        if(!empty($files)):
             $i=0;
             foreach($files as $file):
-                // dd($file) ;
                 $i++;
                 try{
                 $imagetbl = new ProductImage;
-                $imageName = time().$i.'.'.$file->extension(); 
-                $file->move(public_path('storage/product'), $imageName);
+                $imageName = time().$i.'.'.$file->extension();
+                $file->storeAs('/product',$imageName,'public');
                 $imagetbl->image =$imageName;
-                $imagetbl->product_id = $request->id;
+                $imagetbl->product_id =$request->id;
                 $imagetbl->priority = $i;
-                $imagetbl->save();   
+                $imagetbl->save();
 
             }catch(Exception $e){
                     ['message'=> ' '.$e.' '];
@@ -261,23 +304,23 @@ class ProductController extends Controller
             return response()->json([
                 "sucess"  => true,
                 "message" => "Product image has been uploaded!",
-                
+
             ]);
 
         else:
             return response()->json([
                 "sucess"  => false,
                 "message" => "Product image  upload failed!",
-                
+
             ]);
 
         endif;
 
     }
-    
 
 
-    
+
+
     public function setPriority(Request $request){
         try{
             $image=ProductImage::find($request->id);
@@ -286,7 +329,7 @@ class ProductController extends Controller
             return response()->json([
                 "sucess"  => true,
                 "message" => "Priority of the image has been set to ".$request->priority,
-                
+
             ]);
         } catch(Exception $e){
             return response()->json([

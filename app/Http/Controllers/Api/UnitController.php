@@ -31,7 +31,7 @@ class UnitController extends Controller
 
         $validator = Validator::make($request->all(),[
             'name' => 'required|string',
-            'bn_name' => 'sometimes|string',
+            'bn_name' => 'nullable|string',
         ]);
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
@@ -44,7 +44,7 @@ class UnitController extends Controller
 
             return response()->json([
                 "success"  => true,
-                "message" => "Unit has been added!",
+                "message" => "An Unit has been added!",
                 "unit" => $unit,
             ]);
         }catch(Exception $e){
@@ -63,9 +63,9 @@ class UnitController extends Controller
             return response()->json([
                 "success"  => false,
                 "message" => "No Unit Found!",
-                
+
             ]);
-            
+
             return response()->json([
                 "success"  => true,
                 "unit" => $unit,
@@ -81,12 +81,12 @@ class UnitController extends Controller
 
 
 
-   
+
     public function update(Request $request)
     {
         $validator = Validator::make($request->all(),[
             'name' => 'required|string',
-            'bn_name' => 'sometimes|string',
+            'bn_name' => 'nullable|string',
         ]);
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
@@ -94,7 +94,8 @@ class UnitController extends Controller
         try{
             $unit = Unit::find($request->id);
             $unit->name =$request->name;
-            $unit->bn_name =$request->bn_name;
+            if(request()->has('bn_name'))
+                $unit->bn_name =$request->bn_name;
             $unit->save();
 
             return response()->json([
@@ -111,7 +112,7 @@ class UnitController extends Controller
         }
     }
 
-    
+
     public function destroy(Request  $request)
     {
         try{
@@ -119,8 +120,8 @@ class UnitController extends Controller
             if(is_null($unit))
             return response()->json([
                 "success"  => false,
-                "message" => "No Unit Found!",    
-            ]);    
+                "message" => "No Unit Found!",
+            ]);
             $unit->delete();
             return response()->json([
                 "success"  => true,

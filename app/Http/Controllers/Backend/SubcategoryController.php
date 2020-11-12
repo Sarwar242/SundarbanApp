@@ -29,7 +29,7 @@ class SubcategoryController extends Controller
         return view('test')->with('categories',$categories);
     }
 
-    
+
     public function create(){
         return view('backend.subcategory.add');
     }
@@ -44,12 +44,12 @@ class SubcategoryController extends Controller
             'image' => 'nullable|file|image|max:3000',
             'category_id' => 'required',
         ]);
-        
+
         try{
             $subcategory= new Subcategory;
             $subcategory->name =$request->name;
             $subcategory->bn_name =$request->bn_name;
-           
+
             if(is_null($request->description)){
                 $subcategory->description ="N/A";
             }else{
@@ -64,14 +64,14 @@ class SubcategoryController extends Controller
             if(is_null($request->image)){
                 $subcategory->image="default.png";
             }else if(request()->hasFile('image')){
-                $imageName = time().'.'.$request->image->extension();  
+                $imageName = time().'.'.$request->image->extension();
                 $request->image->storeAs('/subcategory',$imageName,'public');
                 $subcategory->image=$imageName;
             }
 
 
-            $subcategory->admin_id=Auth::guard('admin')->user()->id; 
-            
+            $subcategory->admin_id=Auth::guard('admin')->user()->id;
+
             $slug = Str::slug(str_replace( ' ', '-', $request->name));
             $i = 0;
             while(Subcategory::whereSlug($slug)->exists())
@@ -99,9 +99,9 @@ class SubcategoryController extends Controller
             return response()->json([
                 "sucess"  => false,
                 "message" => "No Subcategory Found!",
-                
+
             ]);
-            
+
             return response()->json([
                 "sucess"  => true,
                 "subcategory" => $subcategory,
@@ -115,7 +115,7 @@ class SubcategoryController extends Controller
         }
     }
 
-   
+
     public function edit($id){
         $subcategory= Subcategory::find($id);
         return view('backend.subcategory.edit')->with('subcategory',$subcategory);
@@ -134,19 +134,20 @@ class SubcategoryController extends Controller
 
 
         $subcategory = Subcategory::find($id);
+        $slug_change=0;
         if($subcategory->name!=$request->name){
             $slug_change=1;
         }
         $subcategory->name =$request->name;
         $subcategory->bn_name =$request->bn_name;
         $subcategory->description =$request->description;
-        
+
         if(is_null($request->bn_description)){
             $subcategory->bn_description ="N/A";
         }else{
             $subcategory->bn_description =$request->bn_description;
         }
-        
+
         if(request()->hasFile('image')){
             if(!is_null($subcategory->image) && $subcategory->image !="default.png" &&  $subcategory->image !="default.jpg"){
                 $exists = Storage::disk('public')->exists('subcategory/'.$subcategory->image);
@@ -154,7 +155,7 @@ class SubcategoryController extends Controller
                     Storage::disk('public')->delete('subcategory/'.$subcategory->image);
                 //dd(unlink(public_path('/storage/subcategory/'.$subcategory->image)));
             }
-            $imageName = time().'.'.$request->image->extension();  
+            $imageName = time().'.'.$request->image->extension();
             $request->image->storeAs('/subcategory',$imageName,'public');
             $subcategory->image=$imageName;
         }
@@ -176,7 +177,7 @@ class SubcategoryController extends Controller
         return redirect()->route('admin.subcategory.update',$subcategory->id);
     }
 
-    
+
     public function destroy($id)
     {
         try{

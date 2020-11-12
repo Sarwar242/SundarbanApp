@@ -12,4 +12,13 @@ class Follow extends Model
     protected $casts = [
         'accepted_at' => 'datetime',
     ];
+
+    // public function followers()
+    // {
+    //     return $this->hasMany(User::class);
+    // }
+    // public function followings()
+    // {
+    //     return $this->hasMany(Company::class);
+    // }
 }

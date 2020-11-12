@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Laravel\Passport\HasApiTokens;
 use Auth;
 
@@ -18,10 +20,10 @@ class AuthController extends Controller
 {
     public function login(Request $request){
         $loginData = $request->validate([
-            'email'=>'email|required',
+            'phone'=>'phone|required',
             'password' => 'required',
         ]);
-       
+
         if(!auth()->attempt($loginData)){
                 return response()->json([
                     'success'=>false,
@@ -40,19 +42,19 @@ class AuthController extends Controller
                 ]);
         }else if($user->is_company==0){
             $customer = $user->customer;
-        $accessToken = $user->createToken('authToken')->accessToken;
+            $accessToken = $user->createToken('authToken')->accessToken;
 
-        return response()->json([
-        'success'=>true,
-        'access_token'=> $accessToken,
-        'user' =>auth()->user(),
-        ]);    
-     } else{
-        return response()->json([
-            'success'=>false,
-            'message'=>'Invalid Credintials'
-     ]);
-     } 
+            return response()->json([
+            'success'=>true,
+            'access_token'=> $accessToken,
+            'user' =>auth()->user(),
+            ]);
+        }else{
+            return response()->json([
+                'success'=>false,
+                'message'=>'Invalid Credintials'
+            ]);
+        }
     }
 
 
@@ -60,7 +62,7 @@ class AuthController extends Controller
     public function register(Request $request){
 
         $rules = [
-            'email'=>'email|required|unique:users',
+            'phone'=>'phone|required|unique:users',
             'password' => 'required|min:8',
             'is_company' => 'required|boolean',
         ];
@@ -75,7 +77,8 @@ class AuthController extends Controller
             $encryptedPass= Hash::make($request->password);
             if($request->is_company==1){
                 $validator2 = Validator::make($request->all(),[
-                    'email'=>'email|required',
+                    'email'=>'email|nullable|unique:users',
+                    'phone'=>'phone|required|unique:users',
                     'password' => 'required|min:8',
                     'is_company' => 'required|boolean',
                     'name' => 'required|string',
@@ -83,16 +86,40 @@ class AuthController extends Controller
                 if ($validator2->fails()) {
                     return response()->json($validator2->errors(), 422);
                  }
-            
+
                 try {
                     $user = new User;
                     $user->email =$request->email;
+                    $user->phone =$request->phone;
                     $user->password =$encryptedPass;
                     $user->is_company=$request->is_company;
                     $user->save();
                     $profile = new Company;
                     $profile->name=$request->name;
                     $profile->user_id=$user->id;
+                    $profile->image="default.png";
+                    $profile->user_id=$user->id;
+                    $profile->off_day="Friday";
+                    $profile->open="09:00:00";
+                    $profile->close="21:00:00";
+                    $slug = Str::slug(str_replace( ' ', '-', $request->name));
+                    $i = 0;
+                    while(Company::whereSlug($slug)->exists())
+                    {
+                        $i++;
+                        $slug = $slug . $i;
+                    }
+                    $profile->slug = $slug;
+
+                    $lastId = Company::latest('id')->first()->id;
+                    $code =  100000000+$lastId+1;
+                    $i = 0;
+                    while(Company::whereCode($code)->exists())
+                    {
+                        $i++;
+                        $code = $code + $i;
+                    }
+                    $profile->code = $code;
                     $profile->save();
                     $accessToken = $user->createToken('authToken')->accessToken;
                     return response()->json([
@@ -107,11 +134,11 @@ class AuthController extends Controller
                     'message'=> ''.$e
                    ]);
             }
-        } 
+        }
         else if($request->is_company==0){
-            
+
             $validator2 = Validator::make($request->all(),[
-                'email'=>'email|required',
+                'email'=>'email|nullable|unique:users',
                 'password' => 'required|min:8',
                 'is_company' => 'required|boolean',
                 'first_name' => 'required|string',
@@ -120,16 +147,26 @@ class AuthController extends Controller
             if ($validator2->fails()) {
                 return response()->json($validator2->errors(), 422);
             }
-            try{                   
+            try{
                 $user = new User;
                 $user->email =$request->email;
+                $user->phone =$request->phone;
                 $user->password =$encryptedPass;
                 $user->is_company=$request->is_company;
                 $user->save();
                 $profile = new Customer;
                 $profile->first_name=$request->first_name;
                 $profile->last_name=$request->last_name;
+                $profile->image="default.png";
                 $profile->user_id=$user->id;
+                $username = Str::slug($request->first_name . "-" . $request->last_name);
+                $i = 0;
+                while(Customer::whereUsername($username)->exists())
+                {
+                    $i++;
+                    $username = $username . $i;
+                }
+                $profile->username =$username;
                 $profile->save();
                 $accessToken = $user->createToken('authToken')->accessToken;
                 return response()->json([
@@ -160,7 +197,7 @@ class AuthController extends Controller
 
 
      public function logout(Request $request){
-        
+
         if(auth('api')->check()){
             auth('api')->user()->tokens()->first()->revoke() ;
             return response()->json([
@@ -175,7 +212,7 @@ class AuthController extends Controller
                 'message'=> 'invalid request!'
                ]);
             }
- 
+
      }
 
     public function change_password(Request $request){

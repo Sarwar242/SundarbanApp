@@ -8,14 +8,15 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\File;
-//use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class SubcategoryController extends Controller
 {
     public function index()
     {
         try{
-            $subcategories = Subcategory::all();   
+            $subcategories = Subcategory::all();
             foreach($subcategories as $subcategory ):
                 $subcategory->category;
                 $products=$subcategory->products;
@@ -26,7 +27,7 @@ class SubcategoryController extends Controller
                         $product->subcategory;
                     }
                 }
-            endforeach;   
+            endforeach;
             return response()->json([
                 "success"  => true,
                 "subcategories" => $subcategories,
@@ -49,11 +50,11 @@ class SubcategoryController extends Controller
     {
 
         $validator = Validator::make($request->all(),[
-            'name' => 'sometimes|string',
-            'bn_name' => 'sometimes|string',
-            'description' => 'sometimes|string',
-            'bn_description' => 'sometimes|string',
-            'image' => 'sometimes|file|image|max:3000',
+            'name' => 'required|string',
+            'bn_name' => 'nullable|string',
+            'description' => 'nullable|string',
+            'bn_description' => 'nullable|string',
+            'image' => 'nullable|file|image|max:3000',
             'category_id' => 'required',
         ]);
         if ($validator->fails()) {
@@ -63,28 +64,35 @@ class SubcategoryController extends Controller
             $subcategory= new Subcategory;
             $subcategory->name =$request->name;
             $subcategory->bn_name =$request->bn_name;
-            $subcategory->description =$request->description;
-            $subcategory->bn_description =$request->bn_description;
+
+            if(is_null($request->description)){
+                $subcategory->description ="N/A";
+            }else{
+                $subcategory->description =$request->description;
+            }
+            if(is_null($request->bn_description)){
+                $subcategory->bn_description ="N/A";
+            }else{
+                $subcategory->bn_description =$request->bn_description;
+            }
             $subcategory->category_id =$request->category_id;
             if(is_null($request->image)){
                 $subcategory->image="default.png";
             }else if(request()->hasFile('image')){
-                // $file = $request->file('image');
-            //    $extention=$file->getClientOriginalExtension();
-                //dd( $file->getClientMimeType() );
-                // $image=time().'.'.$extention;
-                // file_put_contents('storage/subcategory/'.$image, base64_decode($request->image));
-
-                $imageName = time().'.'.$request->image->extension();  
-   
-                $request->image->move(public_path('storage/subcategory'), $imageName);
+                $imageName = time().'.'.$request->image->extension();
+                $request->image->storeAs('/subcategory',$imageName,'public');
                 $subcategory->image=$imageName;
-                // return response()->json([
-                //     $request->image,
-                //     "hasfile"
-                //     ]);
             }
-         
+
+            $slug = Str::slug(str_replace( ' ', '-', $request->name));
+            $i = 0;
+            while(Subcategory::whereSlug($slug)->exists())
+            {
+                $i++;
+                $slug = $slug ."-". $i;
+            }
+            $subcategory->slug =$slug;
+
             $subcategory->save();
 
             return response()->json([
@@ -108,7 +116,7 @@ class SubcategoryController extends Controller
             return response()->json([
                 "success"  => false,
                 "message" => "No Subcategory Found!",
-                
+
             ]);
             $category= $subcategory->category;
             $products =$subcategory->products;
@@ -134,26 +142,59 @@ class SubcategoryController extends Controller
 
 
 
-   
+
     public function update(Request $request)
     {
         $validator = Validator::make($request->all(),[
-            'name' => 'sometimes|string',
-            'bn_name' => 'sometimes|string',
-            'description' => 'sometimes|string',
-            'bn_description' => 'sometimes|string',
-            'image' => 'sometimes|file|image|max:3000',
-            'category_id' => 'required',   
+            'name' => 'required|string',
+            'bn_name' => 'nullable|string',
+            'description' => 'nullable|string',
+            'bn_description' => 'nullable|string',
+            'image' => 'nullable|file|image|max:3000',
+            'category_id' => 'required',
         ]);
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
         $subcategory = Subcategory::find($request->id);
+        $slug_change=0;
+        if($subcategory->name!=$request->name){
+            $slug_change=1;
+        }
         $subcategory->name =$request->name;
-        $subcategory->bn_name =$request->bn_name;
-        $subcategory->description =$request->description;
-        $subcategory->bn_description =$request->bn_description;
+        if(request()->has('bn_name'))
+            $subcategory->bn_name =$request->bn_name;
+        if(request()->has('description'))
+            $subcategory->description =$request->description;
+
+        if(is_null($request->bn_description)){
+            $subcategory->bn_description ="N/A";
+        }else{
+            $subcategory->bn_description =$request->bn_description;
+        }
+
+        if(request()->hasFile('image')){
+            if(!is_null($subcategory->image) && $subcategory->image !="default.png" &&  $subcategory->image !="default.jpg"){
+                $exists = Storage::disk('public')->exists('subcategory/'.$subcategory->image);
+                if($exists)
+                    Storage::disk('public')->delete('subcategory/'.$subcategory->image);
+            }
+            $imageName = time().'.'.$request->image->extension();
+            $request->image->storeAs('/subcategory',$imageName,'public');
+            $subcategory->image=$imageName;
+        }
         $subcategory->category_id =$request->category_id;
+
+        if($slug_change==1){
+            $slug = Str::slug(str_replace( ' ', '-', $request->name));
+            $i = 0;
+            while(Subcategory::whereSlug($slug)->exists())
+            {
+                $i++;
+                $slug = $slug ."-". $i;
+            }
+            $subcategory->slug =$slug;
+        }
         $subcategory->save();
 
         return response()->json([
@@ -163,8 +204,8 @@ class SubcategoryController extends Controller
         ]);
     }
 
-    
-    public function destroy(Request  $request)
+
+    public function destroy(Request $request)
     {
         try{
             $subcategory = Subcategory::find($request->id);
@@ -174,10 +215,10 @@ class SubcategoryController extends Controller
                     "message" => "No Subcategory Found!",
                     ]);
             }
-            if (!is_null($subcategory->image) && $subcategory->image !="default.png") {
-                //dd(public_path('storage/subcategory/').$subcategory->image);
-                File::delete(public_path('/storage/subcategory/'.$subcategory->image));
-
+            if (!is_null($subcategory->image) && $subcategory->image !="default.png" &&  $subcategory->image !="default.jpg") {
+                $exists = Storage::disk('public')->exists('subcategory/'.$subcategory->image);
+                if($exists)
+                    Storage::disk('public')->delete('subcategory/'.$subcategory->image);
             }
             $subcategory->delete();
             return response()->json([

@@ -53,11 +53,11 @@ class CategoryController extends Controller
             }else{
                 $category->bn_description =$request->bn_description;
             }
-            $category->admin_id=Auth::guard('admin')->user()->id; 
+            $category->admin_id=Auth::guard('admin')->user()->id;
             if(is_null($request->image)){
                 $category->image="default.png";
             }else if(request()->hasFile('image')){
-                $imageName = time().'.'.$request->image->extension();  
+                $imageName = time().'.'.$request->image->extension();
                 $request->image->storeAs('/category',$imageName,'public');
                 $category->image=$imageName;
             }
@@ -89,9 +89,9 @@ class CategoryController extends Controller
             return response()->json([
                 "sucess"  => false,
                 "message" => "No Category Found!",
-                
+
             ]);
-            
+
             return response()->json([
                 "sucess"  => true,
                 "category" => $category,
@@ -111,7 +111,7 @@ class CategoryController extends Controller
     }
 
 
-   
+
     public function update(Request $request, $id)
     {
         $this->validate($request,[
@@ -121,7 +121,8 @@ class CategoryController extends Controller
             'bn_description' => 'nullable|string',
             'image' => 'nullable|file|image|max:3000',
         ]);
-        $category = Category::find($request->id);
+        $category = Category::find($id);
+        $slug_change=0;
         if($category->name!=$request->name){
             $slug_change=1;
         }
@@ -135,7 +136,7 @@ class CategoryController extends Controller
                 if($exists)
                     Storage::disk('public')->delete('category/'.$category->image);
             }
-            $imageName = time().'.'.$request->image->extension();  
+            $imageName = time().'.'.$request->image->extension();
             $request->image->storeAs('/category',$imageName,'public');
             $category->image=$imageName;
         }
@@ -156,7 +157,7 @@ class CategoryController extends Controller
         return redirect()->route('admin.category.update',$category->id);
     }
 
-    
+
     public function destroy($id)
     {
         try{

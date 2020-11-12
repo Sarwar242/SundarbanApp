@@ -53,7 +53,7 @@ class ProductController extends Controller
             'company_id' => 'nullable',
             "image[]" => 'nullable|file|image|max:3000',
         ]);
-       
+
         try{
             $product= new Product;
             $product->code =$request->code;
@@ -62,7 +62,7 @@ class ProductController extends Controller
             $product->description =$request->description;
             $product->bn_description =$request->bn_description;
             $product->price =$request->price;
-            $product->admin_id=Auth::guard('admin')->user()->id; 
+            $product->admin_id=Auth::guard('admin')->user()->id;
             if(!is_null($product->discount))
                 $product->discount =$request->discount;
             else
@@ -75,7 +75,7 @@ class ProductController extends Controller
             $product->unit_id =$request->unit_id;
             $product->company_id =$request->company_id;
 
-            
+
             $slug = Str::slug(str_replace( ' ', '-', $request->name));
             $i = 0;
             while(Product::whereSlug($slug)->exists())
@@ -86,25 +86,26 @@ class ProductController extends Controller
             $product->slug =$slug;
             $product->save();
 
-            
+
             $pid= $product->id;
             $files = $request->file('image');
-        
-            if (!empty($files)):  
+
+            if (!empty($files)):
                 $i=0;
                 foreach($files as $file):
                     // dd($file) ;
                     $i++;
                     try{
                         $imagetbl = new ProductImage;
-                        $imageName = time().$i.'.'.$file->extension();  
+                        $imageName = time().$i.'.'.$file->extension();
                         $file->storeAs('/product',$imageName,'public');
                         $imagetbl->image =$imageName;
                         $imagetbl->product_id = $pid;
                         $imagetbl->priority = $i;
-                        $imagetbl->save();   
+                        $imagetbl->save();
                     }catch(Exception $e){
-                            ['message'=> ' '.$e.' '];
+                        session()->flash('failed', 'Error occured! --'.$e);
+                        return redirect()->route('admin.product.create');
                     }
                 endforeach;
             endif;
@@ -124,7 +125,7 @@ class ProductController extends Controller
     }
 
 
-   
+
     public function update(Request $request, $id)
     {
         $this->validate($request,[
@@ -142,7 +143,7 @@ class ProductController extends Controller
             'unit_id' => 'required',
             'company_id' => 'nullable'
             ]);
-       
+
         $product = Product::find($id);
         $product->code =$request->code;
         $slug_change =0;
@@ -153,14 +154,14 @@ class ProductController extends Controller
         $product->bn_name =$request->bn_name;
         $product->description =$request->description;
         $product->bn_description =$request->bn_description;
-        
+
         if(!is_null($product->discount))
             $product->discount =$request->discount;
         else
             $product->discount=0;
 
         $product->price =$request->price;
-       
+
         $product->quantity =$request->quantity;
         $product->type =$request->type;
         $product->category_id =$request->category_id;
@@ -177,14 +178,14 @@ class ProductController extends Controller
             }
             $product->slug =$slug;
         }
-        
+
         $product->save();
 
         session()->flash('success', 'The Product has been updated!!');
             return redirect()->route('admin.product.update',$product->id);
     }
 
-    
+
     public function destroy($id)
     {
         try{
@@ -193,15 +194,15 @@ class ProductController extends Controller
                 session()->flash('failed', 'No Product found !!!');
                 return redirect()->route('admin.products');
             }
-        
+
             if (!empty($product->images)):
                 $i=0;
-                
+
                 foreach ($product->images as $img):
                    Storage::disk('public')->delete('product/'.$img->image);
                 endforeach;
 
-                
+
             endif;
             $product->delete();
             session()->flash('success', 'A Product has been Deleted!!');
@@ -228,19 +229,19 @@ class ProductController extends Controller
     public function uploadImage(Request $request, $id)
     {
         $files = $request->file('image');
-       
-        if(!empty($files)): 
+
+        if(!empty($files)):
             $i=0;
             foreach($files as $file):
                 $i++;
                 try{
                 $imagetbl = new ProductImage;
-                $imageName = time().$i.'.'.$file->extension(); 
+                $imageName = time().$i.'.'.$file->extension();
                 $file->storeAs('/product',$imageName,'public');
                 $imagetbl->image =$imageName;
                 $imagetbl->product_id =$id;
                 $imagetbl->priority = $i;
-                $imagetbl->save();   
+                $imagetbl->save();
 
             }catch(Exception $e){
                     ['message'=> ' '.$e.' '];
@@ -253,10 +254,10 @@ class ProductController extends Controller
         endif;
 
     }
-    
 
 
-    
+
+
     public function setPriority(Request $request){
         try{
             $image=ProductImage::find($request->id);
@@ -265,7 +266,7 @@ class ProductController extends Controller
             return response()->json([
                 "sucess"  => true,
                 "message" => "Priority of the image has been set to ".$request->priority,
-                
+
             ]);
         } catch(Exception $e){
             return response()->json([
