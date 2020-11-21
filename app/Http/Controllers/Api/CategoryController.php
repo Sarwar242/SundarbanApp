@@ -19,14 +19,17 @@ class CategoryController extends Controller
     public function index()
     {
         try{
-            $categories = Category::all();
+            $categories = Category::orderBy('name', 'ASC')->get();
             foreach ($categories as $category) {
                 $subcategories = $category->subcategories;
                 $products=$category->products;
                 if(!is_null($products))
                 {
                     foreach ($products as $product) {
+                        $product->unit;
+                        $product->images;
                         $product->subcategory;
+                        $product->company;
                     }
                 }
             }
@@ -118,8 +121,10 @@ class CategoryController extends Controller
             if(!is_null($products))
                 {
                     foreach ($products as $product) {
-                        $product->category;
+                        $product->unit;
+                        $product->images;
                         $product->subcategory;
+                        $product->company;
                     }
                 }
 

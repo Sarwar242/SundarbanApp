@@ -16,7 +16,7 @@ class CustomerController extends Controller
 
     public function customers(Request $request)
     {
-        $customers= Customer::all();
+        $customers= Customer::orderBy('name', 'ASC')->get();
         foreach($customers as $customer):
             $user=$customer->user;
             $division = $customer->division;
@@ -41,6 +41,7 @@ class CustomerController extends Controller
                 'message'=>'No customer found in database!'
                ]);
         }
+        $user=$customer->user;
         $division = $customer->division;
         $district=$customer->district;
         $upazilla=$customer->upazilla;
@@ -66,7 +67,6 @@ class CustomerController extends Controller
             'nid' => 'nullable|string',
             'gender' => 'nullable|string',
             'email' => 'nullable|email',
-            'phone' => 'required|numeric|phone|unique:users,phone,'.$customer->user->id,
             'phone_hide' => 'nullable|boolean',
             'phone2' => 'nullable|numeric|phone',
             'street' => 'nullable|string',
@@ -91,7 +91,7 @@ class CustomerController extends Controller
             $customer->last_name =$request->last_name;
             if(request()->has('email'))
                 $customer->user->email =$request->email;
-            $customer->user->phone =$request->phone;
+           // $customer->user->phone =$request->phone;
             if(request()->has('phone_hide'))
                 $customer->phone_hide =$request->phone_hide;
             if(request()->has('dob'))

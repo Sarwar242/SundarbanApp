@@ -12,7 +12,7 @@ class UnitController extends Controller
     public function index()
     {
         try{
-            $units = Unit::all();
+            $units = Unit::orderBy('name', 'ASC')->get();
             return response()->json([
                 "success"  => true,
                 "units" => $units,

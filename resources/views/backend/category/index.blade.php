@@ -28,12 +28,13 @@
                 <th scope="row">{{$loop->index+1}}</th>
                 <td>{{$category->name}}</td>
                 <td>{{$category->bn_name}}</td>
-                <td>{{$category->description}}</td>
-                <td>{{$category->bn_description}}</td>
-                <td><img src="{{ asset('storage/category')}}/{{$category->image}}" 
-                    style="width:30px;" class="user-image" alt="Category Image"></td>    
+
+                <td>{!!strlen($category->description) > 100 ? substr($category->description,0,100)." .....": $category->description!!}</td>
+                <td>{!!strlen($category->bn_description) > 100 ? substr($category->bn_description,0,100)." ...": $category->bn_description!!}</td>
+                <td><img src="{{ asset('storage/category')}}/{{$category->image}}"
+                    style="width:30px;" class="user-image" alt="Category Image"></td>
                 <td><a href="{{route('admin.category.update',$category->id)}}">Edit</a></td>
-                <td><a class="delete" data-confirm="Are you sure to delete this item?" 
+                <td><a class="delete" data-confirm="Are you sure to delete this item?"
                     href="{{route('admin.category.delete',$category->id)}}">Delete</a></td>
             </tr>
           @endforeach
@@ -46,13 +47,13 @@
 <script src="{{ asset('js/backend/jquery.min.js')}}"></script>
 <script>
     var deleteLinks = document.querySelectorAll('.delete');
-    
+
     for (var i = 0; i < deleteLinks.length; i++) {
         deleteLinks[i].addEventListener('click', function(event) {
             event.preventDefault();
-    
+
             var choice = confirm(this.getAttribute('data-confirm'));
-    
+
             if (choice) {
                 window.location.href = this.getAttribute('href');
             }

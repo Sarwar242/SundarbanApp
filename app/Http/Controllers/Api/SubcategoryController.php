@@ -16,15 +16,16 @@ class SubcategoryController extends Controller
     public function index()
     {
         try{
-            $subcategories = Subcategory::all();
+            $subcategories = Subcategory::orderBy('name', 'ASC')->get();
             foreach($subcategories as $subcategory ):
                 $subcategory->category;
                 $products=$subcategory->products;
                 if(!is_null($products))
                 {
                     foreach ($products as $product) {
-                        $product->category;
-                        $product->subcategory;
+                        $product->unit;
+                        $product->company;
+                        $product->images;
                     }
                 }
             endforeach;
@@ -123,8 +124,9 @@ class SubcategoryController extends Controller
             if(!is_null($products))
                 {
                     foreach ($products as $product) {
-                        $product->category;
-                        $product->subcategory;
+                        $product->unit;
+                        $product->company;
+                        $product->images;
                     }
                 }
             return response()->json([

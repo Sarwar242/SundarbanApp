@@ -18,7 +18,7 @@ class ProductController extends Controller
     public function index()
     {
         try{
-            $products = Product::all();
+            $products = Product::orderBy('name', 'ASC')->get();
             foreach($products as $product ):
                 $unit=$product->unit;
                 $category = $product->category;

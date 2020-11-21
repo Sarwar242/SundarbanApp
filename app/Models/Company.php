@@ -69,6 +69,14 @@ class Company extends Model
    {
        return $this->belongsToMany(User::class,'follows');
    }
+   public function rated()
+   {
+       return $this->belongsToMany(User::class,'ratings');
+   }
+   public function ratings()
+   {
+       return $this->hasMany(Rating::class);
+   }
 
 
    public static function slugComplete() {

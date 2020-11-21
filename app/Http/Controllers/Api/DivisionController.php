@@ -14,7 +14,7 @@ class DivisionController extends Controller
     public function index()
     {
         try{
-            $divisions = Division::all();
+            $divisions = Division::orderBy('name', 'ASC')->get();
             return response()->json([
                 "success"  => true,
                 "divisions" => $divisions,
@@ -46,7 +46,7 @@ class DivisionController extends Controller
             $division->bn_name =$request->bn_name;
             $division->longitude =$request->longitude;
             $division->latitude =$request->latitude;
-  
+
             $division->save();
 
             return response()->json([
@@ -70,9 +70,9 @@ class DivisionController extends Controller
             return response()->json([
                 "success"  => false,
                 "message" => "No Division Found!",
-                
+
             ]);
-            
+
             return response()->json([
                 "success"  => true,
                 "division" => $division,
@@ -88,7 +88,7 @@ class DivisionController extends Controller
 
 
 
-   
+
     public function update(Request $request)
     {
         $validator = Validator::make($request->all(),[
@@ -122,7 +122,7 @@ class DivisionController extends Controller
         }
     }
 
-    
+
     public function destroy(Request  $request)
     {
         try{
@@ -130,8 +130,8 @@ class DivisionController extends Controller
             if(is_null($division))
             return response()->json([
                 "success"  => false,
-                "message" => "No Division Found!",    
-            ]);    
+                "message" => "No Division Found!",
+            ]);
             $division->delete();
             return response()->json([
                 "success"  => true,

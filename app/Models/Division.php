@@ -10,18 +10,24 @@ class Division extends Model
       'name',  'bn_name', 'longitude','latitude',
    ];
 
-   
-   
+
+
    public function districts()
    {
        return $this->hasMany(District::class);
    }
-   
-   
+
+
    public static function divisions()
    {
        $divisions= Division::latest()->paginate(10);
        return $divisions;
    }
    //orderBy('created_at','desc')->
+
+
+   public function products()
+   {
+       return $this->hasManyThrough(Product::class, Company::class)->orderBy('name', 'ASC');
+   }
 }

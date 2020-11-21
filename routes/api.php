@@ -209,25 +209,25 @@ Route::get('union/show', 'Api\UnionController@show');
 Route::get('/get-subcategories', function (Request $request) {
     return response()->json([
         "success"  => true,
-        "subcategories" =>App\Models\Subcategory::where('category_id', $request->id)->get(),
+        "subcategories" =>App\Models\Subcategory::where('category_id', $request->id)->orderBy('name', 'ASC')->get(),
     ]);
 });
 Route::get('/get-districts', function (Request $request) {
     return response()->json([
         "success"  => true,
-        "districts" =>App\Models\District::where('division_id', $request->id)->get(),
+        "districts" =>App\Models\District::where('division_id', $request->id)->orderBy('name', 'ASC')->get(),
     ]);
 });
 Route::get('/get-upazillas', function (Request $request) {
     return response()->json([
         "success"  => true,
-        "upazillas" =>App\Models\Upazilla::where('district_id', $request->id)->get(),
+        "upazillas" =>App\Models\Upazilla::where('district_id', $request->id)->orderBy('name', 'ASC')->get(),
     ]);
 });
 Route::get('/get-unions', function (Request $request) {
     return response()->json([
         "success"  => true,
-        "unions" =>App\Models\Union::where('upazilla_id', $request->id)->get(),
+        "unions" =>App\Models\Union::where('upazilla_id', $request->id)->orderBy('name', 'ASC')->get(),
     ]);
 });
 
@@ -244,4 +244,9 @@ Route::get('/get-unions', function (Request $request) {
 |--------------------------------------------------------------------------
 */
 Route::get('product-search', 'Api\SearchController@productSearch');
-
+Route::get('company-search', 'Api\SearchController@companySearch');
+Route::get('search-by-type', 'Api\SearchController@searchByType');
+Route::get('product-by-type', 'Api\SearchController@productByType');
+Route::get('company-by-type', 'Api\SearchController@companyByType');
+Route::get('company-by-location', 'Api\SearchController@companyByLocation');
+Route::get('product-by-location', 'Api\SearchController@productByLocation');

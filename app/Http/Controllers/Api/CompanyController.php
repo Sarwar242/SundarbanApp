@@ -16,20 +16,24 @@ class CompanyController extends Controller
 
     public function companies(Request $request)
     {
-        $companies= Company::all();
+        $companies= Company::orderBy('name', 'ASC')->get();
         foreach($companies as $company):
-            $user=$company->user;
-            $category=$company->category;
+            $user = $company->user;
+            $category = $company->category;
             $subcategory = $company->subcategory;
             $division = $company->division;
-            $district=$company->district;
-            $upazilla=$company->upazilla;
-            $union=$company->union;
+            $district = $company->district;
+            $upazilla = $company->upazilla;
+            $union = $company->union;
+            $company->following = $company->user->followings()->get()->count();
+            $company->followers = $company->followers()->get()->count();
+            $company->ratings   = $company->ratings()->get()->avg('rating');
         endforeach;
 
         return response()->json([
             'success'=>true,
-            'companies'=>$companies
+            'companies'=>$companies,
+
            ]);
     }
 
@@ -42,6 +46,7 @@ class CompanyController extends Controller
                 'message'=>'No company found in database!'
                ]);
         }
+        $user=$company->user;
         $category=$company->category;
         $subcategory = $company->subcategory;
         $division = $company->division;
@@ -49,16 +54,20 @@ class CompanyController extends Controller
         $upazilla=$company->upazilla;
         $union=$company->union;
         $products = $company->products;
+        foreach ($products as $product) {
+            $product->images;
+        }
         $user=User::find($company->user_id);
-        $following=$user->followings()->get()->count() ;
-        $followers=$company->followers()->get()->count() ;
-
+        $following=$user->followings()->get()->count();
+        $followers=$company->followers()->get()->count();
+        $ratings = $company->ratings()->get()->avg('rating');
 
         return response()->json([
             'success'=>true,
             'company'=>$company,
             'followers'=>$followers,
-            'following'=>$following
+            'following'=>$following,
+            'rating' =>$ratings,
            ]);
     }
 
@@ -69,8 +78,6 @@ class CompanyController extends Controller
             'id' => 'required',
             'name' => 'required|string',
             'email' => 'nullable|email',
-            'phone' => 'required|numeric|phone|unique:users,phone,'.$company->user->id,
-
             'bn_name' => 'nullable|string',
             'owners_name' => 'nullable|string',
             'owners_nid' => 'nullable|string',
@@ -119,7 +126,7 @@ class CompanyController extends Controller
             }
 
             $company->name =$request->name;
-            $company->user->phone =$request->phone;
+            // $company->user->phone =$request->phone;
             if(request()->has('email'))
                 $company->user->email =$request->email;
 

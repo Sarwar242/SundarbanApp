@@ -13,12 +13,12 @@ class Subcategory extends Model
 
    public function products()
    {
-       return $this->hasMany(Product::class);
+       return $this->hasMany(Product::class)->orderBy('name', 'ASC');
    }
 
    public function category()
    {
-       return $this->belongsTo(Category::class);
+       return $this->belongsTo(Category::class)->orderBy('name', 'ASC');
    }
 
    public static function subcategoies()
@@ -26,7 +26,7 @@ class Subcategory extends Model
        $subcategoies = Subcategory::latest()->paginate(10);
        return $subcategoies;
    }
-      
+
    public static function slugComplete() {
     $categories = Subcategory::all();
     foreach($categories as $category){

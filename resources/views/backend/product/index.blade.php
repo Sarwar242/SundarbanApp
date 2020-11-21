@@ -17,7 +17,7 @@
 		    <tr>
 		      <th scope="col">#</th>
 		      <th scope="col">Name</th>
-		      <th scope="col">Code</th>  
+		      <th scope="col">Code</th>
 		      <th scope="col">Price</th>
 			  <th scope="col">Quantity</th>
 			  <th scope="col">Category</th>
@@ -33,7 +33,7 @@
 					<th scope="row">{{$loop->index+1}}</th>
 					<td onclick="window.location.href='{{route('admin.product.show', $product->slug)}}'" style="cursor: pointer">{{$product->name}}</td>
 					<td onclick="window.location.href='{{route('admin.product.show', $product->slug)}}'" style="cursor: pointer">{{$product->code}}</td>
-				
+
 					<td>{{$product->price}}</td>
 					<td>{{$product->quantity}}</td>
 					@if(!is_null($product->category))
@@ -48,7 +48,7 @@
 						<td></td>
 					@endif
 
-					<td>{{$product->description}}</td>
+					<td>{{substr($product->description, 0,  100)}}</td>
 					<td><a href="{{route('admin.product.update',$product->id)}}">Edit</a></td>
 					<td><a class="delete" data-confirm="Are you sure to delete this item?" href="{{route('admin.product.delete',$product->id)}}">Delete</a></td>
 				</tr>
@@ -61,13 +61,13 @@
 	<script src="{{ asset('js/backend/jquery.min.js')}}"></script>
 	<script>
 		var deleteLinks = document.querySelectorAll('.delete');
-		
+
 		for (var i = 0; i < deleteLinks.length; i++) {
 			deleteLinks[i].addEventListener('click', function(event) {
 				event.preventDefault();
-		
+
 				var choice = confirm(this.getAttribute('data-confirm'));
-		
+
 				if (choice) {
 					window.location.href = this.getAttribute('href');
 				}

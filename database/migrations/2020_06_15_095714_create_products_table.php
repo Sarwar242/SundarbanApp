@@ -19,8 +19,8 @@ class CreateProductsTable extends Migration
             $table->string('code');
             $table->string('slug')->nullable();
             $table->string('bn_name')->nullable();
-            $table->string('description')->nullable();
-            $table->string('bn_description')->nullable();
+            $table->text('description')->nullable();
+            $table->text('bn_description')->nullable();
             $table->double('price')->default(0);
             $table->double('discount')->nullable();
             $table->double('quantity')->nullable();
@@ -30,14 +30,14 @@ class CreateProductsTable extends Migration
             $table->unsignedBigInteger('subcategory_id')->nullable();
             $table->unsignedBigInteger('unit_id')->nullable();
             $table->unsignedBigInteger('company_id')->nullable();
-            
+
             $table->timestamps();
 
 
             $table->foreign('admin_id')
             ->references('id')->on('admins')
             ->onDelete('set null');
-            
+
             $table->foreign('category_id')
             ->references('id')->on('categories')
             ->onDelete('set null');

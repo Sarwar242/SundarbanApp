@@ -18,8 +18,8 @@ class CreateSubcategoriesTable extends Migration
             $table->string('name');
             $table->string('bn_name')->nullable();
             $table->string('slug')->nullable();
-            $table->string('description');
-            $table->string('bn_description');
+            $table->text('description')->nullable();
+            $table->text('bn_description')->nullable();
             $table->string('image');
             $table->unsignedBigInteger('category_id')->nullable();
             $table->unsignedBigInteger('admin_id')->nullable();

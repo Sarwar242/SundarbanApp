@@ -10,13 +10,13 @@ class District extends Model
         'name','bn_name','longitude','latitude','website','admin_id','division_id',
    ];
 
-   
+
    public function division()
    {
        return $this->belongsTo(Division::class);
    }
 
-   
+
    public function upazillas()
    {
        return $this->hasMany(Upazilla::class);
@@ -27,5 +27,9 @@ class District extends Model
        $districts= District::orderBy('division_id','asc')->paginate(10);
        return $districts;
    }
-   //orderBy('created_at','desc')->
+
+   public function products()
+   {
+       return $this->hasManyThrough(Product::class, Company::class)->orderBy('name', 'ASC');
+   }
 }

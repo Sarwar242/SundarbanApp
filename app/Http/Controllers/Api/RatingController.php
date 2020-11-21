@@ -12,6 +12,13 @@ use App\Models\Rating;
 class RatingController extends Controller
 {
     public function rate(Request $request){
+        // $validator = Validator::make($request->all(),[
+        //     'name' => 'required|string',
+        //     'bn_name' => 'nullable|string',
+        // ]);
+        // if ($validator->fails()) {
+        //     return response()->json($validator->errors(), 422);
+        // }
         $company = Company::find($request->company_id);
         $user = User::find($request->user_id);
         $has_rated=Rating::where('user_id', '=',$request->user_id )
@@ -36,5 +43,5 @@ class RatingController extends Controller
             'rating'=>$rate->rating
         ]);
     }
-   
+
 }

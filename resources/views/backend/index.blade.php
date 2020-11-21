@@ -18,7 +18,7 @@
             </div>
           @endif
           @if(Session::has('failed'))
-  
+
             <div class="alert alert-error alert-block">
                 <button type="button" class="close" data-dismiss="alert">
                     x
@@ -27,11 +27,11 @@
                     {!! session('failed') !!}
                 </strong>
             </div>
-    
-		  @endif
-		  
 
-		  <hr> 
+		  @endif
+
+
+		  <hr>
 		<center>
 			<div class="heading">
 				<h4>Latest Companies are here</h3>
@@ -99,7 +99,7 @@
 			@endforeach
 		  </tbody>
 		</table>
-		
+
 		<hr>
 
 		<center>
@@ -160,7 +160,7 @@
 					<th scope="row">{{$loop->index+1}}</th>
 					<td>{{$product->name}}</td>
 					<td>{{$product->code}}</td>
-					<td>{{$product->description}}</td>
+					<td>{!!strlen($product->description) > 100 ? substr($product->description,0,100)." ...": $product->description!!}</td>
 					<td>{{$product->price}}</td>
 					<td>{{$product->quantity}}</td>
 					<td><a href="{{route('admin.product.update',$product->id)}}">Edit</a></td>
@@ -169,7 +169,7 @@
 			@endforeach
 		  </tbody>
 		</table>
-		
+
 		<hr>
 
 
@@ -196,20 +196,20 @@
 					<th scope="row">{{$loop->index+1}}</th>
 					<td>{{$category->name}}</td>
 					<td>{{$category->bn_name}}</td>
-					<td>{{$category->description}}</td>
-					<td>{{$category->bn_description}}</td>
+					<td>{!!strlen($category->description) > 100 ? substr($category->description,0,100)." ...": $category->description!!}</td>
+					<td>{!!strlen($category->bn_description) > 100 ? substr($category->bn_description,0,100)." ...": $category->bn_description!!}</td>
 					<td><a href="{{route('admin.category.update',$category->id)}}">Edit</a></td>
-					<td><a class="delete" data-confirm="Are you sure to delete this item?" 
+					<td><a class="delete" data-confirm="Are you sure to delete this item?"
 						href="{{route('admin.category.delete',$category->id)}}">Delete</a></td>
 				</tr>
 			@endforeach
 		  </tbody>
 		</table>
-		
+
 		<hr>
 
 
-		
+
 		<center>
 			<div class="heading">
 				<h4>Latest Subcategories are here</h3>
@@ -239,10 +239,10 @@
 					@else
 					<td>N/A</td>
 					@endif
-					<td>{{$subcategory->description}}</td>
-					<td>{{$subcategory->bn_description}}</td>
+					<td>{!!strlen($subcategory->description) > 100 ? substr($subcategory->description,0,100)." ...": $subcategory->description!!}</td>
+					<td>{!!strlen($subcategory->bn_description) > 100 ? substr($subcategory->bn_description,0,100)." ...": $subcategory->bn_description!!}</td>
 					<td><a href="{{route('admin.subcategory.update',$subcategory->id)}}">Edit</a></td>
-					<td><a class="delete" data-confirm="Are you sure to delete this item?" 
+					<td><a class="delete" data-confirm="Are you sure to delete this item?"
 						href="{{route('admin.subcategory.delete',$subcategory->id)}}">Delete</a></td>
 				</tr>
 			@endforeach
@@ -251,17 +251,17 @@
 
 	</div>
 
-	
+
     <script src="{{ asset('js/backend/jquery.min.js')}}"></script>
 	<script>
 		var deleteLinks = document.querySelectorAll('.delete');
-		
+
 		for (var i = 0; i < deleteLinks.length; i++) {
 			deleteLinks[i].addEventListener('click', function(event) {
 				event.preventDefault();
-		
+
 				var choice = confirm(this.getAttribute('data-confirm'));
-		
+
 				if (choice) {
 					window.location.href = this.getAttribute('href');
 				}

@@ -45,8 +45,6 @@ class User extends Authenticatable implements MustVerifyEmail
         $this->notify(new PasswordResetNotification($token));
     }
 
-
-
     public function username()
     {
         return $this->phone;
@@ -65,5 +63,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function followings()
     {
         return $this->belongsToMany(Company::class,'follows');
+    }
+
+    public function rates()
+    {
+        return $this->belongsToMany(Company::class,'ratings');
     }
 }

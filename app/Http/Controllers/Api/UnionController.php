@@ -16,7 +16,7 @@ class UnionController extends Controller
     public function index()
     {
         try{
-            $unions = Union::all();
+            $unions = Union::orderBy('name', 'ASC')->get();
             return response()->json([
                 "success"  => true,
                 "unions" => $unions,
@@ -73,9 +73,9 @@ class UnionController extends Controller
             return response()->json([
                 "success"  => false,
                 "message" => "No union Found!",
-                
+
             ]);
-            
+
             return response()->json([
                 "success"  => true,
                 "union" => $union,
@@ -91,7 +91,7 @@ class UnionController extends Controller
 
 
 
-   
+
     public function update(Request $request)
     {
         $validator = Validator::make($request->all(),[
@@ -126,7 +126,7 @@ class UnionController extends Controller
         }
     }
 
-    
+
     public function destroy(Request  $request)
     {
         try{
@@ -134,8 +134,8 @@ class UnionController extends Controller
             if(is_null($union))
                 return response()->json([
                     "sucess"  => false,
-                    "message" => "No union Found!",    
-                ]);    
+                    "message" => "No union Found!",
+                ]);
             $union->delete();
             return response()->json([
                 "sucess"  => true,

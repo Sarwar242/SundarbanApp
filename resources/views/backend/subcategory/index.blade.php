@@ -34,12 +34,12 @@
                 @else
                     <td>N/A</td>
                 @endif
-                <td>{{$subcategory->description}}</td>
-                <td>{{$subcategory->bn_description}}</td>
-                <td><img src="{{ asset('storage/subcategory')}}/{{$subcategory->image}}" 
+                <td>{{substr($subcategory->bn_description, 0,  100)}}</td>
+                <td>{{substr($subcategory->bn_description, 0,  100)}}</td>
+                <td><img src="{{ asset('storage/subcategory')}}/{{$subcategory->image}}"
                     style="width:30px;" alt="Subcategory Image"></td>
                 <td><a href="{{route('admin.subcategory.update',$subcategory->id)}}">Edit</a></td>
-                <td><a class="delete" data-confirm="Are you sure to delete this item?" 
+                <td><a class="delete" data-confirm="Are you sure to delete this item?"
                     href="{{route('admin.subcategory.delete',$subcategory->id)}}">Delete</a></td>
             </tr>
         @endforeach
@@ -52,13 +52,13 @@
 <script src="{{ asset('js/backend/jquery.min.js')}}"></script>
 <script>
     var deleteLinks = document.querySelectorAll('.delete');
-    
+
     for (var i = 0; i < deleteLinks.length; i++) {
         deleteLinks[i].addEventListener('click', function(event) {
             event.preventDefault();
-    
+
             var choice = confirm(this.getAttribute('data-confirm'));
-    
+
             if (choice) {
                 window.location.href = this.getAttribute('href');
             }

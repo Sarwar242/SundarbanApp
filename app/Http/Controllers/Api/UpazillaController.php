@@ -15,7 +15,7 @@ class UpazillaController extends Controller
     public function index()
     {
         try{
-            $upazillas = Upazilla::all();
+            $upazillas = Upazilla::orderBy('name', 'ASC')->get();
             return response()->json([
                 "success"  => true,
                 "upazillas" => $upazillas,
@@ -72,9 +72,9 @@ class UpazillaController extends Controller
             return response()->json([
                 "success"  => false,
                 "message" => "No upazilla Found!",
-                
+
             ]);
-            
+
             return response()->json([
                 "success"  => true,
                 "upazilla" => $upazilla,
@@ -90,7 +90,7 @@ class UpazillaController extends Controller
 
 
 
-   
+
     public function update(Request $request)
     {
         $validator = Validator::make($request->all(),[
@@ -98,7 +98,7 @@ class UpazillaController extends Controller
             'bn_name' => 'sometimes|string',
             'longitude' => 'sometimes|string',
             'latitude' => 'sometimes|string',
-            'district_id' => 'required', 
+            'district_id' => 'required',
         ]);
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
@@ -125,7 +125,7 @@ class UpazillaController extends Controller
         }
     }
 
-    
+
     public function destroy(Request  $request)
     {
         try{
@@ -133,8 +133,8 @@ class UpazillaController extends Controller
             if(is_null($upazilla))
             return response()->json([
                 "success"  => false,
-                "message" => "No Upazilla Found!",    
-            ]);    
+                "message" => "No Upazilla Found!",
+            ]);
             $upazilla->delete();
             return response()->json([
                 "success"  => true,

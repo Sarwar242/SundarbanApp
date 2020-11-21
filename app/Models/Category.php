@@ -11,16 +11,16 @@ class Category extends Model
         'name','bn_name', 'slug','description','bn_description', 'image','admin_id'
    ];
 
-   
+
 
    public function subcategories()
    {
-       return $this->hasMany(Subcategory::class);
-   } 
+       return $this->hasMany(Subcategory::class)->orderBy('name', 'ASC');
+   }
 
     public function products()
    {
-       return $this->hasMany(Product::class);
+       return $this->hasMany(Product::class)->orderBy('name', 'ASC');
    }
 
 

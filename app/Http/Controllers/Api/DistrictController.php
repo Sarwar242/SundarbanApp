@@ -14,7 +14,7 @@ class DistrictController extends Controller
     public function index()
     {
         try{
-            $districts = District::all();
+            $districts = District::orderBy('name', 'ASC')->get();
             return response()->json([
                 "success"  => true,
                 "districts" => $districts,
@@ -50,7 +50,7 @@ class DistrictController extends Controller
             $district->latitude =$request->latitude;
             $district->website =$request->website;
             $district->division_id =$request->division_id;
-  
+
             $district->save();
 
             return response()->json([
@@ -74,9 +74,9 @@ class DistrictController extends Controller
             return response()->json([
                 "success"  => false,
                 "message" => "No District Found!",
-                
+
             ]);
-            
+
             return response()->json([
                 "success"  => true,
                 "district" => $district,
@@ -92,7 +92,7 @@ class DistrictController extends Controller
 
 
 
-   
+
     public function update(Request $request)
     {
         $validator = Validator::make($request->all(),[
@@ -101,7 +101,7 @@ class DistrictController extends Controller
             'longitude' => 'sometimes|string',
             'latitude' => 'sometimes|string',
             'website' => 'sometimes|string',
-            'division_id' => 'required', 
+            'division_id' => 'required',
         ]);
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
@@ -114,7 +114,7 @@ class DistrictController extends Controller
             $district->latitude =$request->latitude;
             $district->website =$request->website;
             $district->division_id =$request->division_id;
-  
+
             $district->save();
 
             return response()->json([
@@ -130,7 +130,7 @@ class DistrictController extends Controller
         }
     }
 
-    
+
     public function destroy(Request  $request)
     {
         try{
@@ -138,8 +138,8 @@ class DistrictController extends Controller
             if(is_null($district))
             return response()->json([
                 "sucess"  => false,
-                "message" => "No District Found!",    
-            ]);    
+                "message" => "No District Found!",
+            ]);
             $district->delete();
             return response()->json([
                 "sucess"  => true,
