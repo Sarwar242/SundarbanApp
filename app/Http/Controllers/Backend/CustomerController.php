@@ -76,7 +76,8 @@ class CustomerController extends Controller
             $customer->last_name =$request->last_name;
             $customer->user->email =$request->email;
             $customer->user->phone =$request->phone;
-            $customer->phone_hide =$request->phone_hide;
+            if(request()->has('phone_hide'))
+                $customer->phone_hide =$request->phone_hide;
             $customer->dob =$request->dob;
             $customer->hn =$request->hn;
             $customer->nid =$request->nid;
@@ -116,7 +117,8 @@ class CustomerController extends Controller
             $customer->save();
 
             session()->flash('success', 'The Customer has been Updated!!');
-                return redirect()->route('admin.customer.update',$customer->id);
+            return redirect()->route('admin.customer.update',$customer->id);
+
             }catch(Exception $e){
                 session()->flash('failed', 'Error occured! --'.$e);
                 return redirect()->route('admin.customer.update',$customer->id);

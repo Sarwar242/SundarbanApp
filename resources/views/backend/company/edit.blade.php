@@ -22,7 +22,7 @@
             </div>
           @endif
           @if(Session::has('failed'))
-  
+
             <div class="alert alert-error alert-block">
                 <button type="button" class="close" data-dismiss="alert">
                     x
@@ -31,7 +31,7 @@
                     {!! session('failed') !!}
                 </strong>
             </div>
-    
+
           @endif
             <div class="text-center">
               <h2>Edit Company</h2>
@@ -68,8 +68,8 @@
                   </strong>
                 </div>
                 @enderror
-              </div>     
-              
+              </div>
+
               <div class="form-group">
                 <label for="">Phone(*)</label>
                 <input type="text" name="phone" value="{{$company->user->phone}}" class="form-control @error('phone') is-invalid @enderror" placeholder="Pease type a valid phone no...">
@@ -83,7 +83,7 @@
                   </strong>
                 </div>
                 @enderror
-              </div>  
+              </div>
 
               <div class="form-group">
                 <label for="Code">Code(*)</label>
@@ -134,7 +134,7 @@
                     </strong>
                   </div>
                 @enderror
-                
+
                 <div class="preview">
                   <img id="img-preview">
                 </div>
@@ -202,7 +202,7 @@
 
               <div class="form-group">
                 <label for="exampleFormControlTextarea1">Description</label>
-                <textarea class="form-control @error('description') is-invalid @enderror" 
+                <textarea class="form-control @error('description') is-invalid @enderror"
                 name="description" rows="3" placeholder="Write something about the Company...">{!!$company->description!!}</textarea>
                 @error('description')
                 <div class="alert alert-danger alert-block">
@@ -217,7 +217,7 @@
               </div>
               <div class="form-group">
                 <label for="Description">Description in Bangla</label>
-                <textarea class="form-control @error('bn_description') is-invalid @enderror" 
+                <textarea class="form-control @error('bn_description') is-invalid @enderror"
                 name="bn_description" rows="3" placeholder="Write something about the Company...">{!!$company->bn_description!!}</textarea>
                 @error('bn_description')
                 <div class="alert alert-danger alert-block">
@@ -298,9 +298,9 @@
                       <option value="{{$company->off_day}}" disabled selected>
                           {{$company->off_day}}</option>
                       <option value="Sunday">
-                        Sunday</option> 
+                        Sunday</option>
                       <option value="Monday">
-                        Monday</option> 
+                        Monday</option>
                       <option value="Tuesday">
                         Tuesday</option>
                       <option value="Wednesday">
@@ -315,9 +315,9 @@
                     <option value="" selected='selected' disabled>
                       Select one</option>
                       <option value="Sunday">
-                        Sunday</option> 
+                        Sunday</option>
                       <option value="Monday">
-                        Monday</option> 
+                        Monday</option>
                       <option value="Tuesday">
                         Tuesday</option>
                       <option value="Wednesday">
@@ -329,7 +329,7 @@
                       <option value="Saturday">
                         Saturday</option>
                     @endif
-                 
+
                 </select>
                 @error('off_day')
                 <div class="alert alert-danger alert-block">
@@ -388,7 +388,7 @@
                 </div>
                 @enderror
               </div>
-              
+
               <div class="form-group">
                 <label for="exampleFormControlSelect1">Category</label>
                 <select class="select2 form-control @error('category_id') is-invalid @enderror" name="category_id"  id="category_id" >
@@ -424,7 +424,7 @@
 
               <div class="form-group">
                 <label for="exampleFormControlSelect1">Sub-Category</label>
-                <select  name="select2 subcategory_id"  class="form-control @error('subcategory_id') is-invalid @enderror" id="subcategory_id" >
+                <select  name="subcategory_id"  class="select2 form-control @error('subcategory_id') is-invalid @enderror" id="subcategory_id" >
                   @if(!is_null($company->subcategory))
                     <option value="{{$company->subcategory->id}}" selected >
                       {{$company->subcategory->name}}</option>
@@ -451,18 +451,18 @@
                       <option value="{{$company->business_type}}" disabled selected>
                           {{$company->business_type}}</option>
                       <option value="Service">
-                            Service</option> 
+                            Service</option>
                       <option value="Product">
                             Product</option>
                     @else
                     <option value="" selected='selected' disabled>
                       Select one</option>
                       <option value="Service">
-                          Service</option> 
+                          Service</option>
                       <option value="Product">
                           Product</option>
                     @endif
-                 
+
                 </select>
                 @error('business_type')
                 <div class="alert alert-danger alert-block">
@@ -484,7 +484,7 @@
                       <option value="{{$company->type}}" selected="selected"  disabled>
                           {{$company->type}}</option>
                       <option value="Wholesale">
-                        Wholesale</option> 
+                        Wholesale</option>
                       <option value="Retailer">Retailer</option>
                       <option value="Manufacturer">Manufacturer</option>
                       <option value="Export">Export</option>
@@ -493,13 +493,13 @@
                     <option value="" selected='selected' disabled>
                       Select one</option>
                       <option value="Wholesale">
-                        Wholesale</option> 
+                        Wholesale</option>
                       <option value="Retailer">Retailer</option>
                       <option value="Manufacturer">Manufacturer</option>
                       <option value="Export">Export</option>
                       <option value="Import">Import</option>
                     @endif
-                
+
                 </select>
                 @error('type')
                 <div class="alert alert-danger alert-block">
@@ -514,7 +514,7 @@
               </div>
               <div class="form-group">
                 <label for="Zip Code">Zip Code</label>
-                <input type="text" name="zipcode"  value="{{$company->zipcode}}"  
+                <input type="text" name="zipcode"  value="{{$company->zipcode}}"
                   class="form-control @error('zipcode') is-invalid @enderror" placeholder="If the company have website...">
                 @error('zipcode')
                 <div class="alert alert-danger alert-block">
@@ -545,8 +545,8 @@
                   @else
                   <option value="" selected='selected' disabled>
                     Select a Division</option>
-                    @foreach(App\Models\Division::all() as $division)   
-                   
+                    @foreach(App\Models\Division::all() as $division)
+
                       <option value="{{ $division->id }}">
                           {{ $division->name}}</option>
                     @endforeach
@@ -628,7 +628,7 @@
               <center>
                 <input type="submit" class="btn btn-success btn-block" value="Update">
                 <a href="{{route('admin.company.create')}}" class="btn btn-primary btn-block">Add New</a>
-                <a data-confirm="Are you sure to delete this company?" href="{{route('admin.company.delete',$company->id)}}" 
+                <a data-confirm="Are you sure to delete this company?" href="{{route('admin.company.delete',$company->id)}}"
                   class="delete btn btn-danger btn-block">Delete</a>
               </center>
             </form>
@@ -638,25 +638,25 @@
     </section>
 
 
-    
-    
+
+
     <script src="{{ asset('js/backend/jquery.min.js')}}"></script>
     <script>
       var deleteLinks = document.querySelectorAll('.delete');
-      
+
       for (var i = 0; i < deleteLinks.length; i++) {
         deleteLinks[i].addEventListener('click', function(event) {
           event.preventDefault();
-      
+
           var choice = confirm(this.getAttribute('data-confirm'));
-      
+
           if (choice) {
             window.location.href = this.getAttribute('href');
           }
         });
       }
       </script>
-  
+
     <script>
         $(document).on('change','#category_id',function(){
           var category = $("#category_id").val();
@@ -674,7 +674,7 @@
               });
 
               $("#subcategory_id").html(option);
-          }); 
+          });
     });
 
        $(document).on('change','#division_id',function(){
@@ -690,13 +690,13 @@
           option = "<option selected disabled>Select one</option>";
             var d = JSON.parse(data);
             d.forEach(function(element) {
-              
+
                 console.log(element.id);
                 option += "<option value='" + element.id + "'>" + element.name + "</option>";
             });
 
             $("#district_id").html(option);
-        }); 
+        });
     });
 
     $(document).on('change','#district_id',function(){
@@ -716,7 +716,7 @@
             });
 
             $("#upazilla_id").html(option);
-        }); 
+        });
     });
 
     $(document).on('change','#upazilla_id',function(){
@@ -735,8 +735,8 @@
             });
 
             $("#union_id").html(option);
-        }); 
+        });
     });
     </script>
-    
+
 @endsection
