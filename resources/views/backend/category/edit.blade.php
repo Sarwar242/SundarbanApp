@@ -21,7 +21,7 @@
                   </strong>
               </div>
             @endif
-            @if(Session::has('failed'))  
+            @if(Session::has('failed'))
               <div class="alert alert-error alert-block">
                   <button type="button" class="close" data-dismiss="alert">
                       x
@@ -75,6 +75,8 @@
                   <img style="display:block; max-width: 200px; padding-left: 10px;padding-bottom: 3px; margin-left: 60px;" src="{{ asset('storage/category')}}/{{$category->image}}" >
                 </div>
                 <input type="file" name="image" class="form-control @error('image') is-invalid @enderror" id="image" accept="image/*" onchange="showImgPreview(event);">
+                <span>[max size: <strong>100kb</strong>
+                    & resolution: <strong>100*85px]</strong> </span>
                 @error('image')
                   <div class="alert alert-danger alert-block">
                     <button type="button" class="close" data-dismiss="alert">
@@ -89,11 +91,11 @@
                   <img id="img-preview">
                 </div>
               </div>
-              
+
               <div class="form-group">
                 <label for="exampleFormControlTextarea1">Description</label>
-                <textarea class="form-control @error('description') is-invalid @enderror" 
-                name="description" id="exampleFormControlTextarea1" rows="3" 
+                <textarea class="form-control @error('description') is-invalid @enderror"
+                name="description" id="exampleFormControlTextarea1" rows="3"
                 placeholder="Write something about the Category...">{!!$category->description!!}</textarea>
                 @error('description')
                   <div class="alert alert-danger alert-block">

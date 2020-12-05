@@ -17,13 +17,13 @@
                     x
                 </button>
                 <strong>
-                  {!! session('success')!!}   @php Session::forget('success') @endphp &nbsp;&nbsp; 
+                  {!! session('success')!!}   @php Session::forget('success') @endphp &nbsp;&nbsp;
                   @if(!is_null($product))<a href="{{route('admin.product.update',$product)}}">Edit</a>@endif
                 </strong>
             </div>
             @endif
             @if(Session::has('failed'))
-    
+
             <div class="alert alert-error alert-block">
                 <button type="button" class="close" data-dismiss="alert">
                     x
@@ -32,7 +32,7 @@
                     {!! session('failed') !!}
                 </strong>
             </div>
-    
+
             @endif
             <div class="text-center">
               <h2>Add Product</h2>
@@ -172,8 +172,8 @@
 
               <div class="form-group">
                 <label for="SubCategory">Sub-Category</label>
-                <select class="select2 form-control @error('subcategory_id') is-invalid @enderror" id="subcategory_id" >
-                 
+                <select class="select2 form-control @error('subcategory_id') is-invalid @enderror" name="subcategory_id" id="subcategory_id" >
+
                 </select>
                 @error('subcategory_id')
                 <div class="alert alert-danger alert-block">
@@ -187,7 +187,32 @@
                 @enderror
               </div>
 
-              
+              <div class="form-group">
+                <label for="type">Type</label>
+                 <select class="select2 form-control @error('type') is-invalid @enderror"
+                  name="type" >
+
+                    <option value="" selected='selected' disabled>
+                      Select one</option>
+                      <option value="Service">
+                          Service</option>
+                      <option value="Product">
+                          Product</option>
+
+                </select>
+                @error('type')
+                <div class="alert alert-danger alert-block">
+                  <button type="button" class="close" data-dismiss="alert">
+                    x
+                  </button>
+                  <strong>
+                      {!! $message !!}
+                  </strong>
+                </div>
+                @enderror
+              </div>
+
+
 
               <div class="form-group">
                 <label for="exampleFormControlSelect1">Company</label>
@@ -213,7 +238,8 @@
               <div class="form-group">
                 <label for="exampleFormControlFile1">Upload Image</label>
                 <input type="file" name="image[]" class="form-control @error('image') is-invalid @enderror" multiple >
-              
+                <span>[max size: <strong>500kb</strong>
+                    & resolution: <strong>800*600px] [Multiple]</strong>  </span>
                 @error('image')
                 <div class="alert alert-danger alert-block">
                   <button type="button" class="close" data-dismiss="alert">
@@ -225,7 +251,7 @@
                 </div>
                 @enderror
               </div>
-              
+
               <div class="form-group">
                 <label for="exampleFormControlTextarea1">Description</label>
                 <textarea class="form-control @error('description') is-invalid @enderror" name="description" rows="3" placeholder="Write something about Product..."></textarea>
@@ -239,13 +265,13 @@
                   </strong>
                 </div>
                 @enderror
-              
+
               </div>
 
               <div class="form-group">
                 <label for="exampleFormControlTextarea1">Description in Bangla</label>
                 <textarea class="form-control @error('bn_description') is-invalid @enderror" name="bn_description" rows="3" placeholder="Write something about Product..."></textarea>
-              
+
                 @error('bn_description')
                 <div class="alert alert-danger alert-block">
                   <button type="button" class="close" data-dismiss="alert">
@@ -287,9 +313,9 @@
             });
 
             $("#subcategory_id").html(option);
-        }); 
+        });
     });
-     
+
       </script>
-      
+
       @endsection

@@ -22,7 +22,7 @@
             </div>
           @endif
           @if(Session::has('failed'))
-  
+
             <div class="alert alert-error alert-block">
                 <button type="button" class="close" data-dismiss="alert">
                     x
@@ -31,7 +31,7 @@
                     {!! session('failed') !!}
                 </strong>
             </div>
-    
+
           @endif
             <div class="text-center">
               <h2>Edit Admin</h2>
@@ -139,16 +139,16 @@
                       <option value="{{$admin->type}}" selected="selected"  disabled >
                           {{$admin->type}}</option>
                       <option value="Admin">
-                            Admin</option> 
+                            Admin</option>
                       <option value="Super Admin">
-                        Super Admin</option>         
+                        Super Admin</option>
                     @else
                     <option value="" selected='selected' disabled>
                       Select one</option>
                       <option value="Admin">
-                        Admin</option> 
+                        Admin</option>
                       <option value="Super Admin">
-                        Super Admin</option>      
+                        Super Admin</option>
                     @endif
                 </select>
                 @error('type')
@@ -162,7 +162,7 @@
                 </div>
                 @enderror
               </div>
-              
+
 
               <div class="form-group">
                 <label for="image">Admin Image :</label>
@@ -170,6 +170,8 @@
                   <img style="display:block; max-width: 200px; padding-left: 10px;padding-bottom: 3px; margin-left: 60px;" src="{{ asset('storage/admin')}}/{{$admin->image}}" >
                 </div>
                 <input type="file" name="image" class="form-control @error('image') is-invalid @enderror" id="image"  accept="image/*" onchange="showImgPreview(event);">
+                <span>[max size: <strong>500kb</strong>
+                    & resolution: <strong>1000*1000px]</strong> </span>
                 @error('image')
                   <div class="alert alert-danger alert-block">
                     <button type="button" class="close" data-dismiss="alert">
@@ -187,7 +189,7 @@
 
               <div class="form-group">
                 <label for="about">About</label>
-                <textarea class="form-control @error('about') is-invalid @enderror" 
+                <textarea class="form-control @error('about') is-invalid @enderror"
                 name="about" rows="3" placeholder="About the admin...">{!!$admin->about!!}</textarea>
                 @error('about')
                 <div class="alert alert-danger alert-block">
@@ -203,7 +205,7 @@
 
               <div class="form-group">
                 <label for="bn_about">About in Bangla</label>
-                <textarea class="form-control @error('bn_about') is-invalid @enderror" 
+                <textarea class="form-control @error('bn_about') is-invalid @enderror"
                 name="bn_about" rows="3" placeholder="About the admin in BD...">{!!$admin->bn_about!!}</textarea>
                 @error('bn_about')
                 <div class="alert alert-danger alert-block">
@@ -219,7 +221,7 @@
 
               <div class="form-group">
                 <label for="Zip Code">Zip Code</label>
-                <input type="text" name="zipcode"  value="{{$admin->zipcode}}"  
+                <input type="text" name="zipcode"  value="{{$admin->zipcode}}"
                   class="form-control @error('zipcode') is-invalid @enderror" placeholder="Zipcode...">
                 @error('zipcode')
                 <div class="alert alert-danger alert-block">
@@ -246,7 +248,7 @@
                   </strong>
                 </div>
                 @enderror
-              </div>  
+              </div>
               <div class="form-group">
                 <label for="Location">Location/Village in Bangla</label>
                 <input type="text" name="bn_location"  value="{{$admin->bn_location}}"  class="form-control @error('bn_location') is-invalid @enderror" placeholder="Exact Location in Bangla ...">
@@ -291,7 +293,7 @@
                 @enderror
               </div>
 
-          
+
               <div class="form-group">
                 <label for="Division">Division</label>
                 <select name="division_id" id="division_id" class="select2 form-control">
@@ -308,8 +310,8 @@
                   @else
                   <option value="" selected='selected' disabled>
                     Select a Division</option>
-                    @foreach(App\Models\Division::all() as $division)   
-                   
+                    @foreach(App\Models\Division::all() as $division)
+
                       <option value="{{ $division->id }}">
                           {{ $division->name}}</option>
                     @endforeach
@@ -389,7 +391,7 @@
               <center>
                 <input type="submit" class="btn btn-success btn-block" value="Update">
                 <a href="{{route('admin.admin.create')}}" class="btn btn-primary btn-block">Add New</a>
-                <a data-confirm="Are you sure to delete the Admin?" href="{{route('admin.admin.delete',$admin->id)}}" 
+                <a data-confirm="Are you sure to delete the Admin?" href="{{route('admin.admin.delete',$admin->id)}}"
                   class="delete btn btn-danger btn-block">Delete</a>
               </center>
             </form>
@@ -399,18 +401,18 @@
     </section>
 
 
-    
-    
+
+
     <script src="{{ asset('js/backend/jquery.min.js')}}"></script>
     <script>
       var deleteLinks = document.querySelectorAll('.delete');
-      
+
       for (var i = 0; i < deleteLinks.length; i++) {
         deleteLinks[i].addEventListener('click', function(event) {
           event.preventDefault();
-      
+
           var choice = confirm(this.getAttribute('data-confirm'));
-      
+
           if (choice) {
             window.location.href = this.getAttribute('href');
           }
@@ -431,13 +433,13 @@
           option = "<option selected disabled>Select one</option>";
             var d = JSON.parse(data);
             d.forEach(function(element) {
-              
+
                 console.log(element.id);
                 option += "<option value='" + element.id + "'>" + element.name + "</option>";
             });
 
             $("#district_id").html(option);
-        }); 
+        });
     });
 
     $(document).on('change','#district_id',function(){
@@ -457,7 +459,7 @@
             });
 
             $("#upazilla_id").html(option);
-        }); 
+        });
     });
 
     $(document).on('change','#upazilla_id',function(){
@@ -476,7 +478,7 @@
             });
 
             $("#union_id").html(option);
-        }); 
+        });
     });
     </script>
 

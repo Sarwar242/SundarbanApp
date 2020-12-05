@@ -68,7 +68,7 @@ class CustomerController extends Controller
             'district_id' => 'nullable|string',
             'division_id' => 'nullable|string',
             'password'=>'nullable|min:8|confirmed',
-            'image' => 'nullable|file|image|max:3000',
+            'image' => 'nullable|file|image|max:1000',
         ]);
         try{
             $customer = Customer::find($id);

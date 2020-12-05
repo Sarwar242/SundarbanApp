@@ -41,7 +41,7 @@ class SubcategoryController extends Controller
             'bn_name' => 'nullable|string',
             'description' => 'nullable|string',
             'bn_description' => 'nullable|string',
-            'image' => 'nullable|file|image|max:3000',
+            'image' => 'nullable|file|image|max:100',
             'category_id' => 'required',
         ]);
 
@@ -128,7 +128,7 @@ class SubcategoryController extends Controller
             'bn_name' => 'nullable|string',
             'description' => 'required|string',
             'bn_description' => 'required|string',
-            'image' => 'nullable|file|image|max:3000',
+            'image' => 'nullable|file|image|max:100',
             'category_id' => 'required',
         ]);
 

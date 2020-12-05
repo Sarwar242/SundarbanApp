@@ -139,7 +139,7 @@ class AdminController extends Controller
             'upazilla_id' => 'sometimes|string',
             'district_id' => 'sometimes|string',
             'division_id' => 'sometimes|string',
-            'image' => 'sometimes|file|image|max:3000',
+            'image' => 'sometimes|file|image|max:1000',
         ]);
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
@@ -202,7 +202,7 @@ class AdminController extends Controller
             'upazilla_id' => 'sometimes|string',
             'district_id' => 'sometimes|string',
             'division_id' => 'sometimes|string',
-            'image' => 'sometimes|file|image|max:3000',
+            'image' => 'sometimes|file|image|max:1000',
         ]);
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);

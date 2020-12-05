@@ -11,7 +11,7 @@
       <section class="col-12 col-sm-6 col-md-3">
         <div class="form-container">
           <div class="container">
-            
+
             @if(Session::has('success'))
 
               <div class="alert alert-success alert-block">
@@ -24,7 +24,7 @@
               </div>
             @endif
             @if(Session::has('failed'))
-    
+
               <div class="alert alert-error alert-block">
                   <button type="button" class="close" data-dismiss="alert">
                       x
@@ -33,7 +33,7 @@
                       {!! session('failed') !!}
                   </strong>
               </div>
-      
+
             @endif
             <div class="text-center">
               <h2>Edit Sub-Category</h2>
@@ -112,6 +112,8 @@
                   <img style="display:block; max-width: 200px; padding-left: 10px;padding-bottom: 3px; margin-left: 60px;" src="{{ asset('storage/subcategory')}}/{{$subcategory->image}}" >
                 </div>
                 <input type="file"  name="image"  class="form-control @error('image') is-invalid @enderror" id="image"  accept="image/*" onchange="showImgPreview(event);">
+                <span>[max size: <strong>100kb</strong>
+                    & resolution: <strong>100*85px]</strong> </span>
                 @error('image')
                 <div class="alert alert-danger alert-block">
                   <button type="button" class="close" data-dismiss="alert">
@@ -126,11 +128,11 @@
                   <img id="img-preview">
                 </div>
               </div>
-              
+
               <div class="form-group">
                 <label for="Description">Description</label>
-                <textarea class="form-control @error('description') is-invalid @enderror" 
-                name="description"  id="" rows="3" 
+                <textarea class="form-control @error('description') is-invalid @enderror"
+                name="description"  id="" rows="3"
                 placeholder="Write something about the Sub-Category...">{!!$subcategory->description!!}</textarea>
                 @error('description')
                 <div class="alert alert-danger alert-block">
@@ -146,8 +148,8 @@
 
               <div class="form-group">
                 <label for="exampleFormControlTextarea1">Description in Bangla</label>
-                <textarea class="form-control @error('bn_description') is-invalid @enderror" 
-                name="bn_description"  rows="3" 
+                <textarea class="form-control @error('bn_description') is-invalid @enderror"
+                name="bn_description"  rows="3"
                 placeholder="Write something about the Sub-Category...">{!!$subcategory->bn_description!!}</textarea>
                 @error('bn_description')
                 <div class="alert alert-danger alert-block">

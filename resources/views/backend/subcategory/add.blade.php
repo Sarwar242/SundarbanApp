@@ -11,7 +11,7 @@
       <section class="col-12 col-sm-6 col-md-3">
         <div class="form-container">
           <div class="container">
-            
+
             @if(Session::has('success'))
 
               <div class="alert alert-success alert-block">
@@ -19,13 +19,13 @@
                       x
                   </button>
                   <strong>
-                    {!! session('success')!!}   @php Session::forget('success') @endphp &nbsp;&nbsp; 
+                    {!! session('success')!!}   @php Session::forget('success') @endphp &nbsp;&nbsp;
                     @if(!is_null($subcategory)) <a href="{{route('admin.subcategory.update',$subcategory)}}">Edit</a> @endif
                   </strong>
               </div>
             @endif
             @if(Session::has('failed'))
-    
+
               <div class="alert alert-error alert-block">
                   <button type="button" class="close" data-dismiss="alert">
                       x
@@ -34,7 +34,7 @@
                       {!! session('failed') !!}
                   </strong>
               </div>
-      
+
             @endif
             <div class="text-center">
               <h2>Add Sub-Category</h2>
@@ -98,6 +98,8 @@
               <div class="form-group">
                 <label for="image">Upload Image</label>
                 <input type="file"  name="image"  class="form-control @error('image') is-invalid @enderror" id="image"  accept="image/*" onchange="showImgPreview(event);">
+                <span>[max size: <strong>100kb</strong>
+                    & resolution: <strong>100*85px]</strong> </span>
                 @error('image')
                 <div class="alert alert-danger alert-block">
                   <button type="button" class="close" data-dismiss="alert">
@@ -112,7 +114,7 @@
                   <img id="img-preview">
                 </div>
               </div>
-              
+
               <div class="form-group">
                 <label for="description">Description</label>
                 <textarea class="form-control @error('description') is-invalid @enderror" name="description"  rows="3" placeholder="Write something about the Sub-Category..."></textarea>

@@ -78,7 +78,7 @@ class ProductController extends Controller
             $product->bn_description =$request->bn_description;
             $product->price =$request->price;
 
-            if(!is_null($product->discount))
+            if(!is_null($request->discount))
                 $product->discount =$request->discount;
             else
                 $product->discount=0;
@@ -195,22 +195,28 @@ class ProductController extends Controller
         }
         $product->name =$request->name;
         $product->bn_name =$request->bn_name;
-        $product->description =$request->description;
-        $product->bn_description =$request->bn_description;
+        if(!is_null($request->description))
+            $product->description =$request->description;
+        if(!is_null($request->bn_description))
+            $product->bn_description =$request->bn_description;
 
-        if(!is_null($product->discount))
+        if(!is_null($request->discount))
             $product->discount =$request->discount;
         else
             $product->discount=0;
 
         $product->price =$request->price;
-
-        $product->quantity =$request->quantity;
-        $product->type =$request->type;
+        if(!is_null($request->quantity))
+            $product->quantity =$request->quantity;
+        if(!is_null($request->type))
+            $product->type =$request->type;
         $product->category_id =$request->category_id;
-        $product->subcategory_id =$request->subcategory_id;
-        $product->unit_id =$request->unit_id;
-        $product->company_id =$request->company_id;
+        if(!is_null($request->subcategory_id))
+            $product->subcategory_id =$request->subcategory_id;
+        if(!is_null($request->unit_id))
+            $product->unit_id =$request->unit_id;
+        if(!is_null($request->company_id))
+            $product->company_id =$request->company_id;
         if($slug_change==1){
             $slug = Str::slug(str_replace( ' ', '-', $request->name));
             $i = 0;
