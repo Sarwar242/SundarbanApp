@@ -17,7 +17,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="col-md-8">
                     <div class="profile-head">
                             <h5>
@@ -31,7 +31,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div> 
+                    </div>
                     {{-- <div class="col-md-1">
                         <label class="switch">
                             <input type="checkbox">
@@ -62,7 +62,7 @@
                                     <div class="col-md-6">
                                         <p>{{$customer->first_name}}</p>
                                     </div>
-                                </div> 
+                                </div>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label>Last Name</label>
@@ -97,13 +97,21 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
+                                        <label>Contact Status</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        @if($customer->phone_hide==1) <p>Hidden</p> @else <p>Shown</p> @endif
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
                                         <label>Deate of Birth</label>
                                     </div>
                                     <div class="col-md-6">
                                         <p>{{$customer->dob}}</p>
                                     </div>
                                 </div>
-                                
+
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label>NID Number</label>
@@ -111,7 +119,7 @@
                                     <div class="col-md-6">
                                         <p>{{$customer->nid}}</p>
                                     </div>
-                                </div>             
+                                </div>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label>Gender</label>
@@ -119,8 +127,8 @@
                                     <div class="col-md-6">
                                         <p>{{$customer->gender}}</p>
                                     </div>
-                                </div>    
-                                
+                                </div>
+
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label>Location</label>
@@ -128,7 +136,7 @@
                                     <div class="col-md-6">
                                         <p>{{$customer->location}}</p>
                                     </div>
-                                </div> 
+                                </div>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label>Street</label>
@@ -136,7 +144,7 @@
                                     <div class="col-md-6">
                                         <p>{{$customer->street}}</p>
                                     </div>
-                                </div> 
+                                </div>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label>Zip Code</label>
@@ -144,7 +152,7 @@
                                     <div class="col-md-6">
                                         <p>{{$customer->zipcode}}</p>
                                     </div>
-                                </div> 
+                                </div>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label>Division</label>
@@ -154,7 +162,7 @@
                                             <p>{{$customer->division->name}}</p>
                                         @endif
                                     </div>
-                                </div> 
+                                </div>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label>District</label>
@@ -164,7 +172,7 @@
                                             <p>{{$customer->district->name}}</p>
                                         @endif
                                     </div>
-                                </div> 
+                                </div>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label>Upazilla</label>
@@ -174,7 +182,7 @@
                                             <p>{{$customer->upazilla->name}}</p>
                                         @endif
                                     </div>
-                                </div> 
+                                </div>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label>Union</label>
@@ -184,7 +192,7 @@
                                             <p>{{$customer->union->name}}</p>
                                         @endif
                                     </div>
-                                </div> 
+                                </div>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label>Added by</label>
@@ -194,7 +202,7 @@
                                             <p onclick="window.location.href='{{route('admin.profile', $customer->admin->username)}}'" style="cursor: pointer">{{$customer->admin->username}}</p>
                                         @endif
                                     </div>
-                                </div> 
+                                </div>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label>Joined </label>
@@ -204,15 +212,15 @@
                                             <p>{{$customer->created_at->format('M Y') }}</p>
                                         @endif
                                     </div>
-                                </div> 
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </form>           
+            </form>
     </div>
     <script>
-            
+
         var modal = document.getElementById("admin_modal");
 
         // Get the image and insert it inside the modal - use its "alt" text as a caption

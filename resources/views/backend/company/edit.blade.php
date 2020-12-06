@@ -86,6 +86,39 @@
               </div>
 
               <div class="form-group">
+                <label for="option">Phone Option</label>
+                <select class="form-control @error('phone_hide') is-invalid @enderror"
+                  name="phone_hide" >
+                    @if(!is_null($company->phone_hide))
+                        <option value="{{$company->phone_hide}}" disabled selected>
+                           @if($company->phone_hide==1) Hide @else Show @endif </option>
+                        @if($company->phone_hide==1)
+                           <option value="0">
+                                Show</option>
+                        @else
+                        <option value="1">
+                                Hide</option>
+                        @endif
+                    @else
+                        <option value="" selected='selected' disabled>
+                            Select one</option>
+                        <option value="0">Show</option>
+                        <option value="1">Hide</option>
+                    @endif
+                </select>
+                 @error('phone_hide')
+                <div class="alert alert-danger alert-block">
+                  <button type="button" class="close" data-dismiss="alert">
+                    x
+                  </button>
+                  <strong>
+                      {!! $message !!}
+                  </strong>
+                </div>
+                @enderror
+              </div>
+
+              <div class="form-group">
                 <label for="Code">Code(*)</label>
                 <input type="text" name="code" value="{{$company->code}}" class="form-control @error('code') is-invalid @enderror" placeholder="Please type a numeric code...">
                 @error('code')

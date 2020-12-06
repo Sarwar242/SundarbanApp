@@ -12,7 +12,7 @@ class Company extends Model
     protected $fillable = [
         'name', 'slug', 'bn_name', 'code','owners_name','owners_nid','phone1','phone2','ban','image',
         'description','bn_description','street','bn_street', 'location','bn_location','website',
-        'business_type','type','admin_id', 'zipcode', 'open', 'close', 'off_day',
+        'business_type','type','admin_id', 'zipcode', 'open', 'close', 'off_day','phone_hide',
         'union_id','upazilla_id','district_id','division_id','category_id','subcategory_id'
    ];
 

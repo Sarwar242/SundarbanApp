@@ -15,7 +15,7 @@ class CreateCompaniesTable extends Migration
     {
         Schema::create('companies', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('user_id');      
+            $table->unsignedBigInteger('user_id');
             $table->string('name');
             $table->string('bn_name')->nullable();
             $table->string('slug')->nullable();
@@ -28,6 +28,7 @@ class CreateCompaniesTable extends Migration
             $table->boolean('ban')->nullable();
             $table->string('phone1')->nullable();
             $table->string('phone2')->nullable();
+            $table->boolean('phone_hide')->nullable()->default(0);
             $table->string('website')->nullable();
             $table->string('image')->nullable();
             $table->text('description')->nullable();
@@ -52,7 +53,7 @@ class CreateCompaniesTable extends Migration
             $table->foreign('admin_id')
             ->references('id')->on('admins')
             ->onDelete('set null');
-                 
+
             $table->foreign('category_id')
             ->references('id')->on('categories')
             ->onDelete('set null');
@@ -60,11 +61,11 @@ class CreateCompaniesTable extends Migration
             $table->foreign('subcategory_id')
             ->references('id')->on('subcategories')
             ->onDelete('set null');
-             
+
             $table->foreign('user_id')
             ->references('id')->on('users')
             ->onDelete('cascade');
-            
+
             $table->foreign('union_id')
             ->references('id')->on('unions')
             ->onDelete('set null');
@@ -72,7 +73,7 @@ class CreateCompaniesTable extends Migration
             $table->foreign('upazilla_id')
             ->references('id')->on('upazillas')
             ->onDelete('set null');
-            
+
             $table->foreign('district_id')
             ->references('id')->on('districts')
             ->onDelete('set null');

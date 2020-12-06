@@ -23,7 +23,7 @@ class CreateCustomersTable extends Migration
             $table->date('dob')->nullable();
             $table->string('hn')->comment('holding_number')->nullable();
             $table->string('phone')->nullable();
-            $table->boolean('phone_hide')->default(0);
+            $table->boolean('phone_hide')->nullable()->default(0);
             $table->boolean('ban')->nullable();
             $table->string('nid')->nullable();
             $table->string('gender')->nullable();

@@ -83,6 +83,7 @@ class CompanyController extends Controller
             'owners_nid' => 'nullable|string',
             'phone1' => 'nullable|numeric|phone',
             'phone2' => 'nullable|numeric|phone',
+            'phone_hide' => 'nullable|boolean',
             'description' => 'nullable|string',
             'bn_description' => 'nullable|string',
             'street' => 'nullable|string',
@@ -142,6 +143,8 @@ class CompanyController extends Controller
             if(request()->has('phone2'))
                 $company->phone2 =$request->phone2;
 
+            if(request()->has('phone_hide'))
+                $company->phone_hide =$request->phone_hide;
             if(request()->has('description'))
                 $company->description =$request->description;
             if(request()->has('bn_description'))

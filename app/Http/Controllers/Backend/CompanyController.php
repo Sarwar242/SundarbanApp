@@ -22,12 +22,12 @@ use Auth;
 class CompanyController extends Controller
 {
 
-    
+
     public function __construct()
     {
         $this->middleware('auth:admin');
     }
-    
+
     public function profile($slug){
         $company = Company::where('slug', '=', $slug)->first();
         // dd($company);
@@ -38,8 +38,8 @@ class CompanyController extends Controller
         // $slug=Company::slugComplete();
         // dd($slug);
         return view('backend.company.index');
-    }  
-    
+    }
+
     public function create()
     {
         return view('backend.company.add');
@@ -62,6 +62,7 @@ class CompanyController extends Controller
             'owners_nid' => 'nullable|string',
             'phone1' => 'nullable|numeric|phone',
             'phone2' => 'nullable|numeric|phone',
+            'phone_hide' => 'nullable|boolean',
             'description' => 'nullable|string',
             'bn_description' => 'nullable|string',
             'street' => 'nullable|string',
@@ -83,11 +84,11 @@ class CompanyController extends Controller
             'category_id' => 'nullable|numeric',
             'subcategory_id' => 'nullable|numeric',
             'password'=>'nullable|min:8|confirmed',
-            'image' => 'nullable|file|image|max:1000',   
+            'image' => 'nullable|file|image|max:1000',
         ]);
-       
+
         try{
-            
+
             $slug_change =0;
             if($company->name!=$request->name){
                 $slug_change=1;
@@ -102,7 +103,7 @@ class CompanyController extends Controller
                 }
                 $company->slug =$slug;
             }
-            
+
             $company->name =$request->name;
             $company->user->phone =$request->phone;
             $company->user->email =$request->email;
@@ -114,6 +115,8 @@ class CompanyController extends Controller
             $company->owners_nid =$request->owners_nid;
             $company->phone1 =$request->phone1;
             $company->phone2 =$request->phone2;
+            if(request()->has('phone_hide'))
+                $company->phone_hide =$request->phone_hide;
             $company->description =$request->description;
             $company->bn_description =$request->bn_description;
             $company->location =$request->location;
@@ -141,14 +144,14 @@ class CompanyController extends Controller
                 $encryptedPass= Hash::make($request->password);
                 $company->user->password = $encryptedPass;
             }
-            
+
             if(request()->hasFile('image')){
                 if(!is_null($company->image) && $company->image !="default.png" &&  $company->image !="default.jpg"){
                     $exists = Storage::disk('public')->exists('company/'.$company->image);
                     if($exists)
                         Storage::disk('public')->delete('company/'.$company->image);
                 }
-                $imageName = time().'.'.$request->image->extension();  
+                $imageName = time().'.'.$request->image->extension();
                 $request->image->storeAs('/company',$imageName,'public');
                 $company->image=$imageName;
             }
@@ -164,7 +167,7 @@ class CompanyController extends Controller
         }
     }
 
-    
+
     public function destroy($id)
     {
         try{
@@ -186,7 +189,7 @@ class CompanyController extends Controller
             else{
                 $company->delete();
             }
-            
+
             session()->flash('success', 'A Company has been Deleted!!');
             return redirect()->route('admin.companies');
         }catch(Exception $e){

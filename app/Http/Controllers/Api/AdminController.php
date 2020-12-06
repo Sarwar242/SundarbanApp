@@ -346,6 +346,10 @@ class AdminController extends Controller
                     $profile = new Company;
                     $profile->name=$request->name;
                     $profile->user_id=$user->id;
+                    $profile->off_day="Friday";
+                    $profile->open="09:00:00";
+                    $profile->close="21:00:00";
+                    $profile->image="default.png";
                     $profile->save();
                   //  $accessToken = $user->createToken('authToken')->accessToken;
                     return response()->json([
@@ -381,6 +385,7 @@ class AdminController extends Controller
                 $profile = new Customer;
                 $profile->first_name=$request->first_name;
                 $profile->last_name=$request->last_name;
+                $profile->image="default.png";
                 $profile->user_id=$user->id;
                 $profile->save();
                // $accessToken = $user->createToken('authToken')->accessToken;

@@ -17,7 +17,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="col-md-8">
                     <div class="profile-head">
                             <h5>
@@ -31,7 +31,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div> 
+                    </div>
                     {{-- <div class="col-md-1">
                         <label class="switch">
                             <input type="checkbox">
@@ -62,7 +62,7 @@
                                     <div class="col-md-6">
                                         <p>{{$company->owners_name}}</p>
                                     </div>
-                                </div> 
+                                </div>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label>Company Owner's NID</label>
@@ -103,7 +103,15 @@
                                         <p>{{$company->phone2}}</p>
                                     </div>
                                 </div>
-                                
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>Contact Status</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        @if($company->phone_hide==1) <p>Hidden</p> @else <p>Shown</p> @endif
+                                    </div>
+                                </div>
+
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label>Company Type</label>
@@ -111,8 +119,8 @@
                                     <div class="col-md-6">
                                         <p>{{$company->type}}</p>
                                     </div>
-                                </div>    
-                                
+                                </div>
+
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label>Location</label>
@@ -120,7 +128,7 @@
                                     <div class="col-md-6">
                                         <p>{{$company->location}}</p>
                                     </div>
-                                </div> 
+                                </div>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label>Street</label>
@@ -128,7 +136,7 @@
                                     <div class="col-md-6">
                                         <p>{{$company->street}}</p>
                                     </div>
-                                </div> 
+                                </div>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label>Zip Code</label>
@@ -136,7 +144,7 @@
                                     <div class="col-md-6">
                                         <p>{{$company->zipcode}}</p>
                                     </div>
-                                </div> 
+                                </div>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label>Division</label>
@@ -146,7 +154,7 @@
                                             <p>{{$company->division->name}}</p>
                                         @endif
                                     </div>
-                                </div> 
+                                </div>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label>District</label>
@@ -156,7 +164,7 @@
                                             <p>{{$company->district->name}}</p>
                                         @endif
                                     </div>
-                                </div> 
+                                </div>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label>Upazilla</label>
@@ -166,7 +174,7 @@
                                             <p>{{$company->upazilla->name}}</p>
                                         @endif
                                     </div>
-                                </div> 
+                                </div>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label>Union</label>
@@ -176,7 +184,7 @@
                                             <p>{{$company->union->name}}</p>
                                         @endif
                                     </div>
-                                </div> 
+                                </div>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label>Added by</label>
@@ -186,7 +194,7 @@
                                             <p onclick="window.location.href='{{route('admin.profile', $company->admin->username)}}'" style="cursor: pointer">{{$company->admin->username}}</p>
                                         @endif
                                     </div>
-                                </div> 
+                                </div>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label>Added</label>
@@ -196,15 +204,15 @@
                                             <p>{{$company->created_at->format('M Y') }}</p>
                                         @endif
                                     </div>
-                                </div> 
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </form>           
+            </form>
     </div>
     <script>
-            
+
         var modal = document.getElementById("admin_modal");
 
         // Get the image and insert it inside the modal - use its "alt" text as a caption
