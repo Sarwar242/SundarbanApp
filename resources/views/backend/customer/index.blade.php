@@ -39,6 +39,7 @@
 				<th scope="col">#</th>
 				<th scope="col">First Name</th>
 				<th scope="col">Last Name</th>
+				<th scope="col">Username</th>
 				<th scope="col">Email</th>
 				<th scope="col">Phone</th>
 				<th scope="col">Image</th>
@@ -53,6 +54,7 @@
 					  <th scope="row">{{$loop->index+1}}</th>
 					  <td onclick="window.location.href='{{route('admin.customer.profile', $customer->username)}}'" style="cursor: pointer">{{$customer->first_name}}</td>
 					  <td onclick="window.location.href='{{route('admin.customer.profile', $customer->username)}}'" style="cursor: pointer">{{$customer->last_name}}</td>
+					  <td onclick="window.location.href='{{route('admin.customer.profile', $customer->username)}}'" style="cursor: pointer">{{$customer->username}}</td>
 					  <td>{{$customer->user->email}}</td>
 					  <td>{{$customer->user->phone}}</td>
 					  <td><img src="{{ asset('storage/customer')}}/{{$customer->image}}" 

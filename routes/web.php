@@ -15,7 +15,7 @@ Route::get('/clear-cache', function() {
     $run = Artisan::call('config:clear');
     $run = Artisan::call('cache:clear');
     $run = Artisan::call('config:cache');
-    return 'FINISHED';  
+    return 'FINISHED';
 });
 
 Route::get('/', function () {
@@ -40,7 +40,7 @@ Route::group( ['prefix' => 'admin', 'as' => 'admin.'], function() {
 
     //Authorization
     Route::get('/login','Backend\Auth\AdminAuthController@showLoginForm')->name('login');
-    
+
     Route::post('/login', 'Backend\Auth\AdminAuthController@login')->name('login.submit');
     Route::get('logout/', 'Backend\Auth\AdminAuthController@logout')->name('logout');
 
@@ -75,7 +75,7 @@ Route::group( ['prefix' => 'admin', 'as' => 'admin.'], function() {
     Route::get('profile', 'Backend\AdminController@show')->name('profile.own');
     Route::post('profile/update', 'Backend\AdminController@update');
     Route::get('admin/delete/{id}', 'Backend\AdminController@destroy')->name('admin.delete');
-   
+
 
 
     //User
@@ -123,7 +123,7 @@ Route::group( ['prefix' => 'admin', 'as' => 'admin.'], function() {
 
 
 
-        
+
     //Category
     Route::get('categories', 'Backend\CategoryController@index')->name('categories');
     Route::get('category/create', 'Backend\CategoryController@create')->name('category.create');
@@ -133,7 +133,7 @@ Route::group( ['prefix' => 'admin', 'as' => 'admin.'], function() {
     Route::get('category/show/{id}', 'Backend\CategoryController@show')->name('category.show');;
     Route::get('category/delete/{id}', 'Backend\CategoryController@destroy')->name('category.delete');
 
-    
+
 
 
     //Subcategory
@@ -209,14 +209,36 @@ Route::group( ['prefix' => 'admin', 'as' => 'admin.'], function() {
     Route::get('unit/show/{id}', 'Backend\UnitController@show')->name('unit.show');
     Route::get('unit/delete/{id}', 'Backend\UnitController@destroy')->name('unit.delete');
 
+    //Notice
+    Route::get('notices', 'Backend\NoticeController@index')->name('notices');
+    Route::get('notice/create', 'Backend\NoticeController@create')->name('notice.create');
+    Route::post('notice/create', 'Backend\NoticeController@store')->name('notice.create.submit');
+    Route::get('notice/update/{id}', 'Backend\NoticeController@edit')->name('notice.update');
+    Route::post('notice/update/{id}', 'Backend\NoticeController@update')->name('notice.update.submit');
+    Route::get('notice/show/{id}', 'Backend\NoticeController@show')->name('notice.show');
+    Route::get('notice/delete/{id}', 'Backend\NoticeController@destroy')->name('notice.delete');
+
+
+
+
+
 
     //Realtime=jquery
+    Route::get('/get-companies', function () {
+        return json_encode(App\Models\Company::orderBy('name', 'ASC')->get());
+    });    
+    Route::get('/get-customers', function () {
+        return json_encode(App\Models\Customer::orderBy('first_name', 'ASC')->get());
+    });     
+    Route::get('/get-admins', function () {
+        return json_encode(App\Models\Admin::orderBy('first_name', 'ASC')->get());
+    });    
     Route::get('/get-subcategories/{id}', function ($id) {
         return json_encode(App\Models\Subcategory::where('category_id', $id)->get());
-    }); 
+    });
     Route::get('/get-district/{id}', function ($id) {
         return json_encode(App\Models\District::where('division_id', $id)->get());
-    }); 
+    });
     Route::get('/get-upazilla/{id}', function ($id) {
         return json_encode(App\Models\Upazilla::where('district_id', $id)->get());
     });

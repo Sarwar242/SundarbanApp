@@ -3,9 +3,10 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Notifications\Notifiable;
 class Customer extends Model
 {
+    use Notifiable;
     protected $fillable = [
         'first_name', 'last_name','username','user_id','dob','image','nid','gender','phone','phone_hide',
         'about','bn_about','zipcode', 'street','bn_street', 'location','bn_location',

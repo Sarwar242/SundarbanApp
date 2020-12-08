@@ -2,7 +2,7 @@
 <div class="sidebar">
 
     <ul class="list-unstyled components">
-        <li class="active"> 
+        <li class="active">
             <a href="{{route('admin.dashboard')}}"><i class="fas fa-desktop"></i><span>Dashboard</span></a>
         </li>
 
@@ -22,7 +22,7 @@
 
         <li>
             <a href="#customer" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fas fa-users"></i><span>Customers</span></a>
-            
+
             <ul class="collapse list-unstyled" id="customer">
                 <li>
                     <a href="{{route('admin.customer.create')}}"><i class="fas fa-plus"></i><span>Add New</span></a>
@@ -34,7 +34,7 @@
         </li>
         <li>
             <a href="#admin" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fas fa-user-shield"></i><span>Admins</span></a>
-            
+
             <ul class="collapse list-unstyled" id="admin">
                 <li>
                     <a href="{{route('admin.admin.create')}}"><i class="fas fa-plus"></i><span>Add New</span></a>
@@ -152,7 +152,21 @@
                         </li>
                     </ul>
                 </li>
-        
+
+
+            </ul>
+        </li>
+
+        <li>
+            <a href="#notice" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fas fa-envelope-open-text"></i><span>Notices</a>
+            <ul class="collapse list-unstyled" id="notice">
+                <li>
+                    <a href="{{route('admin.notice.create')}}"><i class="fas fa-plus"></i><span>Add New</span></a>
+                </li>
+
+                <li>
+                    <a href="{{route('admin.notices')}}"><i class="fas fa-eye"></i><span>View</span></a>
+                </li>
             </ul>
         </li>
     </ul>

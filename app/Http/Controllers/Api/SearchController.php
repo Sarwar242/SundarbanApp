@@ -165,7 +165,9 @@ class SearchController extends Controller
         ]);
     }
     public function companyByLocation(Request $request){
-        $key = $request->key;
+        if(request()->has('key') && !is_null($request->key))
+            $key = $request->key;
+
         if(request()->has('union_id') && !is_null($request->union_id)){
             $companies = Company::where('union_id', '=', $request->union_id)
                                 ->orderBy('name', 'ASC')->get();
@@ -464,4 +466,216 @@ class SearchController extends Controller
             'message'=>"Invalid request!",
         ]);
     }
+
+
+
+    //Company by Sub-Category
+
+    public function companyBySubcategory(Request $request){
+        $key = $request->key;
+        if(request()->has('union_id') && !is_null($request->union_id)){
+            if(request()->has('key') && !is_null($request->key)){
+                $companies = Company::join( 'categories', 'categories.id', '=', 'companies.category_id' )
+                                    ->join( 'subcategories', 'subcategories.id', '=', 'companies.subcategory_id' )
+                                    ->orWhere('categories.name', 'like',  "%{$key}%")
+                                    ->orWhere('categories.bn_name', 'like',  "%{$key}%")
+                                    ->orWhere('subcategories.name','like',"%{$key}%")
+                                    ->orWhere('subcategories.bn_name', 'like', "%{$key}%")
+                                    ->where('companies.union_id','=',$request->union_id)
+                                    ->get(['companies.*']);
+
+                if(!is_null($companies)){
+                    foreach($companies as $company){
+                        $user = $company->user;
+                        // $category = $company->category;
+                        // $subcategory = $company->subcategory;
+                        // $division = $company->division;
+                        // $district = $company->district;
+                        // $upazilla = $company->upazilla;
+                        // $union = $company->union;
+                        // $products = $company->products;
+                        // foreach ($products as $product) {
+                        //     $product->unit;
+                        //     $product->category;
+                        //     $product->subcategory;
+                        //     $product->images;
+                        // }
+                        // $company->following = $company->user->followings()->get()->count();
+                        $company->followers = $company->followers()->get()->count();
+                        $company->ratings   = $company->ratings()->get()->avg('rating');
+                    }
+                }
+                return response()->json([
+                    'success'=>true,
+                    'companies'=>$companies,
+                ]);
+            }
+            else{
+                $union = Union::find($request->union_id);
+                $companies=$union->companies;
+                if(!is_null($companies)){
+                    foreach($companies as $company){
+                        $user = $company->user;
+                        $company->followers = $company->followers()->get()->count();
+                        $company->ratings   = $company->ratings()->get()->avg('rating');
+                    }
+                }
+                return response()->json([
+                    'success'=>true,
+                    'companies'=>$companies,
+                ]);
+            }
+        }else{
+            if(request()->has('upazilla_id') && !is_null($request->upazilla_id)){
+                if(request()->has('key') && !is_null($request->key)){
+                    $companies = Company::join( 'categories', 'categories.id', '=', 'companies.category_id' )
+                                    ->join( 'subcategories', 'subcategories.id', '=', 'companies.subcategory_id' )
+                                    ->orWhere('categories.name', 'like',  "%{$key}%")
+                                    ->orWhere('categories.bn_name', 'like',  "%{$key}%")
+                                    ->orWhere('subcategories.name','like',"%{$key}%")
+                                    ->orWhere('subcategories.bn_name', 'like', "%{$key}%")
+                                    ->where('companies.upazilla_id','=',$request->upazilla_id)
+                                    ->get(['companies.*']);
+
+                    if(!is_null($companies)){
+                        foreach($companies as $company){
+                            $user = $company->user;
+                            $company->followers = $company->followers()->get()->count();
+                            $company->ratings   = $company->ratings()->get()->avg('rating');
+                        }
+                    }
+                    return response()->json([
+                        'success'=>true,
+                        'companies'=>$companies,
+                    ]);
+                }
+                else{
+                    $upazilla = Upazilla::find($request->upazilla_id);
+                    $companies=$upazilla->companies;
+                    if(!is_null($companies)){
+                        foreach($companies as $company){
+                            $user = $company->user;
+                            $company->followers = $company->followers()->get()->count();
+                            $company->ratings   = $company->ratings()->get()->avg('rating');
+                        }
+                    }
+                    return response()->json([
+                        'success'=>true,
+                        'companies'=>$companies,
+                    ]);
+                }
+            }else{
+                if(request()->has('district_id') && !is_null($request->district_id)){
+                    if(request()->has('key') && !is_null($request->key)){
+                        $companies = Company::join( 'categories', 'categories.id', '=', 'companies.category_id' )
+                                    ->join( 'subcategories', 'subcategories.id', '=', 'companies.subcategory_id' )
+                                    ->orWhere('categories.name', 'like',  "%{$key}%")
+                                    ->orWhere('categories.bn_name', 'like',  "%{$key}%")
+                                    ->orWhere('subcategories.name','like',"%{$key}%")
+                                    ->orWhere('subcategories.bn_name', 'like', "%{$key}%")
+                                    ->where('companies.district_id','=',$request->district_id)
+                                    ->get(['companies.*']);
+
+
+                        if(!is_null($companies)){
+                            foreach($companies as $company){
+                                $user = $company->user;
+                                $company->followers = $company->followers()->get()->count();
+                                $company->ratings   = $company->ratings()->get()->avg('rating');
+                            }
+                        }
+                        return response()->json([
+                            'success'=>true,
+                            'companies'=>$companies,
+                        ]);
+                    }
+                    else{
+                        $district = District::find($request->district_id);
+                        $companies=$district->companies;
+                        if(!is_null($companies)){
+                            foreach($companies as $company){
+                                $user = $company->user;
+                                $company->followers = $company->followers()->get()->count();
+                                $company->ratings   = $company->ratings()->get()->avg('rating');
+                            }
+                        }
+                        return response()->json([
+                            'success'=>true,
+                            'companies'=>$companies,
+                        ]);
+                    }
+                }else{
+                    if(request()->has('division_id') && !is_null($request->division_id)){
+                        if(request()->has('key') && !is_null($request->key)){
+                            $companies = Company::join( 'categories', 'categories.id', '=', 'companies.category_id' )
+                                                ->join( 'subcategories', 'subcategories.id', '=', 'companies.subcategory_id' )
+                                                ->orWhere('categories.name', 'like',  "%{$key}%")
+                                                ->orWhere('categories.bn_name', 'like',  "%{$key}%")
+                                                ->orwhere('subcategories.name','like',"%{$key}%")
+                                                ->orWhere('subcategories.bn_name', 'like', "%{$key}%")
+                                                ->where('companies.division_id','=',$request->division_id)
+                                                ->get(['companies.*']);
+
+                            if(!is_null($companies)){
+                                foreach($companies as $company){
+                                    $user = $company->user;
+                                    $company->followers = $company->followers()->get()->count();
+                                    $company->ratings   = $company->ratings()->get()->avg('rating');
+                                }
+                            }
+                            return response()->json([
+                                'success'=>true,
+                                'companies'=>$companies,
+                            ]);
+                        }
+                        else{
+                          //  dd($request->division_id);
+                            $division = Division::find($request->division_id);
+                            $companies=$division->companies;
+                            //dd($companies);
+                            if(!is_null($companies)){
+                                foreach($companies as $company){
+                                    $user = $company->user;
+                                    $company->followers = $company->followers()->get()->count();
+                                    $company->ratings   = $company->ratings()->get()->avg('rating');
+                                }
+                            }
+                            return response()->json([
+                                'success'=>true,
+                                'companies'=>$companies,
+                            ]);
+                        }
+                    }else{
+                        //If request hasn't any location but has a key
+                        if(request()->has('key') && !is_null($request->key)){
+                            $companies = Company::join( 'categories', 'categories.id', '=', 'companies.category_id' )
+                                                ->join( 'subcategories', 'subcategories.id', '=', 'companies.subcategory_id' )
+                                                ->orWhere('categories.name', 'like',  "%{$key}%")
+                                                ->orWhere('categories.bn_name', 'like',  "%{$key}%")
+                                                ->orWhere('subcategories.name','like',"%{$key}%")
+                                                ->orWhere('subcategories.bn_name', 'like', "%{$key}%")
+                                                ->get(['companies.*']);
+
+                            if(!is_null($companies)){
+                                foreach($companies as $company){
+                                    $user = $company->user;
+                                    $company->followers = $company->followers()->get()->count();
+                                    $company->ratings   = $company->ratings()->get()->avg('rating');
+                                }
+                            }
+                            return response()->json([
+                                'success'=>true,
+                                'companies'=>$companies,
+                            ]);
+                        }
+                    }
+                }
+            }
+        }
+        return response()->json([
+            'success'=>false,
+            'message'=>"Invalid request!",
+        ]);
+    }
+
 }

@@ -17,6 +17,11 @@ class Division extends Model
        return $this->hasMany(District::class);
    }
 
+    public function companies()
+    {
+        return $this->hasMany(Company::class);
+    }
+
 
    public static function divisions()
    {

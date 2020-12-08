@@ -30,6 +30,10 @@ class Upazilla extends Model
        return $upazillas;
    }
 
+    public function companies()
+    {
+        return $this->hasMany(Company::class);
+    }
 
    public function products()
    {

@@ -114,7 +114,7 @@ class UnionController extends Controller
             $union->save();
 
             return response()->json([
-                "sucess"  => true,
+                "success"  => true,
                 "message" => "Union has been updated!",
                 "union" => $union,
             ]);
@@ -133,12 +133,12 @@ class UnionController extends Controller
             $union = Union::find($request->id);
             if(is_null($union))
                 return response()->json([
-                    "sucess"  => false,
+                    "success"  => false,
                     "message" => "No union Found!",
                 ]);
             $union->delete();
             return response()->json([
-                "sucess"  => true,
+                "success"  => true,
                 "message" => "Union has been deleted!",
             ]);
         }

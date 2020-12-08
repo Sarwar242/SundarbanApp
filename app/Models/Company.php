@@ -4,11 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
-
+use Illuminate\Notifications\Notifiable;
 
 class Company extends Model
 {
-
+    use Notifiable;
+    
     protected $fillable = [
         'name', 'slug', 'bn_name', 'code','owners_name','owners_nid','phone1','phone2','ban','image',
         'description','bn_description','street','bn_street', 'location','bn_location','website',

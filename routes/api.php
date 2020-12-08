@@ -206,28 +206,39 @@ Route::get('union/show', 'Api\UnionController@show');
 
 
 
+Route::get('/get-categories', function (Request $request) {
+    $categories = App\Models\Category::orderBy('bn_name', 'ASC')->get();
+    foreach ($categories as $category) {
+        $category->subcategories;
+    }
+    return response()->json([
+        "success"  => true,
+        "categories" =>$categories,
+    ]);
+});
+
 Route::get('/get-subcategories', function (Request $request) {
     return response()->json([
         "success"  => true,
-        "subcategories" =>App\Models\Subcategory::where('category_id', $request->id)->orderBy('name', 'ASC')->get(),
+        "subcategories" =>App\Models\Subcategory::where('category_id', $request->id)->orderBy('bn_name', 'ASC')->get(),
     ]);
 });
 Route::get('/get-districts', function (Request $request) {
     return response()->json([
         "success"  => true,
-        "districts" =>App\Models\District::where('division_id', $request->id)->orderBy('name', 'ASC')->get(),
+        "districts" =>App\Models\District::where('division_id', $request->id)->orderBy('bn_name', 'ASC')->get(),
     ]);
 });
 Route::get('/get-upazillas', function (Request $request) {
     return response()->json([
         "success"  => true,
-        "upazillas" =>App\Models\Upazilla::where('district_id', $request->id)->orderBy('name', 'ASC')->get(),
+        "upazillas" =>App\Models\Upazilla::where('district_id', $request->id)->orderBy('bn_name', 'ASC')->get(),
     ]);
 });
 Route::get('/get-unions', function (Request $request) {
     return response()->json([
         "success"  => true,
-        "unions" =>App\Models\Union::where('upazilla_id', $request->id)->orderBy('name', 'ASC')->get(),
+        "unions" =>App\Models\Union::where('upazilla_id', $request->id)->orderBy('bn_name', 'ASC')->get(),
     ]);
 });
 
@@ -250,3 +261,14 @@ Route::get('product-by-type', 'Api\SearchController@productByType');
 Route::get('company-by-type', 'Api\SearchController@companyByType');
 Route::get('company-by-location', 'Api\SearchController@companyByLocation');
 Route::get('product-by-location', 'Api\SearchController@productByLocation');
+Route::get('company-by-subcategory', 'Api\SearchController@companyBySubcategory');
+
+
+
+
+/*
+|--------------------------------------------------------------------------
+| Notification API Routes
+|--------------------------------------------------------------------------
+*/
+Route::get('user-notifications', 'Api\NotificationController@AllNotifications');

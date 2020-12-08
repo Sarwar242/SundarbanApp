@@ -28,6 +28,11 @@ class District extends Model
        return $districts;
    }
 
+    public function companies()
+    {
+        return $this->hasMany(Company::class);
+    }
+
    public function products()
    {
        return $this->hasManyThrough(Product::class, Company::class)->orderBy('name', 'ASC');

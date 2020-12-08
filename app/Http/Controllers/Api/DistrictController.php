@@ -137,12 +137,12 @@ class DistrictController extends Controller
             $district = District::find($request->id);
             if(is_null($district))
             return response()->json([
-                "sucess"  => false,
+                "success"  => false,
                 "message" => "No District Found!",
             ]);
             $district->delete();
             return response()->json([
-                "sucess"  => true,
+                "success"  => true,
                 "message" => "District has been deleted!",
             ]);
         }

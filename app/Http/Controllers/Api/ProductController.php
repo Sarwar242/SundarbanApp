@@ -5,12 +5,16 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\Models\Company;
 use App\Models\ProductImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use App\Notifications\NewProduct;
+use App\Notifications\DiscountChanged;
+use Illuminate\Support\Facades\Notification;
 
 class ProductController extends Controller
 {
@@ -125,6 +129,25 @@ class ProductController extends Controller
                 endforeach;
             endif;
 
+
+/*
+|--------------------------------------------------------------------------
+| Notify Recipiants
+|--------------------------------------------------------------------------
+*/
+
+if(!is_null($request->company_id)){
+    $company = Company::find($request->company_id);
+    $users=$company->followers()->get();
+    Notification::send($users, new NewProduct($product));
+}
+
+/*
+|--------------------------------------------------------------------------
+| Notify   Ends
+|--------------------------------------------------------------------------
+*/
+
             return response()->json([
                 "success"  => true,
                 "message" => "New product created!",
@@ -180,7 +203,7 @@ class ProductController extends Controller
             'discount' => 'nullable|numeric',
             'quantity' => 'nullable|numeric',
             'type' => 'nullable|string',
-            'category_id' => 'required',
+            'category_id' => 'nullable',
             'subcategory_id' => 'nullable',
             'unit_id' => 'required',
             'company_id' => 'nullable'
@@ -230,8 +253,26 @@ class ProductController extends Controller
 
         $product->save();
 
+/*
+|--------------------------------------------------------------------------
+| Notify Recipiants
+|--------------------------------------------------------------------------
+*/
+        if(request()->has('discount') && !is_null($request->discount)){
+            if(!is_null($product->company_id)){
+                $company = Company::find($product->company_id);
+                $users=$company->followers()->get();
+                Notification::send($users, new DiscountChanged($product));
+            }
+        }
+/*
+|--------------------------------------------------------------------------
+| Notify   Ends
+|--------------------------------------------------------------------------
+*/
+
         return response()->json([
-            "sucess"  => true,
+            "success"  => true,
             "message" => "Product has been updated!",
             "product" => $product
         ]);
@@ -244,7 +285,7 @@ class ProductController extends Controller
             $product = Product::find($request->id);
             if(is_null($product))
             return response()->json([
-                "sucess"  => false,
+                "success"  => false,
                 "message" => "No Product Found!",
             ]);
 
@@ -255,7 +296,7 @@ class ProductController extends Controller
             endif;
             $product->delete();
             return response()->json([
-                "sucess"  => true,
+                "success"  => true,
                 "message" => "Product has been deleted!",
             ]);
         }
@@ -272,7 +313,7 @@ class ProductController extends Controller
         $productimagetbl = ProductImage::find($request->id);
         if(is_null($productimagetbl))
             return response()->json([
-                "sucess"  => false,
+                "success"  => false,
                 "message" => "Image already deleted!",
             ]);
 
@@ -280,7 +321,7 @@ class ProductController extends Controller
         $productimagetbl->delete();
 
         return response()->json([
-            "sucess"  => true,
+            "success"  => true,
             "message" => "Product image has been deleted!",
         ]);
 
@@ -308,14 +349,14 @@ class ProductController extends Controller
             }
             endforeach;
             return response()->json([
-                "sucess"  => true,
+                "success"  => true,
                 "message" => "Product image has been uploaded!",
 
             ]);
 
         else:
             return response()->json([
-                "sucess"  => false,
+                "success"  => false,
                 "message" => "Product image  upload failed!",
 
             ]);
@@ -333,7 +374,7 @@ class ProductController extends Controller
             $image->priority = $request->priority;
             $image->save();
             return response()->json([
-                "sucess"  => true,
+                "success"  => true,
                 "message" => "Priority of the image has been set to ".$request->priority,
 
             ]);
