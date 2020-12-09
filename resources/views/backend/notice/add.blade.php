@@ -16,7 +16,7 @@
                   </button>
                   <strong>
                     {!! session('success')!!}   @php Session::forget('success') @endphp &nbsp;&nbsp;
-                    @if(!is_null($notice)) <a href="{{route('admin.notice.update',$notice)}}">Edit</a> @endif
+                    @if(!is_null($notice)) <a href="{{route('admin.notice.show',$notice)}}">View</a> @endif
                   </strong>
               </div>
             @endif
@@ -54,7 +54,7 @@
                   </div>
                 @enderror
               </div>
-              
+
               <div class="form-group">
                 <label for="type">Type</label>
                 <select class="select2 form-control @error('type') is-invalid @enderror"  name="type" >
@@ -124,7 +124,7 @@
                 </div>
                 @enderror
               </div>
-             
+
               <center>
                 <input type="submit" class="btn btn-success btn-block" value="Submit">
                 <a href="{{ route('admin.notice.create') }}" class="btn btn-primary btn-block">Add More</a>
@@ -154,7 +154,7 @@
             });
 
             $("#recipient").html(option);
-            }); 
+            });
         }
         else if(for_ == "Customer"){
         $.get(""+myapplink+"/admin/get-customers",
@@ -167,7 +167,7 @@
             });
 
             $("#recipient").html(option);
-            }); 
+            });
         }
         else if(for_ == "Admin"){
         $.get(""+myapplink+"/admin/get-admins",
@@ -180,10 +180,10 @@
             });
 
             $("#recipient").html(option);
-            }); 
+            });
         }
         else{
-    
+
             option = "<option selected disabled>All "+
                 for_+" Selected</option>";
             $("#recipient").html(option);

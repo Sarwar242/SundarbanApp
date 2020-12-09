@@ -12,7 +12,7 @@ use App\Models\Customer;
 use App\Models\Company;
 use Illuminate\Support\Facades\Validator;
 use App\Notifications\AdminNotice;
-
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
 use Auth;
 
@@ -53,7 +53,7 @@ class NoticeController extends Controller
             $notice->user_id =$request->user_id;
             $notice->admin_id=Auth::guard('admin')->user()->id;
             $notice->save();
-      
+
 /*
 |--------------------------------------------------------------------------
 | Notify Recipiants
@@ -69,7 +69,7 @@ class NoticeController extends Controller
                     $company = Company::find($notice->user_id);
                     $user = $company->user;
                     $user->notify(new AdminNotice($notice));
-                }        
+                }
                 else if($notice->for == "Admin"){
                     $admin = Admin::find($notice->user_id);
                     $admin->notify(new AdminNotice($notice));
@@ -90,7 +90,7 @@ class NoticeController extends Controller
                     Notification::send($users, new AdminNotice($notice));
                 }
             }
-            
+
 
 
 /*
@@ -108,25 +108,29 @@ class NoticeController extends Controller
 
     public function show($id)
     {
-        try{
-            $notice = notice::find($request->id);
-            if(is_null($notice))
-            return response()->json([
-                "sucess"  => false,
-                "message" => "No Notice Found!",
-
-            ]);
-            return response()->json([
-                "sucess"  => true,
-                "notice" => $notice,
-            ]);
+        $notice = notice::find($id);
+        if(is_null($notice)){
+            session()->flash('failed', 'Error occured! --'.$e);
+            return redirect()->back();
         }
-        catch(Exception $e){
-            return response()->json([
-                'success'=>false,
-                'message'=> ''.$e,
-            ]);
+        $recipiant="";
+        if(!is_null($notice->user_id)){
+            if($notice->for == "Customer"){
+                $recipiant = Customer::find($notice->user_id)->username;
+            }
+            else if($notice->for == "Company"){
+                $recipiant = Company::find($notice->user_id)->name;
+            }
+            else if($notice->for == "Admin"){
+                $recipiant = Admin::find($notice->user_id)->username;
+            }
+            if(!is_null($recipiant)){
+                return view('backend.notice.view')->with('notice',$notice)->with('recipiant',$recipiant);
+            }else{
+                return view('backend.notice.view')->with('notice',$notice);
+            }
         }
+        return view('backend.notice.view')->with('notice',$notice);
     }
 
 
@@ -140,7 +144,7 @@ class NoticeController extends Controller
             }
             else if($notice->for == "Company"){
                 $recipiant = Company::find($notice->user_id)->name;
-            }        
+            }
             else if($notice->for == "Admin"){
                 $recipiant = Admin::find($notice->user_id)->username;
             }
@@ -192,10 +196,15 @@ class NoticeController extends Controller
     {
         try{
             $notice = Notice::find($id);
+
             if(is_null($notice)){
                 session()->flash('failed', 'No notice found');
                 return redirect()->route('admin.notices');
             }
+            $notifications = DB::table('notifications')
+                                ->where('data->notice_id','=', $notice->id)
+                                ->delete();
+
             $notice->delete();
             session()->flash('success', 'The Notice has been Deleted!!');
             return redirect()->route('admin.notices');

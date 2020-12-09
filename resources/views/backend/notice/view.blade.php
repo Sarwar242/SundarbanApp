@@ -1,5 +1,5 @@
 @extends('backend.layouts.master')
-@section('title','Edit Notice')
+@section('title','View Notice')
 
 @section('contents')
 @include('backend.layouts.sidebar')
@@ -20,7 +20,7 @@
               </div>
             @endif
             @if(Session::has('failed'))
-    
+
               <div class="alert alert-error alert-block">
                   <button type="button" class="close" data-dismiss="alert">
                       x
@@ -29,19 +29,19 @@
                       {!! session('failed') !!}
                   </strong>
               </div>
-      
+
             @endif
             <div class="text-center">
-              <h2>Edit Notice</h2>
+              <h2>View Notice</h2>
             </div>
           </div>
 
-            <form  method="POST" action="{{route('admin.notice.update.submit',$notice->id) }}" enctype="multipart/form-data" novalidate="novalidate">
+            <form  action="#" enctype="multipart/form-data" novalidate="novalidate">
               @csrf
               <div class="form-group">
                 <label for="Title">Title</label>
                 <input type="text" name="title" class="form-control @error('title') is-invalid @enderror"
-                 id="title" placeholder="title" value="{{$notice->title}}">
+                 id="title" placeholder="title" value="{{$notice->title}}" disabled>
                 @error('title')
                   <div class="alert alert-danger alert-block">
                     <button type="button" class="close" data-dismiss="alert">
@@ -53,17 +53,17 @@
                   </div>
                 @enderror
               </div>
-              
+
               <div class="form-group">
                 <label for="type">Type</label>
-                <select class="select2 form-control @error('type') is-invalid @enderror"  name="type" >
+                <select class="select2 form-control @error('type') is-invalid @enderror"  name="type" disabled>
                   <option value="{{$notice->type}}" selected='selected' disabled>
                     {{$notice->type}}</option>
-                    <option value="General">General</option>
+                    {{-- <option value="General">General</option>
                     <option value="Warning">Warning</option>
                     <option value="News">News</option>
                     <option value="Announcement">Announcement</option>
-                    <option value="Offer">Offer</option>
+                    <option value="Offer">Offer</option> --}}
                 </select>
                 @error('type')
                 <div class="alert alert-danger alert-block">
@@ -79,17 +79,17 @@
 
             <div class="form-group">
                 <label for="for">For</label>
-                <select class="select2 form-control @error('for') is-invalid @enderror" id="for" required name="for" >
+                <select class="select2 form-control @error('for') is-invalid @enderror" id="for" required name="for" disabled>
                   <option value="{{$notice->for}}" selected='selected' disabled>
                     {{$notice->for}}</option>
-                    <option value="Company">Company</option>
+                    {{-- <option value="Company">Company</option>
                     <option value="Customer">Customer</option>
                     <option value="Admin">Admin</option>
                     <option value="Users">Users</option>
                     <option value="Companies">Companies</option>
                     <option value="Customers">Customers</option>
                     <option value="Admins">Admins</option>
-                    <option value="Non-Registerd">Non-Registerd</option>
+                    <option value="Non-Registerd">Non-Registerd</option> --}}
                 </select>
                 @error('type')
                 <div class="alert alert-danger alert-block">
@@ -105,18 +105,18 @@
 
               <div class="form-group">
                 <label for="Recipient">Recipient</label>
-                <select class="select2 form-control" name="user_id" id="recipient">
+                <select class="select2 form-control" name="user_id" id="recipient" disabled>
                     @if(!is_null($notice->user_id))
-                        <option value="{{$notice->user_id}}" selected>{{$recipiant}}</option> 
+                        <option value="{{$notice->user_id}}" selected>{{$recipiant}}</option>
                     @else
-                        <option value="" selected>This Notice is for {{$notice->for}}</option> 
-                    @endif            
+                        <option value="" selected>This Notice is for {{$notice->for}}</option>
+                    @endif
                 </select>
               </div>
 
               <div class="form-group">
                 <label for="description">Description</label>
-                <textarea class="form-control @error('description') is-invalid @enderror" name="description"  rows="3" placeholder="Write description...">{!!$notice->description!!}</textarea>
+                <textarea class="form-control @error('description') is-invalid @enderror" name="description"  rows="3" placeholder="Write description..." disabled>{!!$notice->description!!}</textarea>
                 @error('description')
                 <div class="alert alert-danger alert-block">
                   <button type="button" class="close" data-dismiss="alert">
@@ -128,9 +128,9 @@
                 </div>
                 @enderror
               </div>
-             
+
               <center>
-                <input type="submit" class="btn btn-success btn-block" value="Submit">
+                <a href="{{ route('admin.notices') }}" class="btn btn-primary btn-block">Back</a>
                 <a href="{{ route('admin.notice.create') }}" class="btn btn-primary btn-block">Add More</a>
               </center>
             </form>
@@ -156,7 +156,7 @@
             });
 
             $("#recipient").html(option);
-            }); 
+            });
         }
         else if(for_ == "Customer"){
         $.get(""+myapplink+"/admin/get-customers",
@@ -169,7 +169,7 @@
             });
 
             $("#recipient").html(option);
-            }); 
+            });
         }
         else if(for_ == "Admin"){
         $.get(""+myapplink+"/admin/get-admins",
@@ -182,10 +182,10 @@
             });
 
             $("#recipient").html(option);
-            }); 
+            });
         }
         else{
-    
+
             option = "<option selected disabled>All "+
                 for_+" Selected</option>";
             $("#recipient").html(option);

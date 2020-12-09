@@ -272,3 +272,8 @@ Route::get('company-by-subcategory', 'Api\SearchController@companyBySubcategory'
 |--------------------------------------------------------------------------
 */
 Route::get('user-notifications', 'Api\NotificationController@AllNotifications');
+Route::get('read-one-notification', 'Api\NotificationController@ReadOne');
+Route::get('delete-one-notification', 'Api\NotificationController@DeleteOne');
+Route::get('delete-read-notifications', 'Api\NotificationController@DeleteAlreadyRead');
+Route::get('delete-all-notifications', 'Api\NotificationController@DeleteAll');
+Route::get('read-all-notifications', 'Api\NotificationController@ReadAll');

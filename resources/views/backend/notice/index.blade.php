@@ -40,8 +40,8 @@
 			  <th scope="col">For</th>
               <th scope="col">Recipiant</th>
               <th scope="col">By</th>
-              
-		      <th scope="col">Edit</th>
+
+		      <th scope="col">View</th>
 		      <th scope="col">Action</th>
 		    </tr>
 		  </thead>
@@ -63,7 +63,7 @@
                         <td>-----</td>
                     @endif
                     <td>{{$notice->admin->username}}</td>
-					<td><a href="{{route('admin.notice.update',$notice->id)}}">Edit</a></td>
+					<td><a href="{{route('admin.notice.show',$notice->id)}}">View</a></td>
 					<td><a class="delete" data-confirm="Are you sure to delete this item?"
 						href="{{route('admin.notice.delete',$notice->id)}}">Delete</a></td>
 				</tr>
