@@ -76,6 +76,7 @@ class AdminNotice extends Notification
             'notice_id' => $this->notice->id,
             'notice_type' => $this->notice->type,
             'message' =>$this->notice->title,
+            'description' =>$this->notice->description,
         ];
     }
 
@@ -85,6 +86,7 @@ class AdminNotice extends Notification
             'notice_id' => $this->notice->id,
             'notice_type' => $this->notice->type,
             'message' =>$this->notice->title,
+            'description' =>$this->notice->description,
         ]);
     }
 }

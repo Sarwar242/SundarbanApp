@@ -12,7 +12,7 @@ use App\Models\User;
 use App\Models\Customer;
 use App\Models\Company;
 
-class DiscountChanged extends Notification
+class DiscountChanged extends Notification implements ShouldBroadcast
 {
     use Queueable;
 
@@ -69,7 +69,7 @@ class DiscountChanged extends Notification
     {
         return [
       'product_id' => $this->product->id,
-            'message' =>"Discount on ".$this->product->name." has been updated by ".$this->product->company->name.".",
+            'message' =>$this->product->discount."% Discount on ".$this->product->name." has been updated by ".$this->product->company->name.".",
         ];
     }
 
@@ -77,7 +77,7 @@ class DiscountChanged extends Notification
     {
         return new BroadcastMessage([
             'product_id' => $this->product->id,
-            'message' =>"Discount on ".$this->product->name." has been updated by ".$this->product->company->name.".",
+            'message' =>$this->product->discount."% Discount on ".$this->product->name." has been updated by ".$this->product->company->name.".",
         ]);
     }
 }
