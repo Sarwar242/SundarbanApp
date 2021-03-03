@@ -30,7 +30,61 @@
 
 		  @endif
 
+<hr>
+			<div class="container">
+				<div class="row row-cols-1 row-cols-md-4">
+					<div class="col mb-4">
+                        <div class="card border-success h-80">
+                            <div class="card-header bg-transparent border-success">
+                                <h5 class="font-weight-bold font-size-12">
+                                    {{__('Total Companies')}}
+                                </h5>
+                            </div>
+                            <div class="card-body text-success">
+                                <h2 class="card-title text-center font-size-20"><span class="counter font-weight-bold font-size-24">{{count(App\Models\Company::all())}}</span></h2>
+                            </div>
+                        </div>
+					</div>
+					<div class="col mb-4">
+                        <div class="card border-success h-80">
+                            <div class="card-header bg-transparent border-success">
+                                <h5 class="font-weight-bold font-size-12">
+                                    {{__('Total Customers')}}
+                                </h5>
+                            </div>
+                            <div class="card-body text-success">
+                                <h2 class="card-title text-center font-size-20"><span class="counter font-weight-bold font-size-24">{{count(App\Models\Customer::all())}}</span></h2>
+                            </div>
+                        </div>
+					</div>
+					<div class="col mb-4">
+                        <div class="card border-success h-80">
+                            <div class="card-header bg-transparent border-success">
+                                <h5 class="font-weight-bold font-size-14">
+                                    {{__('Total Categories')}}
+                                </h5>
+                            </div>
+                            <div class="card-body text-success">
+                                <h2 class="card-title text-center font-size-20"><span class="counter font-weight-bold font-size-24">{{count(App\Models\Category::all())+count(App\Models\Subcategory::all())}}</span></h2>
+                            </div>
+                        </div>
+					</div>
 
+                    <div class="col mb-4">
+                        <div class="card border-success h-80">
+                            <div class="card-header bg-transparent border-success">
+                                <h5 class="font-weight-bold font-size-14">
+                                    {{__('Total Locations')}}
+                                </h5>
+                            </div>
+                            <div class="card-body text-success">
+                                <h2 class="card-title text-center font-size-20"><span class="counter font-weight-bold font-size-24">{{count(App\Models\Division::all())+count(App\Models\District::all())+count(App\Models\Upazilla::all())+count(App\Models\Union::all())}}</span></h2>
+                            </div>
+                        </div>
+					</div>
+
+				</div>
+			</div>
 		  <hr>
 		<center>
 			<div class="heading">
@@ -270,3 +324,15 @@
 		</script>
 
 	@endsection
+@section('scripts')
+{{-- <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script> --}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.min.js" integrity="sha512-CEiA+78TpP9KAIPzqBvxUv8hy41jyI3f2uHi7DGp/Y/Ka973qgSdybNegWFciqh6GrN2UePx2KkflnQUbUhNIA==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Counter-Up/1.0.0/jquery.counterup.min.js" integrity="sha512-d8F1J2kyiRowBB/8/pAWsqUl0wSEOkG5KATkVV4slfblq9VRQ6MyDZVxWl2tWd+mPhuCbpTB4M7uU/x9FlgQ9Q==" crossorigin="anonymous"></script>
+<script>
+    $('.counter').counterUp({
+    delay: 10,
+    time: 1500
+});
+</script>
+
+@endsection

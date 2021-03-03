@@ -24,7 +24,9 @@ class CreateNoticesTable extends Migration
             $table->string('status')->default("0")->nullable();
             $table->timestamps();
 
-
+            $table->foreign('user_id')
+            ->references('id')->on('users')
+            ->onDelete('cascade');
             $table->foreign('admin_id')
             ->references('id')->on('admins')
             ->onDelete('set null');

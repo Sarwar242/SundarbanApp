@@ -30,6 +30,10 @@ class CompanyController extends Controller
 
     public function profile($slug){
         $company = Company::where('slug', '=', $slug)->first();
+        // dd($slug);
+        if(is_null($company)){
+            $company = Company::find($slug);
+        }
         // dd($company);
         return view('backend.company.profile')->with('company', $company);
     }
@@ -95,6 +99,10 @@ class CompanyController extends Controller
             }
             if($slug_change==1){
                 $slug = Str::slug(str_replace( ' ', '-', $request->name));
+
+                if(is_null($slug) || len($slug)<=0){
+                    $slug = $this->make_slug($request->name);
+                }
                 $i = 0;
                 while(Company::whereSlug($slug)->exists())
                 {
@@ -159,6 +167,11 @@ class CompanyController extends Controller
             $company->user->save();
             $company->save();
 
+            if(is_null($company->slug)){
+                $company->slug = "100".$company->id;
+
+                $company->save();
+            }
             session()->flash('success', 'The Company Profile has been updated!!');
             return redirect()->route('admin.company.update',$company->id);
         }catch(Exception $e){
@@ -166,7 +179,9 @@ class CompanyController extends Controller
             return redirect()->route('admin.company.index');
         }
     }
-
+    function make_slug($string) {
+        return preg_replace('/\s+/u', '-', trim($string));
+    }
 
     public function destroy($id)
     {

@@ -41,7 +41,7 @@
 				<th scope="col">Owners Name</th>
 				<th scope="col">Phone</th>
 				<th scope="col">Email</th>
-		
+
 				<th scope="col">Logo</th>
 				<th scope="col">Edit</th>
 			  </tr>
@@ -51,15 +51,19 @@
 				<tr>
 					<th scope="row">{{$loop->index+1}}</th>
 					<td>{{$company->code}}</td>
-					<td style="cursor: pointer;" onclick="window.location.href='{{route('admin.company.profile', $company->slug)}}'">{{$company->name}}</td>
+                    @if(is_null($company->slug))
+					    <td style="cursor: pointer;" onclick="window.location.href='{{route('admin.company.profile',$company->slug)}}'">{{$company->name}}</td>
+                    @else
+					    <td style="cursor: pointer;" onclick="window.location.href='{{route('admin.company.profile',$company->id)}}'">{{$company->name}}</td>
+                    @endif
 					<td>{{$company->bn_name}}</td>
 					<td>{{$company->owners_name}}</td>
 					<td>{{$company->user->phone}}</td>
 					<td>{{$company->user->email}}</td>
-					<td><img src="{{ asset('storage/company')}}/{{$company->image}}" 
+					<td><img src="{{ asset('storage/company')}}/{{$company->image}}"
                         style="width:30px;" alt="company Image"></td>
 					<td><a href="{{route('admin.company.update',$company->id)}}">Edit</a></td>
-				
+
 				</tr>
 			@endforeach
 		  </tbody>
@@ -71,13 +75,13 @@
 	<script src="{{ asset('js/backend/jquery.min.js')}}"></script>
 	<script>
 		var deleteLinks = document.querySelectorAll('.delete');
-		
+
 		for (var i = 0; i < deleteLinks.length; i++) {
 			deleteLinks[i].addEventListener('click', function(event) {
 				event.preventDefault();
-		
+
 				var choice = confirm(this.getAttribute('data-confirm'));
-		
+
 				if (choice) {
 					window.location.href = this.getAttribute('href');
 				}

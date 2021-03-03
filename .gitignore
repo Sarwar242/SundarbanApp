@@ -4,6 +4,7 @@
 /vendor
 .env
 .env.backup
+.env.egol
 .phpunit.result.cache
 Homestead.json
 Homestead.yaml

@@ -90,6 +90,11 @@ class AdminController extends Controller
                 $profile->admin_id=Auth::guard('admin')->user()->id;
                 $profile->owners_name=$request->owners_name;
                 $slug = Str::slug(str_replace( ' ', '-', $request->name));
+
+                if(is_null($slug) || strlen($slug)<=0){
+                    $slug = $this->make_slug($request->name);
+                    // dd($slug);
+                }
                 $i = 0;
                 while(Company::whereSlug($slug)->exists())
                 {
@@ -162,7 +167,9 @@ class AdminController extends Controller
             return back();
         }
     }
-
+    function make_slug($string) {
+        return preg_replace('/\s+/u', '-', trim($string));
+    }
 
     public function createAdmin(){
         return view('backend.admin.add');
