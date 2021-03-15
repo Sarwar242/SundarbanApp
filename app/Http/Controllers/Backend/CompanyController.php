@@ -100,7 +100,7 @@ class CompanyController extends Controller
             if($slug_change==1){
                 $slug = Str::slug(str_replace( ' ', '-', $request->name));
 
-                if(is_null($slug) || len($slug)<=0){
+                if(is_null($slug) || strlen($slug)<=0){
                     $slug = $this->make_slug($request->name);
                 }
                 $i = 0;
@@ -115,8 +115,6 @@ class CompanyController extends Controller
             $company->name =$request->name;
             $company->user->phone =$request->phone;
             $company->user->email =$request->email;
-
-            //dd($company->user->email);
             $company->bn_name =$request->bn_name;
             $company->code =$request->code;
             $company->owners_name =$request->owners_name;

@@ -130,7 +130,7 @@ class CategoryController extends Controller
         $category->bn_name =$request->bn_name;
         $category->description =$request->description;
         $category->bn_description =$request->bn_description;
-        if(request()->hasFile('image')){
+        if(request()->hasFile('image') && !is_null($request->file('image'))){
             if(!is_null($category->image) && $category->image !="default.png" &&  $category->image !="default.jpg"){
                 $exists = Storage::disk('public')->exists('category/'.$category->image);
                 if($exists)

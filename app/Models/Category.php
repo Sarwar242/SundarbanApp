@@ -23,6 +23,10 @@ class Category extends Model
        return $this->hasMany(Product::class)->orderBy('name', 'ASC');
    }
 
+   public function companies()
+   {
+        return $this->hasMany(Company::class)->orderBy('name', 'ASC');
+   }
 
    public static function categoies()
    {

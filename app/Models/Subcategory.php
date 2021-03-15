@@ -27,6 +27,11 @@ class Subcategory extends Model
        return $subcategoies;
    }
 
+   public function companies()
+   {
+        return $this->hasMany(Company::class)->orderBy('name', 'ASC');
+   }
+
    public static function slugComplete() {
     $categories = Subcategory::all();
     foreach($categories as $category){
