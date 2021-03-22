@@ -179,4 +179,65 @@ class CategoryController extends Controller
             return redirect()->route('admin.dashboard');
         }
     }
+
+    public function featuredFunc(Request $request){
+        try{
+            $category=Category::find($request->id);
+
+            if(is_null($category))
+                return json_encode([
+                    "sucess"  => false,
+                    "message" => "No category Found!",
+                ]);
+
+            if($category->featured==1){
+                $category->featured = 0;
+                $category->save();
+
+                return json_encode([
+                    'success'=>true,
+                    'message'=> "The category has been unfeatured!",
+                    ]);
+            }
+            else{
+                $category->featured = 1;
+                $category->save();
+                return json_encode([
+                    'success'=>true,
+                    'message'=> "The category has been featured!",
+                    ]);
+            }
+        }catch(\Exception $e){
+            return json_encode([
+                'success'=>false,
+                'message'=> ''.$e,
+            ]);
+        }
+    }
+
+    public function priorityFunc(Request $request){
+        try{
+            $category=Category::find($request->id);
+
+            if(is_null($category))
+                return json_encode([
+                    "sucess"  => false,
+                    "message" => "No category Found!",
+                ]);
+
+
+            $category->priority = $request->priority;
+            $category->save();
+
+            return json_encode([
+                'success'=>true,
+                'message'=> "The category priority has been set to ".$request->priority."!",
+                ]);
+        }catch(\Exception $e){
+            return json_encode([
+                'success'=>false,
+                'message'=> ''.$e,
+            ]);
+        }
+    }
 }

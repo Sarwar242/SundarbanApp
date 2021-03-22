@@ -122,6 +122,12 @@ Route::group( ['prefix' => 'admin', 'as' => 'admin.'], function() {
     Route::post('company/update/{id}', 'Backend\CompanyController@update')->name('company.update.submit');
     Route::get('company/delete/{id}', 'Backend\CompanyController@destroy')->name('company.delete');
     Route::post('company/ban/{id}', 'Backend\AdminController@companyBan')->name('company.ban');
+    Route::post('company/boost/{id}', 'Backend\BoostController@boost')->name('company.boost');
+    Route::get('company/boost/delete/{id}', 'Backend\BoostController@destroy')->name('company.boost.delete');
+    Route::get('company/featured', 'Backend\BoostController@featured')->name('company.featured');
+    Route::get('company/boost/records', 'Backend\BoostController@records')->name('company.records');
+    Route::get('company/boost/record/delete/{id}', 'Backend\BoostController@recordDelete')->name('company.record.delete');
+
 
 
     //Customer
@@ -160,6 +166,9 @@ Route::group( ['prefix' => 'admin', 'as' => 'admin.'], function() {
     Route::post('category/update/{id}', 'Backend\CategoryController@update')->name('category.update.submit');
     Route::get('category/show/{id}', 'Backend\CategoryController@show')->name('category.show');;
     Route::get('category/delete/{id}', 'Backend\CategoryController@destroy')->name('category.delete');
+    Route::get('api/category/featured', 'Backend\CategoryController@featuredFunc');
+    Route::get('api/category/priority', 'Backend\CategoryController@priorityFunc');
+
 
 
 
@@ -172,6 +181,8 @@ Route::group( ['prefix' => 'admin', 'as' => 'admin.'], function() {
     Route::post('subcategory/update/{id}', 'Backend\SubcategoryController@update')->name('subcategory.update.submit');
     Route::get('subcategory/show/{id}', 'Backend\SubcategoryController@show')->name('subcategory.show');
     Route::get('subcategory/delete/{id}', 'Backend\SubcategoryController@destroy')->name('subcategory.delete');
+    Route::get('api/subcategory/featured', 'Backend\SubcategoryController@featuredFunc');
+    Route::get('api/subcategory/priority', 'Backend\SubcategoryController@priorityFunc');
 
 
 
@@ -185,6 +196,7 @@ Route::group( ['prefix' => 'admin', 'as' => 'admin.'], function() {
     Route::post('division/update/{id}', 'Backend\DivisionController@update')->name('division.update.submit');
     Route::get('division/show/{id}', 'Backend\DivisionController@show')->name('division.show');
     Route::get('division/delete/{id}', 'Backend\DivisionController@destroy')->name('division.delete');
+    // Route::get('division/view/{id}', 'Backend\DivisionController@destroy')->name('division.delete');
 
 
 
@@ -248,19 +260,39 @@ Route::group( ['prefix' => 'admin', 'as' => 'admin.'], function() {
 
 
 
+    //News
+    Route::get('news', 'Backend\NewsController@index')->name('news');
+    Route::get('news/create', 'Backend\NewsController@create')->name('news.create');
+    Route::post('news/create', 'Backend\NewsController@store')->name('news.create.submit');
+    Route::get('news/update/{id}', 'Backend\NewsController@edit')->name('news.update');
+    Route::post('news/update/{id}', 'Backend\NewsController@update')->name('news.update.submit');
+    Route::get('news/show/{id}', 'Backend\NewsController@show')->name('news.show');
+    Route::get('news/delete/{id}', 'Backend\NewsController@destroy')->name('news.delete');
+
+    //Blogs
+    Route::get('blogs', 'Backend\BlogController@index')->name('blogs');
+    Route::get('blog/create', 'Backend\BlogController@create')->name('blog.create');
+    Route::post('blog/create', 'Backend\BlogController@store')->name('blog.create.submit');
+    Route::get('blog/update/{id}', 'Backend\BlogController@edit')->name('blog.update');
+    Route::post('blog/update/{id}', 'Backend\BlogController@update')->name('blog.update.submit');
+    Route::get('blog/show/{id}', 'Backend\BlogController@show')->name('blog.show');
+    Route::get('blog/delete/{id}', 'Backend\BlogController@destroy')->name('blog.delete');
+
+
+
 
 
 
     //Realtime=jquery
     Route::get('/get-companies', function () {
         return json_encode(App\Models\Company::orderBy('name', 'ASC')->get());
-    });    
+    });
     Route::get('/get-customers', function () {
         return json_encode(App\Models\Customer::orderBy('first_name', 'ASC')->get());
-    });     
+    });
     Route::get('/get-admins', function () {
         return json_encode(App\Models\Admin::orderBy('first_name', 'ASC')->get());
-    });    
+    });
     Route::get('/get-subcategories/{id}', function ($id) {
         return json_encode(App\Models\Subcategory::where('category_id', $id)->get());
     });

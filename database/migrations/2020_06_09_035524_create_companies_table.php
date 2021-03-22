@@ -40,7 +40,7 @@ class CreateCompaniesTable extends Migration
             $table->string('street')->nullable();
             $table->string('bn_street')->nullable();
             $table->string('zipcode')->nullable();
-
+            $table->unsignedTinyInteger('priority')->nullable()->default(12);
             $table->unsignedBigInteger('admin_id')->nullable();
             $table->unsignedBigInteger('category_id')->nullable();
             $table->unsignedBigInteger('subcategory_id')->nullable();

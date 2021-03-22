@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Division;
+use App\Models\Category;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\File;
 
@@ -15,14 +16,14 @@ class DivisionController extends Controller
     {
         $this->middleware('auth:admin');
     }
-    
+
     public function index()
     {
         return view('backend.division.index');
     }
 
 
-        
+
     public function create(){
         return view('backend.division.add');
     }
@@ -36,14 +37,14 @@ class DivisionController extends Controller
             'longitude' => 'nullable|string',
             'latitude' => 'nullable|string',
         ]);
-     
+
         try{
             $division= new Division;
             $division->name =$request->name;
             $division->bn_name =$request->bn_name;
             $division->longitude =$request->longitude;
             $division->latitude =$request->latitude;
-  
+
             $division->save();
 
             session()->flash('success', 'A Division has been Added!!');
@@ -54,21 +55,21 @@ class DivisionController extends Controller
         }
     }
 
-    public function show(Request  $request)
+    public function show(Request $request)
     {
         try{
             $division = Division::find($request->id);
+            // $companies = $division->companies;
+            // $categories = $companies;
+            $categories=Category::join( 'companies', 'companies.category_id', '=', 'categories.id' )
+                                    ->where('companies.division_id','=',$request->id)
+                                    ->distinct()
+                                    ->get(['categories.*']);
+                                    // dd($categories);
             if(is_null($division))
-            return response()->json([
-                "sucess"  => false,
-                "message" => "No Division Found!",
-                
-            ]);
-            
-            return response()->json([
-                "sucess"  => true,
-                "division" => $division,
-            ]);
+                return back();
+
+            return view('backend.division.details',compact(['division','categories']));
         }
         catch(Exception $e){
             return response()->json([
@@ -85,7 +86,7 @@ class DivisionController extends Controller
     }
 
 
-   
+
     public function update(Request $request, $id)
     {
         $this->validate($request,[
@@ -94,7 +95,7 @@ class DivisionController extends Controller
             'longitude' => 'nullable|string',
             'latitude' => 'nullable|string',
         ]);
-     
+
         try{
             $division = Division::find($id);
             $division->name =$request->name;
@@ -111,7 +112,7 @@ class DivisionController extends Controller
         }
     }
 
-    
+
     public function destroy($id)
     {
         try{
@@ -120,7 +121,7 @@ class DivisionController extends Controller
                 session()->flash('failed', 'No division found');
                 return redirect()->route('admin.divisions');
             }
-            
+
             $division->delete();
             session()->flash('success', 'The Division has been Deleted!!');
             return redirect()->route('admin.divisions');

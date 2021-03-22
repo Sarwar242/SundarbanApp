@@ -1,5 +1,5 @@
 @extends('backend.layouts.master')
-@section('title','Companies')
+@section('title','Boost History')
 
 @section('contents')
 @include('backend.layouts.sidebar')
@@ -28,51 +28,46 @@
         @endif
 		<center>
 			<div class="heading">
-				<h4>All The Companies are here</h4>
+				<h4>Boost Histories</h4>
 			</div>
 		</center>
 		<table id="dataTable" class="table">
 		  <thead class="thead-dark">
 			<tr>
 				<th scope="col">#</th>
-				<th scope="col">Code</th>
 				<th scope="col">Name</th>
-				<th scope="col">Name In Bangla</th>
-				<th scope="col">Owners Name</th>
-				<th scope="col">Phone</th>
-				<th scope="col"  style="width: 80px; text-align: center">Email</th>
-
-				<th scope="col">Logo</th>
-				<th scope="col">Edit</th>
+				<th scope="col">Days</th>
+				<th scope="col">Expiree</th>
+				<th scope="col">Activated</th>
+				<th scope="col">Admin</th>
+				<th scope="col">Message</th>
+				<th scope="col">Delete</th>
+                <th></th>
 			  </tr>
 		  </thead>
 		  <tbody>
-		    @foreach(App\Models\Company::latest()->get() as $company)
+		    @foreach(App\Models\Boost_Record::latest()->get() as $boost)
 				<tr>
 					<th scope="row">{{$loop->index+1}}</th>
-					<td>{{$company->code}}</td>
-                    @if(!is_null($company->slug))
-					    <td style="cursor: pointer;" onclick="window.location.href='{{route('admin.company.profile',$company->slug)}}'">{{$company->name}}</td>
-                    @else
-					    <td style="cursor: pointer;" onclick="window.location.href='{{route('admin.company.profile',$company->id)}}'">{{$company->name}}</td>
-                    @endif
-					<td>{{$company->bn_name}}</td>
-					<td>{{$company->owners_name}}</td>
-					<td>{{$company->user->phone}}</td>
-					<td style="width: 50px; word-wrap: break-word;">{{$company->user->email}}</td>
-					<td><img src="{{ asset('storage/company')}}/{{$company->image}}"
-                        style="width:30px;" alt="company Image"></td>
-					<td><a href="{{route('admin.company.update',$company->id)}}">Edit</a></td>
-
+					<td>{{$boost->company? $boost->company->name: ''}}</td>
+					<td>{{$boost->days}}</td>
+					<td>{{Carbon\Carbon::parse($boost->end_date)->format('d M Y') }}</td>
+					<td>{{$boost->created_at->format('d M Y') }}</td>
+					<td>{{$boost->admin->username}}</td>
+					<td style="max-width:250px;">{!!$boost->message!!}</td>
+					<td><a class="delete"  data-confirm="Are you sure to delete this record?" href="{{route('admin.company.record.delete',$boost->id)}}">Delete</a></td>
+                    <td></td>
 				</tr>
+
 			@endforeach
 		  </tbody>
 		</table>
-		{{-- {!! App\Models\Company::companies()->render() !!} --}}
 	</div>
 
+{{-- @endsection
 
-	<script src="{{ asset('js/backend/jquery.min.js')}}"></script>
+@section('scripts') --}}
+<script src="{{ asset('js/backend/jquery.min.js')}}"></script>
 	<script>
 		var deleteLinks = document.querySelectorAll('.delete');
 
@@ -87,5 +82,6 @@
 				}
 			});
 		}
+
 	</script>
-	@endsection
+@endsection

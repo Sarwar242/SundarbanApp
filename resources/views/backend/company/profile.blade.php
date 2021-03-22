@@ -5,7 +5,7 @@
 @include('backend.layouts.sidebar')
 <br>
     <div class="container emp-profile content">
-        <form method="post">
+        <div>
             <div class="row">
                 <div class="col-md-4">
                     <div class="profile-img">
@@ -17,27 +17,36 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="col-md-8">
-                    <div class="profile-head">
-                            <h5>
-                                &nbsp; &nbsp; &nbsp; &nbsp;    {{$company->name}}
-                            </h5>
-                            <div class="col-md-12">
-                                <div class="profile-work">
-                                    <p><strong>Description</strong></p>
-                                    <textarea class="description" maxlength="150" rows="3" cols="30" name="description" disabled>{{$company->description}}</textarea>
-
-                                </div>
-                            </div>
-                        </div>
+                <div class="col-md-1"></div>
+                <div class="col-md-4 mt-2">
+                    <div class="profile-head  mt-4 pt-4">
+                        <h3 class="font-weight-bold">
+                            &nbsp; &nbsp; &nbsp;    {{$company->name}}
+                        </h3>
                     </div>
-                    {{-- <div class="col-md-1">
+                </div>
+
+                    <div class="col-md-2 mt-5">
+                        @if (!$company->boost)
+                        <form action="{{route('admin.company.boost',$company->id)}}" class="form mt-5" method="post">
+                            @csrf
+                            <input class="mt-5"  style="width: 88px;" type="number" min="1" max="31" name="days" placeholder="add days" required>
+                            <input type="submit" class="btn btn-success btn-sm" value="Boost">
+                        </form>
+                        @else
+                        <label class="switch ml-4 mt-3" data-toggle="tooltip" data-placement="bottom" title="Boosted">
+                            <input type="checkbox" checked disabled>
+                            <span class="slider round" style="background-color: green !important;"></span>
+                        </label>
+                        @endif
+                    </div>
+                    <div class="col-md-1"></div>
+                    {{-- <div class="col-md-2">
                         <label class="switch">
                             <input type="checkbox">
                             <span class="slider round"></span>
                         </label>
-                    </div>   --}}
+                    </div> --}}
                 </div>
 
 <br>
@@ -205,11 +214,29 @@
                                         @endif
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>Edit</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p><a href="{{route('admin.company.update',$company->id)}}">Edit</a></p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div class="col-md-6">
+                        <div class="col-md-12">
+                            <div class="profile-work my-2 py-2 px-4 mx-2">
+                                <h4><strong>Description</strong></h4>
+                                <p style="font-size:14px;">{{$company->description}}</p>
                             </div>
                         </div>
                     </div>
                 </div>
-            </form>
+            </div>
     </div>
     <script>
 

@@ -34,6 +34,10 @@ class CompanyController extends Controller
         if(is_null($company)){
             $company = Company::find($slug);
         }
+        if(!is_null($company->boost))
+        {
+            $company['boost']=now()>$company->boost->end_date ? 0:1;
+        }
         // dd($company);
         return view('backend.company.profile')->with('company', $company);
     }
@@ -144,7 +148,6 @@ class CompanyController extends Controller
             $company->division_id =$request->division_id;
             $company->category_id =$request->category_id;
             $company->subcategory_id =$request->subcategory_id;
-           // dd($request);
 
             if(!is_null($request->password)){
                 $encryptedPass= Hash::make($request->password);

@@ -8,7 +8,7 @@ use Illuminate\Support\Str;
 class Subcategory extends Model
 {
     protected $fillable = [
-        'name', 'slug','bn_name','description','bn_description', 'image','admin_id','category_id',
+        'name', 'slug','bn_name','priority','featured','description','bn_description', 'image','admin_id','category_id',
    ];
 
    public function products()

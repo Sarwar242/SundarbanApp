@@ -21,6 +21,10 @@ class Division extends Model
     {
         return $this->hasMany(Company::class);
     }
+    public function customers()
+    {
+        return $this->hasMany(Company::class);
+    }
 
 
    public static function divisions()

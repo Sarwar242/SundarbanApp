@@ -19,7 +19,11 @@ class CategoryController extends Controller
     public function index()
     {
         try{
-            $categories = Category::orderBy('name', 'ASC')->get();
+            $categories = Category::orderBy('priority', 'ASC')
+                            ->orderBy('bn_name', 'asc')
+                            ->get()
+                            ->sortByDESC('featured');
+
             foreach ($categories as $category) {
                 $subcategories = $category->subcategories;
                 $products=$category->products;

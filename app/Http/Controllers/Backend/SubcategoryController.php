@@ -199,4 +199,66 @@ class SubcategoryController extends Controller
             return redirect()->route('admin.dashboard');
         }
     }
+
+
+    public function featuredFunc(Request $request){
+        try{
+            $subcategory=Subcategory::find($request->id);
+
+            if(is_null($subcategory))
+                return json_encode([
+                    "sucess"  => false,
+                    "message" => "No subcategory Found!",
+                ]);
+
+            if($subcategory->featured==1){
+                $subcategory->featured = 0;
+                $subcategory->save();
+
+                return json_encode([
+                    'success'=>true,
+                    'message'=> "The subcategory has been unfeatured!",
+                    ]);
+            }
+            else{
+                $subcategory->featured = 1;
+                $subcategory->save();
+                return json_encode([
+                    'success'=>true,
+                    'message'=> "The subcategory has been featured!",
+                    ]);
+            }
+        }catch(\Exception $e){
+            return json_encode([
+                'success'=>false,
+                'message'=> ''.$e,
+            ]);
+        }
+    }
+
+    public function priorityFunc(Request $request){
+        try{
+            $subcategory=Subcategory::find($request->id);
+
+            if(is_null($subcategory))
+                return json_encode([
+                    "sucess"  => false,
+                    "message" => "No subcategory Found!",
+                ]);
+
+
+            $subcategory->priority = $request->priority;
+            $subcategory->save();
+
+            return json_encode([
+                'success'=>true,
+                'message'=> "The subcategory priority has been set to ".$request->priority."!",
+                ]);
+        }catch(\Exception $e){
+            return json_encode([
+                'success'=>false,
+                'message'=> ''.$e,
+            ]);
+        }
+    }
 }

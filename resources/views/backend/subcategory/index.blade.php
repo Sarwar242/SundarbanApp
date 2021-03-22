@@ -16,8 +16,8 @@
           <th scope="col">Name</th>
           <th scope="col">Name in Bangla</th>
           <th scope="col">Category</th>
-          <th scope="col">Description</th>
-          <th scope="col">Description in Bangla</th>
+          <th scope="col">Priority</th>
+          <th scope="col">featured</th>
           <th scope="col">Image</th>
           <th scope="col">Edit</th>
           <th scope="col">Action</th>
@@ -34,8 +34,30 @@
                 @else
                     <td>N/A</td>
                 @endif
-                <td>{{substr($subcategory->bn_description, 0,  100)}}</td>
-                <td>{{substr($subcategory->bn_description, 0,  100)}}</td>
+                <td>
+                    <select id="priority{{$subcategory->id}}" name="priority{{$subcategory->id}}" onChange="priorityToggle({{$subcategory->id}})">
+                            <option value="{{ is_null($subcategory->priority) ? 12 : $subcategory->priority}}" disabled selected>{{ is_null($subcategory->priority) ? 12 : $subcategory->priority}}</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                    </select>
+                </td>
+                <td>
+                    <input id="subcategoryId" type="hidden" value="{{$subcategory->id}}">
+                    <input id="featured" type="checkbox" @if($subcategory->featured==1 && !is_null($subcategory->featured) && $subcategory->featured!=0) checked @endif data-toggle="toggle" data-size="xs"
+                     data-on="Enabled"
+                     data-off="Disabled"
+                     data-onstyle="success" data-offstyle="danger" onChange="featuredToggle({{$subcategory->id}})" >
+                </td>
                 <td><img src="{{ asset('storage/subcategory')}}/{{$subcategory->image}}"
                     style="width:30px;" alt="Subcategory Image"></td>
                 <td><a href="{{route('admin.subcategory.update',$subcategory->id)}}">Edit</a></td>
@@ -61,6 +83,33 @@
 
             if (choice) {
                 window.location.href = this.getAttribute('href');
+            }
+        });
+    }
+</script>
+@endsection
+@section('scripts')
+<script>
+    function featuredToggle(id){
+        $.get(""+myapplink+"/admin/api/subcategory/featured", {id:id})
+        .done(function(data) {
+            data = JSON.parse(data);
+            console.log(data);
+            if (data.status == 'success') {
+                $("#featured").load(window.location.href + " #featured");
+            }
+        });
+    }
+
+    function priorityToggle(id){
+        var e = $("#priority"+id+" :selected").val();
+        // console.log( e);
+        $.get(""+myapplink+"/admin/api/subcategory/priority", {id:id, priority:e})
+        .done(function(data) {
+            data = JSON.parse(data);
+            console.log(data);
+            if (data.status == 'success') {
+                $("#priority").load(window.location.href + " #priority");
             }
         });
     }
