@@ -133,7 +133,7 @@
         $('#submit').on('click', function() {
             url =$('#url').val();
             console.log(url);
-            $.post(""+myapplink+"/admin/news/create/",
+            $.get(""+myapplink+"/admin/news/create/",
                 {
                     '_token': $('meta[name=csrf-token]').attr('content'),
                     'url':url,

@@ -262,8 +262,8 @@ Route::group( ['prefix' => 'admin', 'as' => 'admin.'], function() {
 
     //News
     Route::get('news', 'Backend\NewsController@index')->name('news');
-    Route::get('news/create', 'Backend\NewsController@create')->name('news.create');
-    Route::post('news/create', 'Backend\NewsController@store')->name('news.create.submit');
+    // Route::get('news/create', 'Backend\NewsController@create')->name('news.create');
+    Route::get('news/create/', 'Backend\NewsController@store')->name('news.create.submit');
     Route::get('news/update/{id}', 'Backend\NewsController@edit')->name('news.update');
     Route::post('news/update/{id}', 'Backend\NewsController@update')->name('news.update.submit');
     Route::get('news/show/{id}', 'Backend\NewsController@show')->name('news.show');
@@ -271,8 +271,8 @@ Route::group( ['prefix' => 'admin', 'as' => 'admin.'], function() {
 
     //Blogs
     Route::get('blogs', 'Backend\BlogController@index')->name('blogs');
-    Route::get('blog/create', 'Backend\BlogController@create')->name('blog.create');
-    Route::post('blog/create', 'Backend\BlogController@store')->name('blog.create.submit');
+    // Route::get('blog/create', 'Backend\BlogController@create')->name('blog.create');
+    Route::get('blog/create/', 'Backend\BlogController@store')->name('blog.create.submit');
     Route::get('blog/update/{id}', 'Backend\BlogController@edit')->name('blog.update');
     Route::post('blog/update/{id}', 'Backend\BlogController@update')->name('blog.update.submit');
     Route::get('blog/show/{id}', 'Backend\BlogController@show')->name('blog.show');
