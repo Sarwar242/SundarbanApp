@@ -16,11 +16,13 @@ class CompanyController extends Controller
 
     public function companies(Request $request)
     {
-        $companies= Company::orderBy('name', 'ASC')->get();
+        $companies= Company::orderBy('priority','ASC')
+                    ->get();
         foreach($companies as $company):
             $user = $company->user;
             $category = $company->category;
             $subcategory = $company->subcategory;
+
             $division = $company->division;
             $district = $company->district;
             $upazilla = $company->upazilla;
@@ -28,13 +30,24 @@ class CompanyController extends Controller
             $company->following = $company->user->followings()->get()->count();
             $company->followers = $company->followers()->get()->count();
             $company->ratings   = $company->ratings()->get()->avg('rating');
+            if($company->boost){
+                $company['featured']=\Carbon\Carbon::now() < \Carbon\Carbon::parse($company->boost['end_date']) ?1:0;
+            }
+            else{
+                $company['featured']=0;
+            }
         endforeach;
 
         return response()->json([
             'success'=>true,
-            'companies'=>$companies,
-
-           ]);
+            'companies'=>$companies->sort(function($a, $b) {
+                if($b['featured'] === 1) {
+                    return 1;
+                }else{
+                    return $a->priority >= $b->priority? 1 :-1;
+                }
+            }),
+        ]);
     }
 
     public function profile(Request $request)
@@ -46,6 +59,12 @@ class CompanyController extends Controller
                 'message'=>'No company found in database!'
                ]);
         }
+        if($company->boost){
+            $company['featured']=\Carbon\Carbon::now() < \Carbon\Carbon::parse($company->boost['end_date']) ? 1:0;
+        }else{
+            $company['featured']=0;
+        }
+
         $user=$company->user;
         $category=$company->category;
         $subcategory = $company->subcategory;

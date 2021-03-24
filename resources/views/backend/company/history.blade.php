@@ -41,7 +41,8 @@
 				<th scope="col">Activated</th>
 				<th scope="col">Admin</th>
 				<th scope="col">Message</th>
-				<th scope="col">Delete</th>
+				{{-- <th scope="col">Delete</th> --}}
+                <th></th>
                 <th></th>
 			  </tr>
 		  </thead>
@@ -55,7 +56,8 @@
 					<td>{{$boost->created_at->format('d M Y') }}</td>
 					<td>{{$boost->admin->username}}</td>
 					<td style="max-width:250px;">{!!$boost->message!!}</td>
-					<td><a class="delete"  data-confirm="Are you sure to delete this record?" href="{{route('admin.company.record.delete',$boost->id)}}">Delete</a></td>
+					{{-- <td><a class="delete"  data-confirm="Are you sure to delete this record?" href="{{route('admin.company.record.delete',$boost->id)}}">Delete</a></td> --}}
+                    <td></td>
                     <td></td>
 				</tr>
 

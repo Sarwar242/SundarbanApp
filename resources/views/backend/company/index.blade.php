@@ -39,7 +39,9 @@
 				<th scope="col">Name</th>
 				<th scope="col">Name In Bangla</th>
 				<th scope="col">Owners Name</th>
+
 				<th scope="col">Phone</th>
+                <th scope="col">Priority</th>
 				<th scope="col"  style="width: 80px; text-align: center">Email</th>
 
 				<th scope="col">Logo</th>
@@ -59,7 +61,24 @@
 					<td>{{$company->bn_name}}</td>
 					<td>{{$company->owners_name}}</td>
 					<td>{{$company->user->phone}}</td>
-					<td style="width: 50px; word-wrap: break-word;">{{$company->user->email}}</td>
+                    <td>
+                        <select id="priority{{$company->id}}" name="priority{{$company->id}}" onChange="priorityToggle({{$company->id}})">
+                                <option value="{{ is_null($company->priority) ? 12 : $company->priority}}" disabled selected>{{ is_null($company->priority) ? 12 : $company->priority}}</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                        </select>
+                    </td>
+					<td style="max-width: 150px; word-wrap: break-word;">{{$company->user->email}}</td>
 					<td><img src="{{ asset('storage/company')}}/{{$company->image}}"
                         style="width:30px;" alt="company Image"></td>
 					<td><a href="{{route('admin.company.update',$company->id)}}">Edit</a></td>
@@ -89,3 +108,21 @@
 		}
 	</script>
 	@endsection
+
+    @section('scripts')
+    
+    <script>
+        function priorityToggle(id){
+            var e = $("#priority"+id+" :selected").val();
+            // console.log( e);
+            $.get(""+myapplink+"/admin/api/company/priority", {id:id, priority:e})
+            .done(function(data) {
+                data = JSON.parse(data);
+                console.log(data);
+                if (data.status == 'success') {
+                    $("#priority").load(window.location.href + " #priority");
+                }
+            });
+        }
+    </script>
+    @endsection

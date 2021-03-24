@@ -22,11 +22,14 @@ class Authenticate extends Middleware
         $guard =Arr::first($guards);
         if (Auth::guard($guard)->guest()) {
             if ($guard === 'api') {
-                return response('Unauthorized.', 401);
+                return response()->json([
+                    'success'=>false,
+                    'message'=>'Unauthorized'
+                ],401);
             }else if($guard === 'admin'){
                 return redirect()->guest('/admin/login');
             }
-            
+
             else {
                 return redirect()->guest('login');
             }

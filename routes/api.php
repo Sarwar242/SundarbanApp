@@ -25,7 +25,7 @@ Route::post('hashpass', 'Api\AdminController@hash');
 Route::post('register', 'Api\AuthController@register');
 Route::post('login', 'Api\AuthController@login');
 
-Route::get('logout', 'Api\AuthController@logout');
+Route::get('logout', 'Api\AuthController@logout')->middleware('auth:api');
 Route::post('password/change', 'Api\AuthController@change_password')->middleware('auth:api');
 
 Route::post('password/email', 'Api\ForgotPasswordController@sendResetLinkEmail');
@@ -67,8 +67,8 @@ Route::post('company/rate', 'Api\RatingController@rate');
 
 Route::get('companies', 'Api\CompanyController@companies');
 Route::get('company/profile', 'Api\CompanyController@profile');
-Route::get('company/delete', 'Api\CompanyController@destroy');
-Route::post('company/update', 'Api\CompanyController@update');
+Route::get('company/delete', 'Api\CompanyController@destroy')->middleware('auth:api');
+Route::post('company/update', 'Api\CompanyController@update')->middleware('auth:api');
 
 
 
@@ -82,8 +82,8 @@ Route::post('company/update', 'Api\CompanyController@update');
 
 Route::get('customers', 'Api\CustomerController@customers');
 Route::get('customer/profile', 'Api\CustomerController@profile');
-Route::get('customer/delete', 'Api\CustomerController@destroy');
-Route::post('customer/update', 'Api\CustomerController@update');
+Route::get('customer/delete', 'Api\CustomerController@destroy')->middleware('auth:api');
+Route::post('customer/update', 'Api\CustomerController@update')->middleware('auth:api');
 
 
 
@@ -124,42 +124,42 @@ Route::post('customer/update', 'Api\CustomerController@update');
 //Product-Part->middleware('auth:api');
 
 Route::get('products', 'Api\ProductController@index');
-Route::post('product/create', 'Api\ProductController@store');
-Route::post('product/update', 'Api\ProductController@update');
+Route::post('product/create', 'Api\ProductController@store')->middleware('auth:api');
+Route::post('product/update', 'Api\ProductController@update')->middleware('auth:api');
 Route::get('product/show', 'Api\ProductController@show');
-Route::get('product/delete', 'Api\ProductController@destroy');
-Route::post('product/image/upload', 'Api\ProductController@uploadImage');
-Route::post('product/image/setpriority', 'Api\ProductController@setPriority');
-Route::get('product/image/delete', 'Api\ProductController@deleteImage');
+Route::get('product/delete', 'Api\ProductController@destroy')->middleware('auth:api');
+Route::post('product/image/upload', 'Api\ProductController@uploadImage')->middleware('auth:api');
+Route::post('product/image/setpriority', 'Api\ProductController@setPriority')->middleware('auth:api');
+Route::get('product/image/delete', 'Api\ProductController@deleteImage')->middleware('auth:api');
 
 
 
 
 //Category
 Route::get('categories', 'Api\CategoryController@index');
-Route::post('category/create', 'Api\CategoryController@store');
-Route::post('category/update', 'Api\CategoryController@update');
+Route::post('category/create', 'Api\CategoryController@store')->middleware('auth:api');
+Route::post('category/update', 'Api\CategoryController@update')->middleware('auth:api');
 Route::get('category/show', 'Api\CategoryController@show');
-Route::get('category/delete', 'Api\CategoryController@destroy');
+Route::get('category/delete', 'Api\CategoryController@destroy')->middleware('auth:api');
 
 
 
 
 //Subcategory
 Route::get('subcategories', 'Api\SubcategoryController@index');
-Route::post('subcategory/create', 'Api\SubcategoryController@store')->name('api.test');
-Route::post('subcategory/update', 'Api\SubcategoryController@update');
+Route::post('subcategory/create', 'Api\SubcategoryController@store')->middleware('auth:api');
+Route::post('subcategory/update', 'Api\SubcategoryController@update')->middleware('auth:api');
 Route::get('subcategory/show', 'Api\SubcategoryController@show');
-Route::get('subcategory/delete', 'Api\SubcategoryController@destroy');
+Route::get('subcategory/delete', 'Api\SubcategoryController@destroy')->middleware('auth:api');
 
 
 
 //Unit
 Route::get('units', 'Api\UnitController@index');
-Route::post('unit/create', 'Api\UnitController@store');
-Route::post('unit/update', 'Api\UnitController@update');
+Route::post('unit/create', 'Api\UnitController@store')->middleware('auth:api');
+Route::post('unit/update', 'Api\UnitController@update')->middleware('auth:api');
 Route::get('unit/show', 'Api\UnitController@show');
-Route::get('unit/delete', 'Api\UnitController@destroy');
+Route::get('unit/delete', 'Api\UnitController@destroy')->middleware('auth:api');
 
 
 
@@ -197,12 +197,20 @@ Route::get('upazilla/show', 'Api\UpazillaController@show');
 
 
 
+//News
+Route::get('news', 'Api\NewsController');
+
+//Blogs
+Route::get('blogs', 'Api\BlogController');
+
+
+
+
+
 //Union
 Route::get('unions', 'Api\UnionController@index');
-// Route::post('union/create', 'Api\UnionController@store');
-// Route::post('union/update', 'Api\UnionController@update');
 Route::get('union/show', 'Api\UnionController@show');
-// Route::get('union/delete', 'Api\UnionController@destroy');
+
 
 
 
@@ -271,9 +279,9 @@ Route::get('company-by-subcategory', 'Api\SearchController@companyBySubcategory'
 | Notification API Routes
 |--------------------------------------------------------------------------
 */
-Route::get('user-notifications', 'Api\NotificationController@AllNotifications');
-Route::get('read-one-notification', 'Api\NotificationController@ReadOne');
-Route::get('delete-one-notification', 'Api\NotificationController@DeleteOne');
-Route::get('delete-read-notifications', 'Api\NotificationController@DeleteAlreadyRead');
-Route::get('delete-all-notifications', 'Api\NotificationController@DeleteAll');
-Route::get('read-all-notifications', 'Api\NotificationController@ReadAll');
+Route::get('user-notifications', 'Api\NotificationController@AllNotifications')->middleware('auth:api');;
+Route::get('read-one-notification', 'Api\NotificationController@ReadOne')->middleware('auth:api');;
+Route::get('delete-one-notification', 'Api\NotificationController@DeleteOne')->middleware('auth:api');;
+Route::get('delete-read-notifications', 'Api\NotificationController@DeleteAlreadyRead')->middleware('auth:api');;
+Route::get('delete-all-notifications', 'Api\NotificationController@DeleteAll')->middleware('auth:api');;
+Route::get('read-all-notifications', 'Api\NotificationController@ReadAll')->middleware('auth:api');;

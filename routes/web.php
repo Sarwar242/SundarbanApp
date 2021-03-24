@@ -127,6 +127,7 @@ Route::group( ['prefix' => 'admin', 'as' => 'admin.'], function() {
     Route::get('company/featured', 'Backend\BoostController@featured')->name('company.featured');
     Route::get('company/boost/records', 'Backend\BoostController@records')->name('company.records');
     Route::get('company/boost/record/delete/{id}', 'Backend\BoostController@recordDelete')->name('company.record.delete');
+    Route::get('api/company/priority', 'Backend\CompanyController@priority');
 
 
 

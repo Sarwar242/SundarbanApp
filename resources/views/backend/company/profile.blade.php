@@ -27,10 +27,10 @@
                 </div>
 
                     <div class="col-md-2 mt-5">
-                        @if (!$company->boost)
+                        @if (!$company->boost || (!is_null($company->boost) && Carbon\Carbon::today() > Carbon\Carbon::parse($company->boost['end_date'])))
                         <form action="{{route('admin.company.boost',$company->id)}}" class="form mt-5" method="post">
                             @csrf
-                            <input class="mt-5"  style="width: 88px;" type="number" min="1" max="31" name="days" placeholder="add days" required>
+                            <input class="mt-5"  style="width: 88px;" type="number" min="1" max="365" name="days" placeholder="add days" required>
                             <input type="submit" class="btn btn-success btn-sm" value="Boost">
                         </form>
                         @else

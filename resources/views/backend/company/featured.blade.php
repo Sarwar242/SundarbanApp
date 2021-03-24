@@ -68,7 +68,7 @@
                             {{-- <form method="POST" name="form1">
                                 @csrf --}}
                                 <div class="modal-body">
-                                <input type="number" style="width: 100%;" name="days" id="days">
+                                <input type="number" style="width: 100%;" name="days"  min="1" max="365" id="days" required>
                                 </div>
                                 <div class="modal-footer">
                                 <button type="submit" id="submit" class="btn btn-primary">Update</button>

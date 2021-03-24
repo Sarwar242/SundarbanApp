@@ -213,4 +213,30 @@ class CompanyController extends Controller
             return redirect()->route('admin.dashboard');
         }
     }
+    
+    public function priority(Request $request){
+        try{
+            $company=Company::find($request->id);
+
+            if(is_null($company))
+                return json_encode([
+                    "sucess"  => false,
+                    "message" => "No company Found!",
+                ]);
+
+
+            $company->priority = $request->priority;
+            $company->save();
+
+            return json_encode([
+                'success'=>true,
+                'message'=> "The company priority has been set to ".$request->priority."!",
+                ]);
+        }catch(\Exception $e){
+            return json_encode([
+                'success'=>false,
+                'message'=> ''.$e,
+            ]);
+        }
+    }
 }
