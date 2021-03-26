@@ -131,6 +131,33 @@ Route::group( ['prefix' => 'admin', 'as' => 'admin.'], function() {
 
 
 
+
+
+//Companies in  Location and Category
+    Route::get('division/category/companies/{category}/{location}', 'Backend\DivisionController@categoryCompanies')->name('division.category.companies');
+    Route::get('division/subcategory/companies/{category}/{location}', 'Backend\DivisionController@subcategoryCompanies')->name('division.subcategory.companies');
+    Route::get('district/category/companies/{category}/{location}', 'Backend\DistrictController@categoryCompanies')->name('district.category.companies');
+    Route::get('district/subcategory/companies/{category}/{location}', 'Backend\DistrictController@subcategoryCompanies')->name('district.subcategory.companies');
+    Route::get('upazilla/category/companies/{category}/{location}', 'Backend\UpazillaController@categoryCompanies')->name('upazilla.category.companies');
+    Route::get('upazilla/subcategory/companies/{category}/{location}', 'Backend\UpazillaController@subcategoryCompanies')->name('upazilla.subcategory.companies');
+    Route::get('union/category/companies/{category}/{location}', 'Backend\UnionController@categoryCompanies')->name('union.category.companies');
+    Route::get('union/subcategory/companies/{category}/{location}', 'Backend\UnionController@subcategoryCompanies')->name('union.subcategory.companies');
+
+//Companies in  Location and Category
+    Route::get('division/category/products/{category}/{location}', 'Backend\DivisionController@categoryProducts')->name('division.category.products');
+    Route::get('division/subcategory/products/{subcategory}/{location}', 'Backend\DivisionController@subcategoryProducts')->name('division.subcategory.products');
+
+    Route::get('district/category/products/{category}/{location}', 'Backend\DistrictController@categoryProducts')->name('district.category.products');
+    Route::get('district/subcategory/products/{subcategory}/{location}', 'Backend\DistrictController@subcategoryProducts')->name('district.subcategory.products');
+
+    Route::get('upazilla/category/products/{category}/{location}', 'Backend\UpazillaController@categoryProducts')->name('upazilla.category.products');
+    Route::get('upazilla/subcategory/products/{subcategory}/{location}', 'Backend\UpazillaController@subcategoryProducts')->name('upazilla.subcategory.products');
+
+    Route::get('union/category/products/{category}/{location}', 'Backend\UnionController@categoryProducts')->name('union.category.products');
+    Route::get('union/subcategory/products/{subcategory}/{location}', 'Backend\UnionController@subcategoryProducts')->name('union.subcategory.products');
+
+
+
     //Customer
     Route::get('customers', 'Backend\CustomerController@index')->name('customers');
     Route::get('customer/create', 'Backend\CustomerController@create')->name('customer.create');

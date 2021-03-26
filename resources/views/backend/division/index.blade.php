@@ -53,8 +53,8 @@
 			  <td class="text-center" style="cursor: pointer;" onclick="window.location.href='{{route('admin.division.show',$division->id)}}'">{{$division->bn_name}}</td>
 			  <td class="text-center">{{$division->longitude}}</td>
 			  <td class="text-center">{{$division->latitude}}</td>
-			  <td class="text-center">{{count($division->companies)}}</td>
-			  <td class="text-center">{{count($division->customers)}}</td>
+			  <td class="text-center">{{$division->companies ? count($division->companies) : 0}}</td>
+			  <td class="text-center">{{$division->customers ? count($division->customers) : 0}}</td>
 			  <td><a href="{{route('admin.division.update',$division->id)}}">Edit</a></td>
 			  <td><a class="delete" data-confirm="Are you sure to delete this item?"
 				  href="{{route('admin.division.delete',$division->id)}}">Delete</a></td>

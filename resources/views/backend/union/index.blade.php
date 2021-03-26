@@ -25,10 +25,10 @@
 			</strong>
 		</div>
 	  @endif
-	  <hr> 
+	  <hr>
 		<center>
 			<div class="heading">
-				<h4>All your Union details are here</h4>
+				<h4>All the Union details are here</h4>
 			</div>
 		</center>
 		<table id="dataTable"  class="table">
@@ -42,6 +42,8 @@
 		      <th scope="col">Division</th>
 		      <th scope="col">Longitude</th>
 			  <th scope="col">Lattitude</th>
+              <th scope="col">Companies</th>
+		      <th scope="col">Customers</th>
 			  <th scope="col"></th>
 		      <th scope="col">Edit</th>
 		      <th scope="col">Action</th>
@@ -52,21 +54,21 @@
 		   @foreach(App\Models\Union::latest()->get() as $union)
 		    <tr>
 		      <th scope="row">{{$loop->index+1}}</th>
-		      <td>{{$union->name}}</td>
-			  <td>{{$union->bn_name}}</td>
+		      <td style="cursor: pointer;" onclick="window.location.href='{{route('admin.union.show',$union->id)}}'">{{$union->name}}</td>
+			  <td style="cursor: pointer;" onclick="window.location.href='{{route('admin.union.show',$union->id)}}'">{{$union->bn_name}}</td>
 			  @if(!is_null($union->upazilla))
-				<td>{{$union->upazilla->name}}</td>
+				<td style="cursor: pointer;" onclick="window.location.href='{{route('admin.upazilla.show',$union->upazilla->id)}}'">{{$union->upazilla->name}}</td>
 				@if(!is_null($union->upazilla->district))
-					<td>{{$union->upazilla->district->name}}</td>
+					<td style="cursor: pointer;" onclick="window.location.href='{{route('admin.district.show',$union->upazilla->district->id)}}'">{{$union->upazilla->district->name}}</td>
 					@if(!is_null($union->upazilla->district->division))
-						<td>{{$union->upazilla->district->division->name}}</td>
+						<td style="cursor: pointer;" onclick="window.location.href='{{route('admin.division.show',$union->upazilla->district->division->id)}}'">{{$union->upazilla->district->division->name}}</td>
 					@else
 						<td></td>
 					@endif
 				@else
 					<td></td>
 					<td></td>
-				@endif 
+				@endif
 			  @else
 				<td></td>
 				<td></td>
@@ -74,9 +76,11 @@
 			  @endif
 			  <td>{{$union->longitude}}</td>
 			  <td>{{$union->latitude}}</td>
+              <td class="text-center">{{$union->companies ? count($union->companies) : 0}}</td>
+			  <td class="text-center">{{$union->customers ? count($union->customers) : 0}}</td>
 			  <td></td>
 			  <td><a href="{{route('admin.union.update',$union->id)}}">Edit</a></td>
-			  <td><a class="delete" data-confirm="Are you sure to delete this item?" 
+			  <td><a class="delete" data-confirm="Are you sure to delete this item?"
 				  href="{{route('admin.union.delete',$union->id)}}">Delete</a></td>
 			</tr>
 			@endforeach
@@ -89,13 +93,13 @@
 	<script src="{{ asset('js/backend/jquery.min.js')}}"></script>
 	<script>
 		var deleteLinks = document.querySelectorAll('.delete');
-		
+
 		for (var i = 0; i < deleteLinks.length; i++) {
 			deleteLinks[i].addEventListener('click', function(event) {
 				event.preventDefault();
-		
+
 				var choice = confirm(this.getAttribute('data-confirm'));
-		
+
 				if (choice) {
 					window.location.href = this.getAttribute('href');
 				}

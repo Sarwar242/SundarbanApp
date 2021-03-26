@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Division;
 use App\Models\Category;
+use App\Models\Subcategory;
+use App\Models\Company;
+use App\Models\Product;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\File;
 
@@ -59,13 +62,10 @@ class DivisionController extends Controller
     {
         try{
             $division = Division::find($request->id);
-            // $companies = $division->companies;
-            // $categories = $companies;
             $categories=Category::join( 'companies', 'companies.category_id', '=', 'categories.id' )
                                     ->where('companies.division_id','=',$request->id)
                                     ->distinct()
                                     ->get(['categories.*']);
-                                    // dd($categories);
             if(is_null($division))
                 return back();
 
@@ -129,5 +129,42 @@ class DivisionController extends Controller
             session()->flash('failed', 'Error occured! --'.$e);
             return redirect()->route('admin.divisions');
         }
+    }
+
+    public function categoryCompanies($category, $location){
+        $companies=Company::where('division_id',$location)
+                ->where('category_id',$category )->get();
+            $data['location']= Division::find($location)->name;
+            $data['category']= Category::find($category)->name;
+            $data['subcategory']= '';
+        // dd($companies);
+        return view('backend.category.companies', compact(['companies','data']));
+    }
+
+    public function subcategoryCompanies($subcategory, $location){
+        $companies=Company::where('division_id',$location)
+                ->where('subcategory_id',$subcategory )->get();
+            $data['location']= Division::find($location)->name;
+            $data['subcategory']= Subcategory::find($subcategory)->name;
+            $data['category']=Subcategory::find($subcategory)->category->name;
+        // dd($companies);
+        return view('backend.category.companies', compact(['companies','data']));
+    }
+
+    public function categoryProducts($category, $location){
+            $products=Product::where('category_id',$category )->get();
+            $data['location']= Division::find($location)->name;
+            $data['category']= Category::find($category)->name;
+            $data['subcategory']='';
+        // dd($companies);
+            return view('backend.category.products', compact(['products','data']));
+    }
+
+    public function subcategoryProducts($subcategory, $location){
+            $products=Product::where('subcategory_id',$subcategory )->get();
+            $data['location']= Division::find($location)->name;
+            $data['subcategory']= Subcategory::find($subcategory)->name;
+            $data['category']=Subcategory::find($subcategory)->category->name;
+            return view('backend.subcategory.products', compact(['products','data']));
     }
 }

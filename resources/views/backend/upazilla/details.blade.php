@@ -1,5 +1,5 @@
 @extends('backend.layouts.master')
-@section('title','Divisions')
+@section('title','Upazilla Details')
 
 @section('contents')
 @include('backend.layouts.sidebar')
@@ -27,7 +27,7 @@
 		  <hr>
 		<center>
 			<div class="heading">
-				<h4 class="jumbotron jumbotron-fluid py-3"><small class="text-muted">Details for Division: </small>{{$division->name}}</h4>
+				<h4 class="jumbotron jumbotron-fluid py-3"><small class="text-muted">Details for Upazilla: </small>{{$upazilla->name}}</h4>
 			</div>
 		</center>
 		<table id="dataTable" class="table">
@@ -46,10 +46,10 @@
                 @foreach ($category->subcategories as $subcategory)
                     <tr>
                         <th scope="row" class="text-center">{{$loop->index+1}}</th>
-                        <td class="text-center" style="cursor: pointer;" onclick="window.location.href='{{route('admin.division.category.products',[$category->id,$division->id])}}'">{!! $category->name==''? $category->bn_name:$category->name !!} <span class="badge badge-pill badge-secondary">{{count($category->products)}}</span></td>
-                        <td class="text-center" style="cursor: pointer;" onclick="window.location.href='{{route('admin.division.subcategory.products',[$subcategory->id,$division->id])}}'">{!! $subcategory->name==''? $subcategory->bn_name:$subcategory->name !!} <span class="badge badge-pill badge-secondary">{{count($subcategory->products)}}</span></td>
-                        <td class="text-center" style="cursor: pointer;" onclick="window.location.href='{{route('admin.division.subcategory.companies',[$subcategory->id,$division->id])}}'">{{count($subcategory->companies->where('division_id',$division->id))}}</td>
-                        <td class="text-center" style="cursor: pointer;" onclick="window.location.href='{{route('admin.division.category.companies',[$category->id,$division->id])}}'">{{count($category->companies->where('division_id',$division->id))}}</td>
+                        <td class="text-center" style="cursor: pointer;" onclick="window.location.href='{{route('admin.upazilla.category.products',[$category->id,$upazilla->id])}}'">{!! $category->name==''? $category->bn_name:$category->name !!} <span class="badge badge-pill badge-secondary">{{count($category->products)}}</span></td>
+                        <td class="text-center" style="cursor: pointer;" onclick="window.location.href='{{route('admin.upazilla.subcategory.products',[$subcategory->id,$upazilla->id])}}'">{!! $subcategory->name==''? $subcategory->bn_name:$subcategory->name !!} <span class="badge badge-pill badge-secondary">{{count($subcategory->products)}}</span></td>
+                        <td class="text-center" style="cursor: pointer;" onclick="window.location.href='{{route('admin.upazilla.subcategory.companies',[$subcategory->id,$upazilla->id])}}'">{{count($subcategory->companies->where('upazilla_id',$upazilla->id))}}</td>
+                        <td class="text-center" style="cursor: pointer;" onclick="window.location.href='{{route('admin.upazilla.category.companies',[$category->id,$upazilla->id])}}'">{{count($category->companies->where('upazilla_id',$upazilla->id))}}</td>
                         <td class="text-center"></td>
                     </tr>
                 @endforeach

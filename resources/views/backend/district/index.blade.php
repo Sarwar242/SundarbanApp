@@ -24,7 +24,7 @@
 			</strong>
 		</div>
 	  @endif
-	  <hr> 
+	  <hr>
 
 		<center>
 			<div class="heading">
@@ -41,6 +41,8 @@
 		      <th scope="col">Website</th>
 		      <th scope="col">Longitude</th>
 			  <th scope="col">Lattitude</th>
+              <th scope="col">Companies</th>
+		      <th scope="col">Customers</th>
 			  <th scope="col"></th>
 		      <th scope="col">Edit</th>
 		      <th scope="col">Action</th>
@@ -50,19 +52,21 @@
 			@foreach(App\Models\District::latest()->get() as $district)
 		    <tr>
 		      <th scope="row">{{$loop->index+1}}</th>
-			  <td>{{$district->name}}</td>
-			  <td>{{$district->bn_name}}</td>
+			  <td  style="cursor: pointer;" onclick="window.location.href='{{route('admin.district.show',$district->id)}}'">{{$district->name}}</td>
+			  <td  style="cursor: pointer;" onclick="window.location.href='{{route('admin.district.show',$district->id)}}'">{{$district->bn_name}}</td>
 			  @if(!is_null($district->division))
-			  	<td>{{$district->division->name}}</td>
+			  	<td style="cursor: pointer;" onclick="window.location.href='{{route('admin.division.show',$district->division->id)}}'">{{$district->division->name}}</td>
 			  @else
 			  	<td>N/A</td>
 			  @endif
 			  <td>{{$district->website}}</td>
 			  <td>{{$district->longitude}}</td>
 			  <td>{{$district->latitude}}</td>
+              <td class="text-center">{{$district->companies ? count($district->companies) : 0}}</td>
+			  <td class="text-center">{{$district->customers ? count($district->customers) : 0}}</td>
 			  <td></td>
 		      <td><a href="{{route('admin.district.update',$district->id)}}">Edit</a></td>
-			  <td><a class="delete" data-confirm="Are you sure to delete this item?" 
+			  <td><a class="delete" data-confirm="Are you sure to delete this item?"
 				  href="{{route('admin.district.delete',$district->id)}}">Delete</a></td>
 			</tr>
 			@endforeach
@@ -74,13 +78,13 @@
 	<script src="{{ asset('js/backend/jquery.min.js')}}"></script>
 	<script>
 		var deleteLinks = document.querySelectorAll('.delete');
-		
+
 		for (var i = 0; i < deleteLinks.length; i++) {
 			deleteLinks[i].addEventListener('click', function(event) {
 				event.preventDefault();
-		
+
 				var choice = confirm(this.getAttribute('data-confirm'));
-		
+
 				if (choice) {
 					window.location.href = this.getAttribute('href');
 				}

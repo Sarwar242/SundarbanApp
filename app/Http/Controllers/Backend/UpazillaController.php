@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 use App\Models\Division;
 use App\Models\District;
 use App\Models\Upazilla;
+use App\Models\Category;
+use App\Models\Subcategory;
+use App\Models\Company;
+use App\Models\Product;
 use Illuminate\Support\Facades\Validator;
 use Auth;
 
@@ -23,7 +27,7 @@ class UpazillaController extends Controller
     }
 
 
-            
+
     public function create(){
         return view('backend.upazilla.add');
     }
@@ -38,7 +42,7 @@ class UpazillaController extends Controller
             'latitude' => 'nullable|string',
             'district_id' => 'required',
         ]);
-   
+
         try{
             $upazilla= new Upazilla;
             $upazilla->name =$request->name;
@@ -46,7 +50,7 @@ class UpazillaController extends Controller
             $upazilla->longitude =$request->longitude;
             $upazilla->latitude =$request->latitude;
             $upazilla->district_id =$request->district_id;
-            $upazilla->admin_id=Auth::guard('admin')->user()->id; 
+            $upazilla->admin_id=Auth::guard('admin')->user()->id;
             $upazilla->save();
 
             session()->flash('success', 'A Upazilla has been Added!!');
@@ -60,18 +64,18 @@ class UpazillaController extends Controller
     public function show($id)
     {
         try{
-            $upazilla = Upazilla::find($request->id);
+            $upazilla = Upazilla::find($id);
+            // $companies = $division->companies;
+            // $categories = $companies;
+            $categories=Category::join('companies', 'companies.category_id', '=', 'categories.id' )
+                                    ->where('companies.upazilla_id','=',$id)
+                                    ->distinct()
+                                    ->get(['categories.*']);
+                                    // dd($categories);
             if(is_null($upazilla))
-            return response()->json([
-                "sucess"  => false,
-                "message" => "No upazilla Found!",
-                
-            ]);
-            
-            return response()->json([
-                "sucess"  => true,
-                "upazilla" => $upazilla,
-            ]);
+                return back();
+
+            return view('backend.upazilla.details',compact(['upazilla','categories']));
         }
         catch(Exception $e){
             return response()->json([
@@ -87,7 +91,7 @@ class UpazillaController extends Controller
     }
 
 
-   
+
     public function update(Request $request, $id)
     {
         $this->validate($request,[
@@ -97,7 +101,7 @@ class UpazillaController extends Controller
             'latitude' => 'nullable|string',
             'district_id' => 'required',
         ]);
-   
+
         try{
             $upazilla=Upazilla::find($id);
             $upazilla->name =$request->name;
@@ -115,7 +119,7 @@ class UpazillaController extends Controller
         }
     }
 
-    
+
     public function destroy($id)
     {
         try{
@@ -131,5 +135,42 @@ class UpazillaController extends Controller
             session()->flash('failed', 'Error occured! --'.$e);
             return redirect()->route('admin.upazillas');
         }
+    }
+
+    public function categoryCompanies($category, $location){
+        $companies=Company::where('upazilla_id',$location)
+                ->where('category_id',$category )->get();
+            $data['location']= Upazilla::find($location)->name;
+            $data['category']= Category::find($category)->name;
+            $data['subcategory']='';
+        return view('backend.category.companies', compact(['companies','data']));
+    }
+
+    public function subcategoryCompanies($subcategory, $location){
+        $companies=Company::where('upazilla_id',$location)
+                ->where('subcategory_id',$subcategory )->get();
+            $data['location']= Upazilla::find($location)->name;
+            $data['subcategory']= Subcategory::find($subcategory)->name;
+            $data['category']=Subcategory::find($subcategory)->category->name;
+        // dd($companies);
+        return view('backend.category.companies', compact(['companies','data']));
+    }
+
+
+    public function categoryProducts($category, $location){
+            $products=Product::where('category_id',$category )->get();
+            $data['location']= Upazilla::find($location)->name;
+            $data['category']= Category::find($category)->name;
+            $data['subcategory']='';
+        // dd($companies);
+            return view('backend.category.products', compact(['products','data']));
+    }
+
+    public function subcategoryProducts($subcategory, $location){
+            $products=Product::where('subcategory_id',$subcategory )->get();
+            $data['location']= Upazilla::find($location)->name;
+            $data['subcategory']= Subcategory::find($subcategory)->name;
+            $data['category']=Subcategory::find($subcategory)->category->name;
+            return view('backend.subcategory.products', compact(['products','data']));
     }
 }

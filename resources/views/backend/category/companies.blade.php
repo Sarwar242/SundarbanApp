@@ -1,5 +1,5 @@
 @extends('backend.layouts.master')
-@section('title','Companies')
+@section('title','Companies in '.$data['location'])
 
 @section('contents')
 @include('backend.layouts.sidebar')
@@ -28,7 +28,7 @@
         @endif
 		<center>
 			<div class="heading">
-				<h4 class="jumbotron jumbotron-fluid py-3">All The Companies are here</h4>
+				<h4 class="jumbotron jumbotron-fluid py-3">Companies in Category: {{$data['category']}} @if($data['subcategory']!='' && !is_null($data['subcategory']))> Subcategory: {{$data['subcategory']}} @endif  at {{$data['location']}}.</h4>
 			</div>
 		</center>
 		<table id="dataTable" class="table">
@@ -39,26 +39,23 @@
 				<th scope="col">Name</th>
 				<th scope="col">Name In Bangla</th>
 				<th scope="col">Owners Name</th>
-
 				<th scope="col">Phone</th>
                 <th scope="col">Priority</th>
-				<th scope="col" style="width: 80px; text-align: center;">Email</th>
-
 				<th scope="col">Logo</th>
 				<th scope="col">Edit</th>
 			  </tr>
 		  </thead>
 		  <tbody>
-		    @foreach(App\Models\Company::latest()->get() as $company)
+		    @foreach($companies as $company)
 				<tr>
 					<th scope="row">{{$loop->index+1}}</th>
 					<td>{{$company->code}}</td>
-                    @if(!is_null($company->slug)&& $company->slug!='')
+                    @if(!is_null($company->slug))
 					    <td style="cursor: pointer;" onclick="window.location.href='{{route('admin.company.profile',$company->slug)}}'">{{$company->name}}</td>
                     @else
 					    <td style="cursor: pointer;" onclick="window.location.href='{{route('admin.company.profile',$company->id)}}'">{{$company->name}}</td>
                     @endif
-                    @if(!is_null($company->slug)&& $company->slug!='')
+					@if(!is_null($company->slug))
 					    <td style="cursor: pointer;" onclick="window.location.href='{{route('admin.company.profile',$company->slug)}}'">{{$company->bn_name}}</td>
                     @else
 					    <td style="cursor: pointer;" onclick="window.location.href='{{route('admin.company.profile',$company->id)}}'">{{$company->bn_name}}</td>
@@ -82,7 +79,6 @@
                                 <option value="12">12</option>
                         </select>
                     </td>
-					<td style="max-width: 150px; word-wrap: break-word;">{{$company->user->email}}</td>
 					<td><img src="{{ asset('storage/company')}}/{{$company->image}}"
                         style="width:30px;" alt="company Image"></td>
 					<td><a href="{{route('admin.company.update',$company->id)}}">Edit</a></td>
@@ -122,7 +118,7 @@
             $.get(""+myapplink+"/admin/api/company/priority", {id:id, priority:e})
             .done(function(data) {
                 data = JSON.parse(data);
-                console.log(data);
+                // console.log(data);
                 if (data.status == 'success') {
                     $("#priority").load(window.location.href + " #priority");
                 }

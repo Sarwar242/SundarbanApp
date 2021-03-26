@@ -109,9 +109,9 @@
 			@foreach(App\Models\Company::latest()->limit(10)->get() as $company)
 				<tr>
 					<th scope="row">{{$loop->index+1}}</th>
-					<td>{{$company->code}}</td>
-					<td>{{$company->name}}</td>
-					<td>{{$company->bn_name}}</td>
+					<td style="cursor: pointer;" onclick="window.location.href='{{route('admin.company.profile',$company->slug)}}'">{{$company->code}}</td>
+					<td style="cursor: pointer;" onclick="window.location.href='{{route('admin.company.profile',$company->slug)}}'">{{$company->name}}</td>
+					<td style="cursor: pointer;" onclick="window.location.href='{{route('admin.company.profile',$company->slug)}}'">{{$company->bn_name}}</td>
 					<td>{{$company->owners_name}}</td>
 					<td>{{$company->user->phone}}</td>
 					<td>{{$company->user->email}}</td>
@@ -143,8 +143,8 @@
 			@foreach(App\Models\Customer::latest()->limit(5)->get() as $customer)
 				<tr>
 					<th scope="row">{{$loop->index+1}}</th>
-					<td>{{$customer->first_name}}</td>
-					<td>{{$customer->last_name}}</td>
+					<td onclick="window.location.href='{{route('admin.customer.profile', $customer->username)}}'" style="cursor: pointer">{{$customer->first_name}}</td>
+					<td onclick="window.location.href='{{route('admin.customer.profile', $customer->username)}}'" style="cursor: pointer">{{$customer->last_name}}</td>
 					<td>{{$customer->user->email}}</td>
 					<td>{{$customer->phone}}</td>
 					<td><a href="{{route('admin.customer.update',$customer->id)}}">Edit</a></td>
@@ -178,9 +178,9 @@
 			@foreach(App\Models\Admin::latest()->limit(5)->get() as $admin)
 				<tr>
 					<th scope="row">{{$loop->index+1}}</th>
-					<td>{{$admin->first_name}}</td>
-					<td>{{$admin->last_name}}</td>
-					<td>{{$admin->username}}</td>
+					<td onclick="window.location.href='{{route('admin.profile', $admin->username)}}'" style="cursor: pointer">{{$admin->first_name}}</td>
+					<td onclick="window.location.href='{{route('admin.profile', $admin->username)}}'" style="cursor: pointer">{{$admin->last_name}}</td>
+					<td onclick="window.location.href='{{route('admin.profile', $admin->username)}}'" style="cursor: pointer">{{$admin->username}}</td>
 					<td>{{$admin->email}}</td>
 					<td>{{$admin->phone1}}</td>
 					<td><a href="{{route('admin.admin.update',$admin->id)}}">Edit</a></td>
@@ -212,8 +212,8 @@
 			@foreach(App\Models\Product::latest()->limit(10)->get() as $product)
 				<tr>
 					<th scope="row">{{$loop->index+1}}</th>
-					<td>{{$product->name}}</td>
-					<td>{{$product->code}}</td>
+					<td onclick="window.location.href='{{route('admin.product.show', $product->slug)}}'" style="cursor: pointer">{{$product->name}}</td>
+					<td >{{$product->code}}</td>
 					<td>{!!strlen($product->description) > 100 ? substr($product->description,0,100)." ...": $product->description!!}</td>
 					<td>{{$product->price}}</td>
 					<td>{{$product->quantity}}</td>

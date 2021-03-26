@@ -49,15 +49,15 @@
               @foreach(App\Models\Admin::latest()->get() as $admin)
                   <tr>
                       <th scope="row">{{$loop->index+1}}</th>
-                      <td>{{$admin->first_name}}</td>
-                      <td>{{$admin->last_name}}</td>
-                      <td  onclick="window.location.href='{{route('admin.profile', $admin->username)}}'" style="cursor: pointer">{{$admin->username}}</td>
+                      <td  onclick="window.location.href='{{route('admin.profile', $admin->username)}}'" style="cursor: pointer">{{$admin->first_name}}</td>
+                      <td  onclick="window.location.href='{{route('admin.profile', $admin->username)}}'" style="cursor: pointer">{{$admin->last_name}}</td>
+                      <td onclick="window.location.href='{{route('admin.profile', $admin->username)}}'" style="cursor: pointer">{{$admin->username}}</td>
                       <td>{{$admin->email}}</td>
                       <td>{{$admin->type}}</td>
                       <td>{{$admin->phone1}}</td>
-                      <td>{{$admin->phone2}}</td> 
-                      <td></td>         
-                      <td><img src="{{ asset('storage/admin')}}/{{$admin->image}}" 
+                      <td>{{$admin->phone2}}</td>
+                      <td></td>
+                      <td><img src="{{ asset('storage/admin')}}/{{$admin->image}}"
                         style="width:30px;" alt="Admin Image"></td>
                       <td><a href="{{route('admin.admin.update',$admin->id)}}">Edit</a></td>
                   </tr>
@@ -71,13 +71,13 @@
 	<script src="{{ asset('js/backend/jquery.min.js')}}"></script>
 	<script>
 		var deleteLinks = document.querySelectorAll('.delete');
-		
+
 		for (var i = 0; i < deleteLinks.length; i++) {
 			deleteLinks[i].addEventListener('click', function(event) {
 				event.preventDefault();
-		
+
 				var choice = confirm(this.getAttribute('data-confirm'));
-		
+
 				if (choice) {
 					window.location.href = this.getAttribute('href');
 				}
