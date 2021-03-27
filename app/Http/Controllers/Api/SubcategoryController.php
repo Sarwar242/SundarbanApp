@@ -16,11 +16,11 @@ class SubcategoryController extends Controller
     public function index()
     {
         try{
-            $subcategories = Subcategory::orderBy('priority', 'ASC')
+            $subcategories = Subcategory::orderByDESC('featured')
+                                        ->orderBy('priority', 'ASC')
                                         ->orderBy('bn_name', 'asc')
-                                        ->get()
-                                        ->sortByDESC('featured');
-                                        
+                                        ->get();
+
             foreach($subcategories as $subcategory ):
                 $subcategory->category;
                 $products=$subcategory->products;

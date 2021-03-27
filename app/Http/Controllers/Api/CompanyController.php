@@ -41,12 +41,13 @@ class CompanyController extends Controller
         return response()->json([
             'success'=>true,
             'companies'=>$companies->sort(function($a, $b) {
-                if($b['featured'] === 1) {
-                    return 1;
-                }else{
+                if($b['featured'] === $a['featured']) {
+                    return $b['featured'] ===1? 1:-1;
+                }
+                else{
                     return $a->priority >= $b->priority? 1 :-1;
                 }
-            }),
+            })->values(),
         ]);
     }
 
