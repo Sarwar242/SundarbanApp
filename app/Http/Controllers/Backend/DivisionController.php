@@ -62,7 +62,7 @@ class DivisionController extends Controller
     {
         try{
             $division = Division::find($request->id);
-            $categories=Category::join( 'companies', 'companies.category_id', '=', 'categories.id' )
+            $categories=Category::join('companies', 'companies.category_id', '=', 'categories.id' )
                                     ->where('companies.division_id','=',$request->id)
                                     ->distinct()
                                     ->get(['categories.*']);

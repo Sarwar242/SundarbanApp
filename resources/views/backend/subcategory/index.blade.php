@@ -27,10 +27,10 @@
         @foreach(App\Models\Subcategory::latest()->get() as $subcategory)
             <tr>
                 <th scope="row">{{$loop->index+1}}</th>
-                <td>{{$subcategory->name}}</td>
-                <td>{{$subcategory->bn_name}}</td>
+                <td style="width:100px; cursor: pointer;" onclick="window.location.href='{{route('admin.subcategory.locations.companies', $subcategory->id)}}'">{{$subcategory->name}}</td>
+                <td style="width:100px; cursor: pointer;" onclick="window.location.href='{{route('admin.subcategory.locations.companies', $subcategory->id)}}'">{{$subcategory->bn_name}}</td>
                 @if(!is_null($subcategory->category))
-					<td>{{$subcategory->category->name}}</td>
+					<td style="width:100px;cursor: pointer;" onclick="window.location.href='{{route('admin.category.locations.companies', $subcategory->category->id)}}'">{{$subcategory->category->name}}</td>
                 @else
                     <td>N/A</td>
                 @endif

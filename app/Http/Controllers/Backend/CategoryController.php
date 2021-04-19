@@ -3,7 +3,13 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Subcategory;
 use App\Models\Category;
+use App\Models\Company;
+use App\Models\District;
+use App\Models\Division;
+use App\Models\Upazilla;
+use App\Models\Union;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\File;
@@ -11,6 +17,8 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
 use Auth;
+use DB;
+
 class CategoryController extends Controller
 {
     public function __construct()
@@ -239,5 +247,235 @@ class CategoryController extends Controller
                 'message'=> ''.$e,
             ]);
         }
+    }
+
+
+    public function dataTableDist(Request $request,$id)
+    {
+
+        $draw = $request->get('draw');
+        $start = $request->get("start");
+        $rowperpage = $request->get("length"); // Rows display per page
+
+        $columnIndex_arr = $request->get('order');
+        $columnName_arr = $request->get('columns');
+        $order_arr = $request->get('order');
+        $search_arr = $request->get('search');
+
+        $columnIndex = $columnIndex_arr[0]['column']; // Column index
+        $columnName = $columnName_arr[$columnIndex]['data']; // Column name
+        $columnSortOrder = $order_arr[0]['dir']; // asc or desc
+        $searchValue = $search_arr['value']; // Search value
+
+        // Total records
+        $totalRecords = District::select('count(*) as allcount')->count();
+        $totalRecordswithFilter = District::select('count(*) as allcount')->where('name', 'like', '%' . $searchValue . '%')->count();
+
+
+        $category=Category::find($id);
+        if(is_null($category))
+            return json_encode([
+                "sucess"  => false,
+                "message" => "No category Found!",
+            ]);
+
+        $records=District::Where('districts.name', 'like', '%' . $searchValue . '%')
+                            ->orWhere('divisions.name', 'like', '%' . $searchValue . '%')
+                            ->select('districts.name as district', 'divisions.name as division','districts.id as id')
+                            ->leftJoin('divisions', 'districts.division_id', '=', 'divisions.id')
+                            ->orderBy($columnName, $columnSortOrder)
+                            ->skip($start)
+                            ->take($rowperpage)
+                            ->get();
+                            // dd($records);
+        $data_arr = array();
+        foreach ($records as  $key=>$record) {
+            $key = $key+1;
+            $division = $record->division;
+            $district = $record->district;
+            $cps= Company::where('category_id',$id)
+                            ->where('district_id',$record->id)
+                            ->get();
+            // $companies = $cps['total']?$cps['total']:0;
+            $data_arr[] = array(
+                "id" => $record->id,
+                "district" => $district,
+                'division' => $division,
+                "companies" => count($cps),
+            );
+        }
+        // dd($data_arr);
+        $response = array(
+            "draw" => intval($draw),
+            "iTotalRecords" => $totalRecords,
+            "iTotalDisplayRecords" => $totalRecordswithFilter,
+            "aaData" => $data_arr
+        );
+        return  $response;
+    }
+    // DB::raw('(SELECT COUNT(*) FROM companies WHERE companies.district_id = districts.id) as aggregate')
+
+
+
+    public function dataTableUpz(Request $request,$id)
+    {
+
+        $draw = $request->get('draw');
+        $start = $request->get("start");
+        $rowperpage = $request->get("length"); // Rows display per page
+
+        $columnIndex_arr = $request->get('order');
+        $columnName_arr = $request->get('columns');
+        $order_arr = $request->get('order');
+        $search_arr = $request->get('search');
+
+        $columnIndex = $columnIndex_arr[0]['column']; // Column index
+        $columnName = $columnName_arr[$columnIndex]['data']; // Column name
+        $columnSortOrder = $order_arr[0]['dir']; // asc or desc
+        $searchValue = $search_arr['value']; // Search value
+
+        // Total records
+        $totalRecords = Upazilla::select('count(*) as allcount')->count();
+        $totalRecordswithFilter = Upazilla::select('count(*) as allcount')->where('name', 'like', '%' . $searchValue . '%')->count();
+
+
+        $category=Category::find($id);
+        if(is_null($category))
+            return json_encode([
+                "sucess"  => false,
+                "message" => "No category Found!",
+            ]);
+
+        $records=Upazilla::Where('upazillas.name', 'like', '%' . $searchValue . '%')
+                            ->orWhere('districts.name', 'like', '%' . $searchValue . '%')
+                            ->orWhere('divisions.name', 'like', '%' . $searchValue . '%')
+                            ->select('upazillas.name as upazilla', 'districts.name as district', 'divisions.name as division','upazillas.id as id')
+                            ->leftJoin('districts', 'districts.id', '=', 'upazillas.district_id')
+                            ->leftJoin('divisions', 'districts.division_id', '=', 'divisions.id')
+                            ->orderBy($columnName, $columnSortOrder)
+                            ->skip($start)
+                            ->take($rowperpage)
+                            ->get();
+
+        $data_arr = array();
+        foreach ($records as  $key=>$record) {
+            $key = $key+1;
+            $upazilla = $record->upazilla;
+            $division = $record->division;
+            $district = $record->district;
+            $cps= Company::where('category_id',$id)
+                            ->where('upazilla_id',$record->id)
+                            ->get();
+
+            $data_arr[] = array(
+                "id" => $record->id,
+                "upazilla" => $upazilla,
+                "district" => $district,
+                'division' => $division,
+                "companies" => count($cps),
+            );
+        }
+
+        $response = array(
+            "draw" => intval($draw),
+            "iTotalRecords" => $totalRecords,
+            "iTotalDisplayRecords" => $totalRecordswithFilter,
+            "aaData" => $data_arr
+        );
+        return  $response;
+    }
+
+
+
+
+    public function dataTableUnn(Request $request,$id)
+    {
+
+        $draw = $request->get('draw');
+        $start = $request->get("start");
+        $rowperpage = $request->get("length"); // Rows display per page
+
+        $columnIndex_arr = $request->get('order');
+        $columnName_arr = $request->get('columns');
+        $order_arr = $request->get('order');
+        $search_arr = $request->get('search');
+
+        $columnIndex = $columnIndex_arr[0]['column']; // Column index
+        $columnName = $columnName_arr[$columnIndex]['data']; // Column name
+        $columnSortOrder = $order_arr[0]['dir']; // asc or desc
+        $searchValue = $search_arr['value']; // Search value
+
+        // Total records
+        $totalRecords = Union::select('count(*) as allcount')->count();
+        $totalRecordswithFilter = Union::select('count(*) as allcount')->where('name', 'like', '%' . $searchValue . '%')->count();
+
+
+        $category=Category::find($id);
+        if(is_null($category))
+            return json_encode([
+                "sucess"  => false,
+                "message" => "No category Found!",
+            ]);
+
+        $records=Union::Where('unions.name', 'like', '%' . $searchValue . '%')
+                            ->orWhere('upazillas.name', 'like', '%' . $searchValue . '%')
+                            ->orWhere('districts.name', 'like', '%' . $searchValue . '%')
+                            ->orWhere('divisions.name', 'like', '%' . $searchValue . '%')
+                            ->select('unions.name as union' ,'upazillas.name as upazilla', 'districts.name as district', 'divisions.name as division','unions.id as id')
+                            ->leftJoin('upazillas', 'upazillas.id', '=', 'unions.upazilla_id')
+                            ->leftJoin('districts', 'districts.id', '=', 'upazillas.district_id')
+                            ->leftJoin('divisions', 'divisions.id', '=', 'districts.division_id')
+                            ->orderBy($columnName, $columnSortOrder)
+                            ->skip($start)
+                            ->take($rowperpage)
+                            ->get();
+
+        $data_arr = array();
+        foreach ($records as  $key=>$record) {
+            $key = $key+1;
+            $union = $record->union;
+            $upazilla = $record->upazilla;
+            $division = $record->division;
+            $district = $record->district;
+            $cps= Company::where('category_id',$id)
+                            ->where('union_id',$record->id)
+                            ->get();
+
+            $data_arr[] = array(
+                "id" => $record->id,
+                "union" => $union,
+                "upazilla" => $upazilla,
+                "district" => $district,
+                'division' => $division,
+                "companies" => count($cps),
+            );
+        }
+
+        $response = array(
+            "draw" => intval($draw),
+            "iTotalRecords" => $totalRecords,
+            "iTotalDisplayRecords" => $totalRecordswithFilter,
+            "aaData" => $data_arr
+        );
+        return  $response;
+    }
+
+
+    public function companiesByLocation($id)
+    {
+        $category=Category::find($id);
+
+        if(is_null($category))
+            return json_encode([
+                "sucess"  => false,
+                "message" => "No category Found!",
+            ]);
+
+        // $divisions=Division::join('companies', 'companies.division_id', '=', 'divisions.id' )
+        //                         ->where('companies.category_id','=',$id)
+        //                         ->distinct()
+        //                         ->get(['divisions.*']);
+        $data=$category;
+        return view('backend.category.companiesbylocations', compact(['data']));
     }
 }

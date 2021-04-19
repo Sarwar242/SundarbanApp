@@ -25,11 +25,11 @@
         </tr>
       </thead>
       <tbody>
-          @foreach (App\Models\Category::latest()->get() as $category)
+          @foreach (App\Models\Category::orderBy('name')->get() as $category)
             <tr>
                 <th scope="row">{{$loop->index+1}}</th>
-                <td style="width:100px;">{{$category->name}}</td>
-                <td style="width:100px;">{{$category->bn_name}}</td>
+                <td style="width:100px;cursor: pointer;" onclick="window.location.href='{{route('admin.category.locations.companies', $category->id)}}'">{{$category->name}}</td>
+                <td style="width:100px;cursor: pointer;" onclick="window.location.href='{{route('admin.category.locations.companies', $category->id)}}'">{{$category->bn_name}}</td>
 
                 <td style="width:120px;">{!!strlen($category->description) > 100 ? substr($category->description,0,50)." .....": $category->description!!}</td>
                 <td style="width:120px;">{!!strlen($category->bn_description) > 100 ? substr($category->bn_description,0,50)." ...": $category->bn_description!!}</td>

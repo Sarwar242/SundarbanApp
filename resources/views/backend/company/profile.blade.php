@@ -132,6 +132,28 @@
 
                                 <div class="row">
                                     <div class="col-md-6">
+                                        <label>Subcategory</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        @if(!is_null($company->subcategory))
+                                            <p>{{$company->subcategory->name}}</p>
+                                        @endif
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>Category</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        @if(!is_null($company->category))
+                                            <p>{{$company->category->name}}</p>
+                                        @endif
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
                                         <label>Location</label>
                                     </div>
                                     <div class="col-md-6">

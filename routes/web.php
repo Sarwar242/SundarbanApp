@@ -192,10 +192,16 @@ Route::group( ['prefix' => 'admin', 'as' => 'admin.'], function() {
     Route::post('category/create', 'Backend\CategoryController@store')->name('category.create.submit');
     Route::get('category/update/{id}', 'Backend\CategoryController@edit')->name('category.update');
     Route::post('category/update/{id}', 'Backend\CategoryController@update')->name('category.update.submit');
-    Route::get('category/show/{id}', 'Backend\CategoryController@show')->name('category.show');;
+    Route::get('category/show/{id}', 'Backend\CategoryController@show')->name('category.show');
     Route::get('category/delete/{id}', 'Backend\CategoryController@destroy')->name('category.delete');
+    Route::get('category/locations/companies/{id}', 'Backend\CategoryController@companiesByLocation')->name('category.locations.companies');
     Route::get('api/category/featured', 'Backend\CategoryController@featuredFunc');
     Route::get('api/category/priority', 'Backend\CategoryController@priorityFunc');
+    Route::get('api/category/district/{id}', 'Backend\CategoryController@dataTableDist')->name('api.dist.get');
+    Route::get('api/category/upazilla/{id}', 'Backend\CategoryController@dataTableUpz')->name('api.upz.get');
+    Route::get('api/category/union/{id}', 'Backend\CategoryController@dataTableUnn')->name('api.unn.get');
+
+
 
 
 
@@ -208,9 +214,13 @@ Route::group( ['prefix' => 'admin', 'as' => 'admin.'], function() {
     Route::get('subcategory/update/{id}', 'Backend\SubcategoryController@edit')->name('subcategory.update');
     Route::post('subcategory/update/{id}', 'Backend\SubcategoryController@update')->name('subcategory.update.submit');
     Route::get('subcategory/show/{id}', 'Backend\SubcategoryController@show')->name('subcategory.show');
+    Route::get('subcategory/locations/companies/{id}', 'Backend\SubcategoryController@companiesByLocation')->name('subcategory.locations.companies');
     Route::get('subcategory/delete/{id}', 'Backend\SubcategoryController@destroy')->name('subcategory.delete');
     Route::get('api/subcategory/featured', 'Backend\SubcategoryController@featuredFunc');
     Route::get('api/subcategory/priority', 'Backend\SubcategoryController@priorityFunc');
+    Route::get('api/subcategory/district/{id}', 'Backend\SubcategoryController@dataTableDist')->name('api.dist2.get');    Route::get('api/category/district/{id}', 'Backend\CategoryController@dataTableDist')->name('api.dist.get');
+    Route::get('api/subcategory/upazilla/{id}', 'Backend\SubcategoryController@dataTableUpz')->name('api.upz2.get');
+    Route::get('api/subcategory/union/{id}', 'Backend\SubcategoryController@dataTableUnn')->name('api.unn2.get');
 
 
 

@@ -482,6 +482,7 @@ class SearchController extends Controller
                                     ->orWhere('subcategories.name','like',"%{$key}%")
                                     ->orWhere('subcategories.bn_name', 'like', "%{$key}%")
                                     ->where('companies.union_id','=',$request->union_id)
+                                    ->orderBy('companies.priority','asc')
                                     ->get(['companies.*']);
 
                 if(!is_null($companies)){
@@ -494,12 +495,12 @@ class SearchController extends Controller
                         // $upazilla = $company->upazilla;
                         // $union = $company->union;
                         // $products = $company->products;
-                        // foreach ($products as $product) {
-                        //     $product->unit;
-                        //     $product->category;
-                        //     $product->subcategory;
-                        //     $product->images;
-                        // }
+                        if($company->boost){
+                            $company['featured']=\Carbon\Carbon::now() < \Carbon\Carbon::parse($company->boost['end_date']) ?1:0;
+                        }
+                        else{
+                            $company['featured']=0;
+                        }
                         // $company->following = $company->user->followings()->get()->count();
                         $company->followers = $company->followers()->get()->count();
                         $company->ratings   = $company->ratings()->get()->avg('rating');
@@ -507,7 +508,7 @@ class SearchController extends Controller
                 }
                 return response()->json([
                     'success'=>true,
-                    'companies'=>$companies,
+                    'companies'=>$companies->sortByDesc('featured')->values(),
                 ]);
             }
             else{
@@ -516,13 +517,19 @@ class SearchController extends Controller
                 if(!is_null($companies)){
                     foreach($companies as $company){
                         $user = $company->user;
+                        if($company->boost){
+                            $company['featured']=\Carbon\Carbon::now() < \Carbon\Carbon::parse($company->boost['end_date']) ?1:0;
+                        }
+                        else{
+                            $company['featured']=0;
+                        }
                         $company->followers = $company->followers()->get()->count();
                         $company->ratings   = $company->ratings()->get()->avg('rating');
                     }
                 }
                 return response()->json([
                     'success'=>true,
-                    'companies'=>$companies,
+                    'companies'=>$companies->sortByDesc('featured')->values(),
                 ]);
             }
         }else{
@@ -535,18 +542,25 @@ class SearchController extends Controller
                                     ->orWhere('subcategories.name','like',"%{$key}%")
                                     ->orWhere('subcategories.bn_name', 'like', "%{$key}%")
                                     ->where('companies.upazilla_id','=',$request->upazilla_id)
+                                    ->orderBy('companies.priority','asc')
                                     ->get(['companies.*']);
 
                     if(!is_null($companies)){
                         foreach($companies as $company){
                             $user = $company->user;
+                            if($company->boost){
+                                $company['featured']=\Carbon\Carbon::now() < \Carbon\Carbon::parse($company->boost['end_date']) ?1:0;
+                            }
+                            else{
+                                $company['featured']=0;
+                            }
                             $company->followers = $company->followers()->get()->count();
                             $company->ratings   = $company->ratings()->get()->avg('rating');
                         }
                     }
                     return response()->json([
                         'success'=>true,
-                        'companies'=>$companies,
+                        'companies'=>$companies->sortByDesc('featured')->values(),
                     ]);
                 }
                 else{
@@ -555,13 +569,19 @@ class SearchController extends Controller
                     if(!is_null($companies)){
                         foreach($companies as $company){
                             $user = $company->user;
+                            if($company->boost){
+                                $company['featured']=\Carbon\Carbon::now() < \Carbon\Carbon::parse($company->boost['end_date']) ?1:0;
+                            }
+                            else{
+                                $company['featured']=0;
+                            }
                             $company->followers = $company->followers()->get()->count();
                             $company->ratings   = $company->ratings()->get()->avg('rating');
                         }
                     }
                     return response()->json([
                         'success'=>true,
-                        'companies'=>$companies,
+                        'companies'=>$companies->sortByDesc('featured')->values(),
                     ]);
                 }
             }else{
@@ -574,19 +594,26 @@ class SearchController extends Controller
                                     ->orWhere('subcategories.name','like',"%{$key}%")
                                     ->orWhere('subcategories.bn_name', 'like', "%{$key}%")
                                     ->where('companies.district_id','=',$request->district_id)
+                                    ->orderBy('companies.priority','asc')
                                     ->get(['companies.*']);
 
 
                         if(!is_null($companies)){
                             foreach($companies as $company){
                                 $user = $company->user;
+                                if($company->boost){
+                                    $company['featured']=\Carbon\Carbon::now() < \Carbon\Carbon::parse($company->boost['end_date']) ?1:0;
+                                }
+                                else{
+                                    $company['featured']=0;
+                                }
                                 $company->followers = $company->followers()->get()->count();
                                 $company->ratings   = $company->ratings()->get()->avg('rating');
                             }
                         }
                         return response()->json([
                             'success'=>true,
-                            'companies'=>$companies,
+                            'companies'=>$companies->sortByDesc('featured')->values(),
                         ]);
                     }
                     else{
@@ -595,20 +622,33 @@ class SearchController extends Controller
                         if(!is_null($companies)){
                             foreach($companies as $company){
                                 $user = $company->user;
+                                if($company->boost){
+                                    $company['featured']=\Carbon\Carbon::now() < \Carbon\Carbon::parse($company->boost['end_date']) ?1:0;
+                                }
+                                else{
+                                    $company['featured']=0;
+                                }
                                 $company->followers = $company->followers()->get()->count();
                                 $company->ratings   = $company->ratings()->get()->avg('rating');
                             }
                         }
-                        return response()->json([
-                            'success'=>true,
-                            'companies'=>$companies,
-                        ]);
+                        if(!is_null($companies))
+                            return response()->json([
+                                'success'=>true,
+                                'companies'=>$companies->sortByDesc('featured')->values(),
+                            ]);
+                        else
+                            return response()->json([
+                                'success'=>true,
+                                'companies'=>$companies,
+                            ]);
                     }
                 }else{
                     if(request()->has('division_id') && !is_null($request->division_id)){
                         if(request()->has('key') && !is_null($request->key)){
                             $companies = Company::join( 'categories', 'categories.id', '=', 'companies.category_id' )
                                                 ->join( 'subcategories', 'subcategories.id', '=', 'companies.subcategory_id' )
+                                                ->orderBy('priority','asc')
                                                 ->orWhere('categories.name', 'like',  "%{$key}%")
                                                 ->orWhere('categories.bn_name', 'like',  "%{$key}%")
                                                 ->orwhere('subcategories.name','like',"%{$key}%")
@@ -619,13 +659,19 @@ class SearchController extends Controller
                             if(!is_null($companies)){
                                 foreach($companies as $company){
                                     $user = $company->user;
+                                    if($company->boost){
+                                        $company['featured']=\Carbon\Carbon::now() < \Carbon\Carbon::parse($company->boost['end_date']) ?1:0;
+                                    }
+                                    else{
+                                        $company['featured']=0;
+                                    }
                                     $company->followers = $company->followers()->get()->count();
                                     $company->ratings   = $company->ratings()->get()->avg('rating');
                                 }
                             }
                             return response()->json([
                                 'success'=>true,
-                                'companies'=>$companies,
+                                'companies'=>$companies->sortByDesc('featured')->values(),
                             ]);
                         }
                         else{
@@ -636,13 +682,19 @@ class SearchController extends Controller
                             if(!is_null($companies)){
                                 foreach($companies as $company){
                                     $user = $company->user;
+                                    if($company->boost){
+                                        $company['featured']=\Carbon\Carbon::now() < \Carbon\Carbon::parse($company->boost['end_date']) ?1:0;
+                                    }
+                                    else{
+                                        $company['featured']=0;
+                                    }
                                     $company->followers = $company->followers()->get()->count();
                                     $company->ratings   = $company->ratings()->get()->avg('rating');
                                 }
                             }
                             return response()->json([
                                 'success'=>true,
-                                'companies'=>$companies,
+                                'companies'=>$companies->sortByDesc('featured')->values(),
                             ]);
                         }
                     }else{
@@ -654,18 +706,25 @@ class SearchController extends Controller
                                                 ->orWhere('categories.bn_name', 'like',  "%{$key}%")
                                                 ->orWhere('subcategories.name','like',"%{$key}%")
                                                 ->orWhere('subcategories.bn_name', 'like', "%{$key}%")
+                                                ->orderBy('companies.priority','asc')
                                                 ->get(['companies.*']);
 
                             if(!is_null($companies)){
                                 foreach($companies as $company){
                                     $user = $company->user;
+                                    if($company->boost){
+                                        $company['featured']=\Carbon\Carbon::now() < \Carbon\Carbon::parse($company->boost['end_date']) ?1:0;
+                                    }
+                                    else{
+                                        $company['featured']=0;
+                                    }
                                     $company->followers = $company->followers()->get()->count();
                                     $company->ratings   = $company->ratings()->get()->avg('rating');
                                 }
                             }
                             return response()->json([
                                 'success'=>true,
-                                'companies'=>$companies,
+                                'companies'=>$companies->sortByDesc('featured')->values(),
                             ]);
                         }
                     }

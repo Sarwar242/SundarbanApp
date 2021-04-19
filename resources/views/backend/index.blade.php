@@ -41,7 +41,7 @@
                                 </h5>
                             </div>
                             <div class="card-body text-success">
-                                <h2 class="card-title text-center font-size-20"><span class="counter font-weight-bold font-size-24">{{count(App\Models\Company::all())}}</span></h2>
+                                <h2 class="card-title text-center font-size-20"><span class="counter font-weight-bold font-size-24">{{App\Models\Company::count()}}</span></h2>
                             </div>
                         </div>
 					</div>
@@ -53,7 +53,7 @@
                                 </h5>
                             </div>
                             <div class="card-body text-success">
-                                <h2 class="card-title text-center font-size-20"><span class="counter font-weight-bold font-size-24">{{count(App\Models\Customer::all())}}</span></h2>
+                                <h2 class="card-title text-center font-size-20"><span class="counter font-weight-bold font-size-24">{{ App\Models\Customer::count() }}</span></h2>
                             </div>
                         </div>
 					</div>
@@ -65,7 +65,7 @@
                                 </h5>
                             </div>
                             <div class="card-body text-success">
-                                <h2 class="card-title text-center font-size-20"><span class="counter font-weight-bold font-size-24">{{count(App\Models\Category::all())+count(App\Models\Subcategory::all())}}</span></h2>
+                                <h2 class="card-title text-center font-size-20"><span class="counter font-weight-bold font-size-24">{{ App\Models\Category::count() + App\Models\Subcategory::count() }}</span></h2>
                             </div>
                         </div>
 					</div>
@@ -78,7 +78,7 @@
                                 </h5>
                             </div>
                             <div class="card-body text-success">
-                                <h2 class="card-title text-center font-size-20"><span class="counter font-weight-bold font-size-24">{{count(App\Models\Division::all())+count(App\Models\District::all())+count(App\Models\Upazilla::all())+count(App\Models\Union::all())}}</span></h2>
+                                <h2 class="card-title text-center font-size-20"><span class="counter font-weight-bold font-size-24">{{ App\Models\Division::count() + App\Models\District::count()+ App\Models\Upazilla::count() + App\Models\Union::count() }}</span></h2>
                             </div>
                         </div>
 					</div>
@@ -106,7 +106,7 @@
 		    </tr>
 		  </thead>
 		  <tbody>
-			@foreach(App\Models\Company::latest()->limit(10)->get() as $company)
+			@foreach(App\Models\Company::orderBy('created_at', 'desc')->limit(10)->get() as $company)
 				<tr>
 					<th scope="row">{{$loop->index+1}}</th>
 					<td style="cursor: pointer;" onclick="window.location.href='{{route('admin.company.profile',$company->slug)}}'">{{$company->code}}</td>
