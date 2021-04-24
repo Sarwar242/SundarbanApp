@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Email Signature</title>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+
+    <style>
+        table {
+
+            padding: 20px;
+            margin:auto;
+            border-collapse: collapse;
+        }
+            /* Zebra striping */
+        tr:nth-of-type(odd) {
+            background: rgb(255, 255, 255);
+        }
+        th {
+
+            color: white;
+            font-weight: bold;
+        }
+        td, th {
+            /* padding: 6px; */
+            border: none;
+            text-align: left;
+    }
+
+a{
+    text-decoration: none;
+}
+
+.quote2{
+    padding-right: 1px ;
+}
+.quote{
+    font-size: 18px;
+    padding-right: 1px ;
+}
+    .quote h4{
+        /* width:100%; */
+        margin: 0;
+
+        padding: 5px;
+        font-size: 16px;
+
+
+        border: 1px solid #c7c7c7;
+        width:100%;
+        color:white;
+
+    }
+    .quote h4:hover{
+        color: black !important;
+        background:white !important;
+    }
+    .tag{
+        font-size: 20px;
+    }
+    .socials{
+        margin-bottom: 1px !important;
+    }
+
+    @media only screen and (max-width: 760px),
+(min-device-width: 768px) and (max-device-width: 1024px)  {
+
+	/* Force table to not be like tables anymore */
+	table, thead, tbody, th, td, tr {
+		display: block;
+	}
+
+	/* Hide table headers (but not display: none;, for accessibility) */
+	thead tr {
+		position: absolute;
+		top: -9999px;
+		left: -9999px;
+	}
+
+
+	td {
+		/* Behave  like a "row" */
+		border: none;
+
+		position: relative;
+		padding-left: 4%;
+	}
+    td img{
+        margin:0;
+        padding: 0;
+        vertical-align: center;
+        position: relative;
+
+    }
+    .logo{
+        margin:0;
+        padding: 0;
+        vertical-align: center;
+        padding-top: 10px !important;
+        padding-bottom: 1px !important;
+        padding-left: 6%;
+        margin-top: -1%;
+        padding-top: 0;
+        position: relative;
+    }
+    .quote2{
+
+        text-align: center;
+        margin-left:-3%;
+    }
+
+    .quote h4{
+        width:100%;
+        /* margin-left: 6%; */
+         padding-left: 5%;
+         padding-right: 15%;
+         margin-left:10%;
+        border: 1px solid #c7c7c7;
+         color:white;
+
+    }
+	td:before {
+		/* Now like a table header */
+		position: absolute;
+		/* Top/left values mimic padding */
+		top: 6px;
+		left: 6px;
+		width: 45%;
+		padding-right: 10px;
+		white-space: nowrap;
+	}
+    td:nth-of-type(1):before { margin-bottom: 0; }
+    .pic{
+        float: none !important;
+        padding: auto;
+    }
+
+     .tag{
+         padding-left: 10% !important;
+     }
+
+     tr:nth-of-type(2){
+         padding-bottom: 40px !important;
+
+      }
+      .socials{
+          padding-left: -13% !important;
+      }
+      tr:nth-of-type(3) td p{
+         padding: -15px 0 2px 1% !important;
+         text-align: center;
+         margin:-7% -1px 8% -30% !important;
+      }
+
+	/*
+	Label the data
+	*/
+        /* td:nth-of-type(1):before { content: "First Name"; }
+        td:nth-of-type(2):before { content: "Last Name"; }
+        td:nth-of-type(3):before { content: "Job Title"; }
+        td:nth-of-type(4):before { content: "Favorite Color"; }
+        td:nth-of-type(5):before { content: "Wars of Trek?"; }
+        td:nth-of-type(6):before { content: "Secret Alias"; }
+        td:nth-of-type(7):before { content: "Date of Birth"; }
+        td:nth-of-type(8):before { content: "Dream Vacation City"; }
+        td:nth-of-type(9):before { content: "GPA"; }
+        td:nth-of-type(10):before { content: "Arbitrary Data"; } */
+}
+    </style>
+</head>
+
+<body>
+    <br><br><br>
+    <div style="overflow-x:auto;">
+    <table border="0" cellspacing="0" cellpadding="0" align="center">
+        <tr>
+            <td class="pic" valign="top" align="left" style="vertical-align: center; float: right;  padding-top: 20px; padding-bottom: 20px; padding-right: 15px">
+                <img src="https://i.ibb.co/jHvFWkw/as-featured-in-wsj.png" alt="img" style="
+                height: 150px;width: 150px; border:#BC9B32 3px solid;
+                 border-radius:50%;" border="0" />
+            </td>
+            <td colspan="2" valign="top" style="
+                        vertical-align: top;
+                        padding-left: 12px;
+                        border-left: 3px solid #BC9B32;
+                        text-align: left;
+                    " align="left">
+                <h3 style="
+                            color: #000000;
+                            margin: 0;
+                            font-size: 20px;
+                            font-family: arial;
+                            font-weight: bolder;
+                        ">
+                    Al Kushner
+                </h3>
+                <h5 style="
+                            color: #201d1d;
+                            margin: 5px 0px 1px;
+                            font-size: 16px;
+                            font-family: Arial, Helvetica, sans-serif;
+                            font-weight: 600;
+
+                        ">
+                    CEO l Superior Mutual
+                </h5>
+                <h6 style="
+                            color: #201d1d;
+                            margin: 1px 0px 5px;
+                            font-size: 15px;
+                            font-family: Arial, Helvetica, sans-serif;
+                            font-weight: 600;
+
+                        ">
+                    Offering Superior Service Since 1986
+                </h6>
+                <p style="
+
+                            font-family: arial;
+                            font-size: 17px;
+                            color: black;
+                            margin:1px;
+                            display: flex;
+                        ">
+                    <span style="color: #BC9B32"><img src="https://i.ibb.co/WBjFzp1/phone.png" style="background:#BC9B32; width:15px; height:15px; padding: 3px; border-radius: 50%;" alt=""></span>
+                    &nbsp;<a style="padding-top: 3px;" href="tel:888-810-9725">888-810-9725</a>
+                </p>
+                <p style=" font-family: arial;
+                            font-size: 17px;
+                            color: black;
+                            margin:1px;
+                            display:flex;">
+                    <span style="color: #BC9B32">
+                        <img src="https://i.ibb.co/8MZZLNR/mail.png" style="background:#BC9B32; width:15px; height:15px; padding: 3px; border-radius: 50%;" alt=""></span>
+                        &nbsp;
+                    <a href="mailto:alKushner@SuperiorMutual.com" style="padding-top: 3px;">AlKushner@SuperiorMutual.com</a>
+                </p>
+                <p style="margin: 1px;
+                            font-family: arial;
+                            font-size: 17px;
+                            color: black;
+                            display:flex;
+                        ">
+                    <span style="color: #BC9B32"> <img  style="background:#BC9B32; width:15px; height:15px; padding: 3px; border-radius: 50%;" src="https://i.ibb.co/CWXKfB5/domain.png" alt="">
+                    </span>
+                    &nbsp;
+                    <a href="https://www.SuperiorMutual.com"  style="padding-top: 3px;">www.SuperiorMutual.com</a>
+                </p>
+
+                <p style="
+                    margin: 1px;
+                    font-family: arial;
+                    font-size: 17px;
+                    color: black;
+                    display:flex;
+                "><span style="color: #BC9B32;"><img src="https://i.ibb.co/jZWTD7x/user.png" style="background:#BC9B32; width:15px; height:15px; padding: 3px; border-radius: 50%;" alt=""></span>
+                    &nbsp;
+                    <a href="https://calendly.com/superiormutual/consultation?month=2021-04" style="padding-top: 3px;">Schedule Appointment</a>
+                </p>
+
+            </td>
+            <!-- <td style="width: 20%;"></td> -->
+            <!-- <td  valign="top" class="logo" align="left" style="vertical-align: center; padding-left:10px;">
+                <img class="logo" style="height: 220px; cursor: pointer; margin-left: -90px;" onclick="location.href='https:/\/\www.SuperiorMutual.com'" border="0" src="https://i.ibb.co/TtHGgJc/Superior-logo-removebg-preview.png" alt="">
+            </td> -->
+        </tr>
+        <tr style=" margin-top:5px; padding: 0;overflow: hidden;
+        white-space: nowrap;">
+            <td  valign="center" class="logo" align="left" style="vertical-align: center; padding: 15px 0 25px 5px; height: 100px !important; background:white !important;">
+                <img class="logo" style="height: 70px; cursor: pointer;  margin-left: -1px;" onclick="location.href='https:/\/\www.SuperiorMutual.com'" border="0" src="https://i.ibb.co/LhN6JVm/Superior-logo-removebg-preview.png" alt="">
+            </td>
+            <td  colspan="2" align="center" style="background:#000; display:block; text-align: justify; padding-left:3%; width: 85%;" >
+                <div class="tag" style="color:white;width: 31%; line-height: 1em; text-align:justify; padding: 3px 3px 0 3px;">
+                    Financial Educator, Author<br>&nbsp; & Retirement Specialist
+                </div>
+                <div class="quote2" style="width: 66%;  left:50px; text-align: center; line-height: 0.5em; margin-left:20px; padding: 12px 3px 0 3px;">
+                    <a class="quote" href="https://www.SuperiorMutual.com" style="text-decoration: none; ">
+                        <h4>Get Instant Life Quote</h4>
+                    </a><a class="quote" href="https://www.amazon.com/Savvy-Guide-Buying-Burial-Insurance/dp/1632273209" style="text-decoration: none; ">
+                        <h4>Get My Book</h4>
+                    </a><a class="quote" href="https://www.amazon.com/Savvy-Guide-Buying-Burial-Insurance/dp/1632273209#customerReviews" style="margin-bottom: 0; text-decoration: none; ">
+                        <h4>Read My Reviews</h4>
+                    </a>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3">
+                <p class="socials" style="margin:5px 80px 10px 52%;">
+                    <a href="https://www.facebook.com/SuperiorMutual" target="_blank"
+                        style="text-decoration: none">
+                        <img src="https://i.ibb.co/64YVRtv/facebook.png" style="
+                        width: 25px;
+                        height: 25px;
+                        display: inline-block;
+                        margin-right: 2px;" border="0">
+                       </a>
+                        <a href="https://twitter.com/MutualSuperior" target="_blank"
+                        style="text-decoration: none">
+                        <img src="https://i.ibb.co/FqnsM9S/twitter.png" style="
+                        width: 25px;
+                        height: 25px;
+                        display: inline-block;
+                        margin-right: 2px;" border="0"></a><a href="https://www.pinterest.com/SuperiorMutualAgency/" target="_blank" style="text-decoration: none">
+                         <img src="https://i.ibb.co/ChqbT0v/pinterest.png" style="
+                         width: 26px;
+                        height: 26px;
+                         display: inline-block;
+                         margin-right: 2px;" border="0"></a>
+                    <a href="https://www.alignable.com" style="text-decoration: none" target="_blank">
+                        <img valign="center" src="https://www.alignable.com/assets/badge/alignable-c2.png" alt="img" style="
+                                    width: 26px; margin-bottom: -1px; height: 26px;
+                                    display: inline-block;
+                                   " border="0"></a>
+                </p>
+                <p style="color: #201d1d;
+                margin: 5px 0 0px 35%;
+                font-size: 17px;text-align: center;
+                font-family: Arial, Helvetica, sans-serif;
+                font-weight: 600; ">A referral is the best compliment! <br> <a href="https://www.SuperiorMutual.com" target="_blank">Click here</a> to refer your friends <br> and family. </p>
+            </td>
+        </tr>
+    </table>
+</div>
+    <br /><br /><br />
+</body>
+
+</html>
